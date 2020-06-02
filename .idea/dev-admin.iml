@@ -9,6 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/coffeecode/router" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/plates" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/twbs/bootstrap" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

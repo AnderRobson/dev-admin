@@ -3,6 +3,7 @@
 namespace Theme\pages\home;
 
 use League\Plates\Engine;
+include 'model.php';
 
 class HomeController
 {
@@ -23,7 +24,7 @@ class HomeController
     {
 
         echo $this->view->render("home", [
-//            "users" => (new User())->find()->order('first_name')->fetch(true)
+            "users" => (new User())->find()->order('first_name')->fetch(true)
         ]);
     }
 }
