@@ -3,8 +3,9 @@
     namespace Source\Controllers;
 
     use League\Plates\Engine;
-    use Theme\pages\home\HomeController;
-    use function Composer\Autoload\includeFile;
+    use Theme\Pages\Home\HomeController;
+    use Theme\Pages\Banner\BannerController;
+    use Theme\Pages\Publication\PublicationController;
 
     class Web
     {
@@ -12,34 +13,58 @@
         /** @var Engine  */
         private $controller;
 
+        /** @var Router */
+        private $router;
+
         public function __construct($router)
         {
-            require loadController("home");
-            $this->controller = new HomeController($router);
+            $this->router = $router;
         }
 
-        public function __call($function, $args)
+        /**
+         * @param Engine $controller
+         */
+        public function setController($controller): void
         {
-            var_dump('Fnção não existe !');
-//            require loadController("home");
-//            HomeController::index();
+            $instanciando = null;
+            switch ($controller) {
+                case 'home':
+                    $instanciando = new HomeController($this->router);
+                    break;
+                case 'banner':
+                    $instanciando = new BannerController($this->router);
+                    break;
+                case 'publication':
+                    $instanciando = new PublicationController($this->router);
+            }
+
+            if (! empty($instanciando)) {
+                $this->controller = $instanciando;
+            } else {
+                printrx(utf8_encode("<h1 style='text-align: center'>Construtor da controller {$controller}, nï¿½o implementado</h1>"));
+            }
         }
 
         public function home(array $router)
         {
-            $this->controller->index();
+            redirect("/pages/home");
         }
 
-        public function create(array $data)
+        public function pages(array $data)
         {
-            $callback["data"] = $data;
-            echo json_encode($data);
-        }
+            require loadController($data['page']);
+            $this->setController($data['page']);
+            $function = ! empty($data['function']) ? $data['function'] : "index";
 
-        public function delete(array $data)
-        {
-            $callback["data"] = $data;
-            echo json_encode($data);
+            unset($data['page']);
+            unset($data['function']);
+            unset($data['action']);
+
+            if (!empty($data)) {
+                $this->controller->$function($data);
+            } else {
+                $this->controller->$function();
+            }
         }
 
         public function load(array $data)
@@ -54,7 +79,7 @@
 
         public function slugPost($slugPost)
         {
-            echo "<h1 style='text-align: center'> Pesquisa de publicação pelo slug !</h1>";
+            echo "<h1 style='text-align: center'> Pesquisa de publica??o pelo slug !</h1>";
             var_dump($slugPost);
         }
         public function error($data)

@@ -4,7 +4,7 @@
 
     use CoffeeCode\DataLayer\DataLayer;
 
-    class HomeModel extends DataLayer
+    class UserModel extends DataLayer
     {
         public function __construct()
         {

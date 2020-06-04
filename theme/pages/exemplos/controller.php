@@ -3,7 +3,7 @@
 namespace Theme\Pages\Home;
 
 use League\Plates\Engine;
-include 'model.php';
+use Theme\Pages\Home\User;
 
 class HomeController
 {
@@ -25,7 +25,7 @@ class HomeController
     public function index(): void
     {
         echo $this->view->render("home/view/index", [
-//            "users" => (new BannerModel())->find()->order('first_name')->fetch(true)
+            "users" => (new UserModel())->find()->order('first_name')->fetch(true)
         ]);
     }
 
@@ -39,13 +39,13 @@ class HomeController
             return;
         }
 
-        $user = new HomeModel();
+        $user = new UserModel();
         $user->first_name = $userData["first_name"];
         $user->last_name = $userData["last_name"];
         $user->save();
 
-        $callback["message"] = message("Usuário cadastrado com sucesso !", "success");
-        $callback["user"] = $this->view->render("home/view/elements/user", ["user" => $user]);
+        $callback["message"] = message("Usua�rio cadastrado com sucesso !", "success");
+        $callback["user"] = $this->view->render("banner/view/elements/user", ["user" => $user]);
 
         echo json_encode($callback);
     }
@@ -57,7 +57,7 @@ class HomeController
         }
 
         $id = filter_var($data['id'], FILTER_VALIDATE_INT);
-        $user = (new HomeModel())->findById($id);
+        $user = (new UserModel())->findById($id);
 
         if (! empty($user)) {
             $user->destroy();

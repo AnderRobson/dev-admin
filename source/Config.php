@@ -8,7 +8,7 @@
         "username" => DATABASE_USER,
         "passwd" => DATABASE_PASSWORD,
         "options" => [
-//            '1002' => "SET NAMES utf8",
+            PDO::MYSQL_ATTR_INIT_COMMAND  => "SET NAMES utf8",
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
             PDO::ATTR_CASE => PDO::CASE_NATURAL
@@ -21,13 +21,24 @@
      * @param string $path
      * @return string
      */
-    function url(string $path): string
+    function url(string $path = null): string
     {
         if ($path) {
             return URL_BASE. $path;
         }
 
         return URL_BASE;
+    }
+
+    function redirect($route, $external = false)
+    {
+        if ($external) {
+            header("location: " . $route);
+            exit;
+        }
+        
+        header("location: " . url($route));
+        exit;
     }
 
     function getFile($root): string
@@ -40,10 +51,15 @@
 
     function message(string $message, string $type): string
     {
-        return "<div class='message{$type}'>{$message}</div>";
+        return utf8_encode("<div class='message {$type}'>{$message}</div>");
     }
 
     function loadController(string $controller)
     {
-        return ROOT . DS . 'theme/pages/' . $controller . '/controller.php';
+        $route = ROOT . DS . 'theme' . DS . 'pages' . DS . $controller . DS . 'controller.php';
+
+        if (file_exists($route))
+            return $route;
+        else
+            printrx(utf8_encode("<h1 style='text-align: center'>Página {$controller} não encontrada</h1>"));
     }

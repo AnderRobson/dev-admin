@@ -1,10 +1,10 @@
 <?php
 
-    namespace Theme\Pages\Home;
+    namespace Theme\Pages\Publication;
 
     use CoffeeCode\DataLayer\DataLayer;
 
-    class HomeModel extends DataLayer
+    class PublicationModel extends DataLayer
     {
         public function __construct()
         {
