@@ -36,13 +36,9 @@
      * @param string $path
      * @return string
      */
-    function urlFile(string $path = null): string
+    function urlFile(string $path): string
     {
-        if ($path) {
-            return URL_ADMIN . "/theme/upload/" . $path;
-        }
-
-        return URL_ADMIN;
+        return URL_ADMIN . "/theme/upload/" . $path;
     }
 
     function css(string $file)
@@ -87,7 +83,7 @@
 
     function message(string $message, string $type): string
     {
-        return utf8_encode("<div class='alert {$type}'>{$message}</div>");
+        return utf8_encode("<div class='message {$type}'>{$message}</div>");
     }
 
     function loadController(string $controller)
