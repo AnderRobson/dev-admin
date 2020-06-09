@@ -1,5 +1,5 @@
 <?php
-$v->layout("painel/view/_theme", ["title" => "Banner"]); ?>
+$v->layout("painel/view/_theme", ["title" => $title]); ?>
 
         <div class="ajax_load">
             <div class="ajax_load_box">
@@ -12,8 +12,9 @@ $v->layout("painel/view/_theme", ["title" => "Banner"]); ?>
             <?= $v->section("content"); ?>
         </main>
 
-        <?= $v->section("js"); ?>
-
+<?php $v->start("js"); ?>
+    <?= $v->section("js"); ?>
+<?php  $v->end(); ?>
 <?php $v->start("css"); ?>
-    <?=  getFile(ROOT . DS .'theme/assets/css/style.css'); ?>
+    <?= $v->section("css"); ?>
 <?php  $v->end(); ?>

@@ -11,22 +11,22 @@ $v->layout("banner/view/_theme", ["title" => "Cadastrando Publicação"]); ?>
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Descrição</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
-            <div class="input-group mt-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupFileAddon01">Imagem</span>
-                </div>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="file">
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                </div>
-            </div>
+            <textarea class="form-control" id="textdescricao" rows="3" maxlength="250" name="description"></textarea>
         </div>
+        <script>
+            CKEDITOR.replace('textdescricao');
+        </script>
+
+        <input type="file" id="btnupload" name="file" class="btn btn-success float-left">
 
         <button type="submit" class="btn btn-success float-right">Salvar Publicação</button>
     </form>
+
 </main>
 
 <?php $v->start("js"); ?>
 
 <?php  $v->end(); ?>
+<?php $v->start("css"); ?>
+    <?= css('style'); ?>
+<?php $v->end(); ?>

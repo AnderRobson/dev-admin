@@ -1,7 +1,10 @@
 <?php
     if (!defined('URL_BASE')) {
-//        define('URL_BASE', 'http://localhost:4444/sites/site-dev/ander-admin');
-        define('URL_BASE', 'http://localhost/Plataforma/sites/site-dev/ander-admin');
+        define('URL_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/Plataforma/sites/site-dev/ander-admin');
+    }
+
+    if (!defined('URL_ADMIN')) {
+        define('URL_ADMIN', 'http://' . $_SERVER['HTTP_HOST'] . '/Plataforma/dev-admin');
     }
 
     if (!defined('DS')) {

@@ -3,12 +3,22 @@
 namespace Theme\Pages\Publication;
 
 use League\Plates\Engine;
-use Theme\Pages\Publication\PublicationModel;
+use Source\Controllers\Upload;
 
+/**
+ * Class PublicationController
+ * @package Theme\Pages\Publication
+ *
+ * @property PublicationModel $publication
+ *
+ */
 class PublicationController
 {
     /** @var Engine  */
     private $view;
+
+    /** @var data funcionara tipo um cache */
+    private $data;
 
     public function __construct($router)
     {
@@ -24,37 +34,53 @@ class PublicationController
 
     public function index(): void
     {
+        $message = null;
+        if (! empty($_GET['type'])) {
+            $message = message($_GET['type'], $_GET['type']);
+        }
+
         echo $this->view->render("publication/view/index", [
-//            "users" => (new PublicationModel())->find()->order('first_name')->fetch(true)
+            "publications" => (new PublicationModel())->find()->order('id')->fetch(true),
+            'message' => $message
         ]);
     }
 
     public function create(array $data = null)
     {
         if (! empty($data)) {
-            $userData = filter_var_array($data, FILTER_SANITIZE_STRING);
+            $data = filter_var_array($data, FILTER_SANITIZE_STRING);
 
-            if (in_array("", $userData)) {
-                $callback["message"] = message("Informe o nome e o sobrenome !", "error");
-                echo json_encode($callback);
+            if (empty($data["title"]) || empty($data["description"]) || ! empty($_FILES["file"]["error"])) {
+                redirect("/pages/publication?type=error");
                 return;
             }
 
-            $user = new PublicationModel();
-            $user->first_name = $userData["first_name"];
-            $user->last_name = $userData["last_name"];
-            $user->save();
+            $publication = new PublicationModel();
+            $publication->title = $data['title'];
+            $publication->slug = str_replace(' ', '-', utf8_decode(strtolower($data['title'])));
+            $publication->description = $data['description'];
 
-            $callback["message"] = message("Usuário cadastrado com sucesso !", "success");
-            $callback["user"] = $this->view->render("publication/view/elements/user", ["user" => $user]);
+            if (! empty($_FILES["file"])) {
+                $upload = new Upload();
+                $upload->setArquivo($_FILES);
+                $upload->setDestinho("publication");
+                $nameImage = $upload->upload();
 
-            echo json_encode($callback);
-            return;
+                if (! $nameImage) {
+                    redirect("/pages/publication?type=error");
+                }
+
+                $publication->image = $nameImage;
+            }
+
+            if (! $publication->save()) {
+                redirect("/pages/publication?type=error");
+            }
+
+            redirect("/pages/publication?type=success");
         }
 
-        echo $this->view->render("publication/view/create", [
-//            "users" => (new PublicationModel())->find()->order('first_name')->fetch(true)
-        ]);
+        echo $this->view->render("publication/view/create");
     }
 
     public function delete(array $data)
@@ -64,10 +90,10 @@ class PublicationController
         }
 
         $id = filter_var($data['id'], FILTER_VALIDATE_INT);
-        $user = (new PublicationModel())->findById($id);
+        $publication = (new PublicationModel())->findById($id);
 
-        if (! empty($user)) {
-            $user->destroy();
+        if (! empty($publication)) {
+            $publication->destroy();
         }
 
         $callback['remove'] = true;

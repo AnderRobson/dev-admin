@@ -6,6 +6,7 @@
     use Theme\Pages\Home\HomeController;
     use Theme\Pages\Banner\BannerController;
     use Theme\Pages\Publication\PublicationController;
+    use Theme\Pages\Exemplos\ExemploController;
 
     class Web
     {
@@ -24,24 +25,28 @@
         /**
          * @param Engine $controller
          */
-        public function setController($controller): void
+        public function setController($controllerName): void
         {
-            $instanciando = null;
-            switch ($controller) {
+            $controller = null;
+            switch ($controllerName) {
                 case 'home':
-                    $instanciando = new HomeController($this->router);
+                    $controller = new HomeController($this->router);
                     break;
                 case 'banner':
-                    $instanciando = new BannerController($this->router);
+                    $controller = new BannerController($this->router);
                     break;
                 case 'publication':
-                    $instanciando = new PublicationController($this->router);
+                    $controller = new PublicationController($this->router);
+                    break;
+                case 'exemplos':
+                    $controller = new ExemploController($this->router);
+                    break;
             }
 
-            if (! empty($instanciando)) {
-                $this->controller = $instanciando;
+            if (! empty($controller)) {
+                $this->controller = $controller;
             } else {
-                printrx(utf8_encode("<h1 style='text-align: center'>Construtor da controller {$controller}, nï¿½o implementado</h1>"));
+                printrx(utf8_encode("<h1 style='text-align: center'>Construtor da controller {$controllerName}, não implementado</h1>"));
             }
         }
 
@@ -67,21 +72,12 @@
             }
         }
 
-        public function load(array $data)
-        {
-            includeFile(ROOT . DS . 'theme/assets/' . $data['pasta'] . DS . $data['arquivo'] . '.' . $data['type']);
-        }
-
-        public function banner($data)
-        {
-            echo "<h1 style='text-align: center'> Bem vindo a tela banner</h1>";
-        }
-
         public function slugPost($slugPost)
         {
-            echo "<h1 style='text-align: center'> Pesquisa de publica??o pelo slug !</h1>";
+            echo "<h1 style='text-align: center'> Pesquisa de publicação pelo slug !</h1>";
             var_dump($slugPost);
         }
+
         public function error($data)
         {
             echo "<h1 style='text-align: center'>Web Error " . $data['errcode'] . "</h1>";

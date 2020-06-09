@@ -1,30 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap');
 
-* {
-    font-family: "Open Sans", sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --color-red: #ff7675;
-    --color-blue: #0984e3;
-    --color-green: #00b894;
-    --color-yellow: #fdcb6e;
-}
-
-body {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    padding: 30px 0;
-}
-
 /*DEFAULT LOAD*/
 .ajax_load {
     display: none;
@@ -101,6 +76,7 @@ body {
 .message {
     display: block;
     padding: 15px;
+    margin-top: 30px;
     margin-bottom: 20px;
     border: 1px solid #636e72;
     border-left-width: 50px;
@@ -108,99 +84,4 @@ body {
     color: #636e72;
     font-size: 1em;
     font-weight: 100;
-}
-
-.message.info {
-    border-color: var(--color-blue);
-    color: var(--color-blue);
-}
-
-.message.error {
-    border-color: var(--color-red);
-    color: var(--color-red);
-}
-
-.message.success {
-    border-color: var(--color-green);
-    color: var(--color-green);
-}
-
-.form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    align-items: center;
-}
-
-.form > * {
-    width: 100%;
-}
-
-.form input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    font-size: 1em;
-}
-
-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    color: var(--color-green);
-    border: 1px solid var(--color-green);
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
-    background: none;
-    transition-duration: 0.3s;
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-button:hover {
-    background: var(--color-green);
-    color: #ffffff;
-}
-
-.users_user {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    align-items: center;
-    padding: 20px;
-    margin-bottom: 10px;
-    background: #eeeeee;
-    border-radius: 4px;
-}
-
-.users_user h3 {
-    font-size: 1em;
-    color: #888888;
-}
-
-.users_user h3 span {
-    font-weight: 300;
-}
-
-.users_user a {
-    font-size: 0.8em;
-    font-weight: bold;
-    color: var(--color-red);
-    text-align: center;
-    text-decoration: none;
-    transition-duration: 0.3s;
-    display: block;
-    width: 100%;
-    padding: 5px 0;
-    border: 2px solid var(--color-red);
-    border-radius: 4px;
-}
-
-.users_user a:hover {
-    background: var(--color-red);
-    color: #ffffff;
 }

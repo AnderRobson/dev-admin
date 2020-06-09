@@ -30,6 +30,50 @@
         return URL_BASE;
     }
 
+    /**
+     * Retorna o caminho de arquivos do admin
+     *
+     * @param string $path
+     * @return string
+     */
+    function urlFile(string $path = null): string
+    {
+        if ($path) {
+            return URL_ADMIN . "/theme/upload/" . $path;
+        }
+
+        return URL_ADMIN;
+    }
+
+    function css(string $file)
+    {
+        $file = "/Plataforma/dev-admin/theme/assets/css/" . $file . ".css";
+        return "<link rel='stylesheet' href='{$file}'>";
+    }
+
+    function js(string $file)
+    {
+        $file = "/Plataforma/dev-admin/theme/assets/js/" . $file . ".js";
+        return "<script src='{$file}'></script>";
+    }
+
+    function plugins(string $file)
+    {
+        $return = null;
+        $type = explode('.', $file);
+        $type = end($type);
+        $file = "/Plataforma/dev-admin/theme/assets/plugins/" . $file;
+
+        switch ($type) {
+            case 'js':
+                $return = "<script src='{$file}'></script>";
+            case 'css':
+                $return = "<link rel='stylesheet' href='{$file}'>";
+        }
+
+        return $return;
+    }
+
     function redirect($route, $external = false)
     {
         if ($external) {
@@ -41,17 +85,9 @@
         exit;
     }
 
-    function getFile($root): string
-    {
-        if (file_exists($root)) {
-            return file_get_contents($root);
-        }
-        return $root;
-    }
-
     function message(string $message, string $type): string
     {
-        return utf8_encode("<div class='message {$type}'>{$message}</div>");
+        return utf8_encode("<div class='alert {$type}'>{$message}</div>");
     }
 
     function loadController(string $controller)

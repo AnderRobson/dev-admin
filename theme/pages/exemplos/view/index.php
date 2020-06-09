@@ -1,5 +1,5 @@
 <?php
-$v->layout("home/view/_theme", ["title" => "Usuários"]); ?>
+$v->layout("exemplos/view/_theme", ["title" => "Exemplos"]); ?>
 
 <div class="create">
     <div class="form_ajax" style="display: none"></div>
@@ -17,67 +17,70 @@ $v->layout("home/view/_theme", ["title" => "Usuários"]); ?>
 <section class="users">
     <?php if (! empty($users)):
         foreach ($users as $user):
-            $v->insert("home/view/elements/user", ['user' => $user]);
+            $v->insert("exemplos/view/elements/user", ['user' => $user]);
         endforeach;
     endif; ?>
 </section>
 
 <?php $v->start("js"); ?>
-<script>
-    $(function () {
-        function load(action) {
-            var load_div = $(".ajax_load");
-            if (action === "open") {
-                load_div.fadeIn().css("display", "flex");
-            } else {
-                load_div.fadeOut();
-            }
-        }
-
-        $("form").submit(function (e) {
-            e.preventDefault();
-            const form = $(this);
-            var form_ajax = $(".form_ajax");
-            var users = $(".users");
-
-            $.ajax({
-                url: form.attr("action"),
-                data: form.serialize(),
-                type: "POST",
-                dataType: "json",
-                beforeSend: function () {
-                    load("open");
-                },
-                success: function (callback) {
-                    if (callback.message) {
-                        form_ajax.html(callback.message).fadeIn();
-                    } else {
-                        form_ajax.fadeOut(function () {
-                            $(this).html("");
-                        })
-                    }
-
-                    if (callback.user) {
-                        users.prepend(callback.user);
-                    }
-                },
-                complete: function () {
-                    load('close');
+    <script>
+        $(function () {
+            function load(action) {
+                var load_div = $(".ajax_load");
+                if (action === "open") {
+                    load_div.fadeIn().css("display", "flex");
+                } else {
+                    load_div.fadeOut();
                 }
+            }
+
+            $("form").submit(function (e) {
+                e.preventDefault();
+                const form = $(this);
+                var form_ajax = $(".form_ajax");
+                var users = $(".users");
+
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: "POST",
+                    dataType: "json",
+                    beforeSend: function () {
+                        load("open");
+                    },
+                    success: function (callback) {
+                        if (callback.message) {
+                            form_ajax.html(callback.message).fadeIn();
+                        } else {
+                            form_ajax.fadeOut(function () {
+                                $(this).html("");
+                            })
+                        }
+
+                        if (callback.user) {
+                            users.prepend(callback.user);
+                        }
+                    },
+                    complete: function () {
+                        load('close');
+                    }
+                });
             });
-        });
 
-        $("body").on("click", "[data-action]", function (e) {
-            e.preventDefault();
-            var data = $(this).data();
-            var div = $(this).parent();
+            $("body").on("click", "[data-action]", function (e) {
+                e.preventDefault();
+                var data = $(this).data();
+                var div = $(this).parent();
 
-            $.post(data.action, data, function () {
-                div.fadeOut();
-            }, "json").fail(function () {
-                alert("Erro ao processar a requisição !");
+                $.post(data.action, data, function () {
+                    div.fadeOut();
+                }, "json").fail(function () {
+                    alert("Erro ao processar a requisição !");
+                })
             })
-        })
-    });
-</script>
+        });
+    </script>
+<?php  $v->end(); ?>
+<?php $v->start("css"); ?>
+    <?= css("style") ?>
 <?php  $v->end(); ?>

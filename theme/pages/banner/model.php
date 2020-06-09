@@ -8,6 +8,6 @@
     {
         public function __construct()
         {
-            parent::__construct("banners", ["title", "slug", "description", "image"]);
+            parent::__construct("banners", ["title", "slug", "description"]);
         }
     }

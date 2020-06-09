@@ -7,11 +7,12 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?= $title; ?></title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <style>
-            <?=  getFile(ROOT . DS .'theme/assets/css/admin.css'); ?>
-            <?= $v->section("css"); ?>
-        </style>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="//cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
+        <?=
+            css("admin");
+            $v->section("css");
+        ?>
     </head>
     <body>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow navbar-expand-md">
@@ -78,6 +79,12 @@
                                     Integrations
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= url("/pages/exemplos"); ?>">
+                                    <span data-feather="layers"></span>
+                                    Exemplo
+                                </a>
+                            </li>
                         </ul>
 
                         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -117,14 +124,20 @@
             </div>
         </div>
 
+    <body>
         <div class="container-fluid">
             <?= $v->section("content"); ?>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
+        <!-- Responsavel por carregar os icones -->
         <script>
-            <?=  getFile(ROOT . DS .'theme/assets/js/admin.js'); ?>
+            feather.replace();
         </script>
+
+        <?= $v->section("js"); ?>
+    </body>
+    
     </body>
 </html>

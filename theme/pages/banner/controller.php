@@ -3,13 +3,14 @@
 namespace Theme\Pages\Banner;
 
 use League\Plates\Engine;
-use Theme\Pages\Banner\BannerModel;
+use Source\Controllers\Upload;
 
 /**
  * Class BannerController
  * @package Theme\Pages\Banner
  *
  * @property BannerModel $banner
+ * @property Upload $upload
  */
 class BannerController
 {
@@ -30,8 +31,14 @@ class BannerController
 
     public function index(): void
     {
+        $message = null;
+        if (! empty($_GET['type'])) {
+            $message = message($_GET['type'], $_GET['type']);
+        }
+
         echo $this->view->render("banner/view/index", [
-            "banners" => (new BannerModel())->find()->order('id')->fetch(true)
+            "banners" => (new BannerModel())->find()->order('id')->fetch(true),
+            'message' => $message
         ]);
     }
 
@@ -40,34 +47,36 @@ class BannerController
         if (! empty($data)) {
             $data = filter_var_array($data, FILTER_SANITIZE_STRING);
 
-            if (empty($data["title"]) || empty($data["description"]) || $_FILES["file"]["error"] != 0) {
-                $callback["message"] = message("Esta faltando informação para cadastrar banner !", "error");
-                echo json_encode($callback);
-                return;
+            if (empty($data["title"]) || empty($data["description"]) || ! empty($_FILES["file"]["error"])) {
+                redirect("/pages/banner?type=error");
             }
-
-            $name = date("YmdHis");
-            $nameImage = $name . $_FILES["file"]["name"];
-
-            move_uploaded_file($_FILES["file"]["tmp_name"], 'upload/banner/'. $nameImage);
 
             $banner = new BannerModel();
             $banner->title = $data["title"];
+            $banner->slug = str_replace(' ', '-', utf8_decode(strtolower($data['title'])));
             $banner->description = $data["description"];
 
-            $banner->image = $nameImage;
-            $banner->save();
+            if (! empty($_FILES)) {
+                $upload = new Upload();
+                $upload->setArquivo($_FILES);
+                $upload->setDestinho("banner");
+                $nameImage = $upload->upload();
 
-            $callback["message"] = message("Banner cadastrado com sucesso !", "success");
-//            $callback["user"] = $this->view->render("banner/view/elements/user", ["user" => $user]);
+                if (! $nameImage) {
+                    redirect("/pages/banner?type=error");
+                }
 
-            echo json_encode($callback);
-            return;
+                $banner->image = $nameImage;
+            }
+
+            if (! $banner->save()) {
+                redirect("/pages/banner?type=error");
+            }
+
+            redirect("/pages/banner?type=success");
         }
 
-        echo $this->view->render("banner/view/create", [
-//            "users" => (new BannerModel())->find()->order('first_name')->fetch(true)
-        ]);
+        echo $this->view->render("banner/view/create");
     }
 
     public function delete(array $data)
@@ -80,7 +89,9 @@ class BannerController
         $user = (new BannerModel())->findById($id);
 
         if (! empty($user)) {
-            $user->destroy();
+            if (! $user->destroy()) {
+                return false;
+            }
         }
 
         $callback['remove'] = true;

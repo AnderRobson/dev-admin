@@ -7,6 +7,7 @@
       <path value="$PROJECT_DIR$/vendor/league/plates" />
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/twbs/bootstrap" />
+      <path value="$PROJECT_DIR$/vendor/coffeecode/uploader" />
     </include_path>
   </component>
 </project>
