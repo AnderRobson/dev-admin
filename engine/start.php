@@ -1,6 +1,6 @@
 <?php
     if (!defined('URL_BASE')) {
-        define('URL_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/Plataforma/sites/site-dev/ander-admin');
+        define('URL_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/Plataforma/sites/site-dev/admin');
     }
 
     if (!defined('URL_ADMIN')) {
