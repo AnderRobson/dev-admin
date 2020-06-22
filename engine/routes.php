@@ -16,9 +16,19 @@
     $router->get("pages/{page}", "Web:pages");
     $router->get("pages/{page}/{function}", "Web:pages");
     $router->post("pages/{page}/{function}", "Web:pages");
-//    $router->post("create", "Web:create", "form.create");
     $router->post("delete", "Web:delete", 'form.delete');
     $router->get("banner", "Web:banner");
+
+    $router->get("login", "Web:login", "Web.login");
+    $router->post("login", "Web:login", "Web.login");
+    $router->get("registrar", "Web:register", "Web.register");
+    $router->post("registrar", "Web:register", "Web.register");
+    $router->get("recuperar", "Web:forget", "Web.forget");
+    $router->post("recuperar", "Web:forget", "Web.forget");
+    $router->post("reset", "Web:reset", "Web.reset");
+    $router->post("reset", "Web:reset", "Web.reset");
+    $router->get("sair", "Web:logoff", "Web.logoff");
+
 
 
 

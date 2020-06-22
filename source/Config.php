@@ -36,8 +36,12 @@
      * @param string $path
      * @return string
      */
-    function urlFile(string $path): string
+    function urlFile(string $path, bool $theme = null): string
     {
+        if ($theme) {
+            return URL_BLOG . $path;
+        }
+
         return URL_ADMIN . "/theme/upload/" . $path;
     }
 
@@ -93,5 +97,5 @@
         if (file_exists($route))
             return $route;
         else
-            printrx(utf8_encode("<h1 style='text-align: center'>Página {$controller} não encontrada</h1>"));
+            printrx(utf8_encode("<h1 style='text-align: center'>Pï¿½gina {$controller} nï¿½o encontrada</h1>"));
     }

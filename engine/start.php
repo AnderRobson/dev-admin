@@ -7,6 +7,10 @@
         define('URL_ADMIN', 'http://' . $_SERVER['HTTP_HOST'] . '/Plataforma/dev-admin');
     }
 
+    if (!defined('URL_BLOG')) {
+        define('URL_BLOG', 'http://' . $_SERVER['HTTP_HOST'] . '/Plataforma/sites/site-dev/');
+    }
+
     if (!defined('DS')) {
         define('DS', DIRECTORY_SEPARATOR);
     }

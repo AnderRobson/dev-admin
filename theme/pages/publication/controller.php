@@ -99,4 +99,9 @@ class PublicationController
         $callback['remove'] = true;
         echo json_encode($callback);
     }
+
+    public function generatePublication ()
+    {
+        require_once ROOT . DS . 'theme/pages/exemplos/generate/generatePublication.php';
+    }
 }
