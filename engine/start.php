@@ -1,6 +1,6 @@
 <?php
-    if (!defined('URL_BASE')) {
-        define('URL_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/Plataforma/sites/site-dev/admin');
+    if (!defined("URL_BASE")) {
+        define("URL_BASE", "http://" . $_SERVER['HTTP_HOST'] . "/Plataforma/sites/" . SITE["PATH"] . "/admin");
     }
 
     if (!defined('URL_ADMIN')) {
@@ -8,7 +8,7 @@
     }
 
     if (!defined('URL_BLOG')) {
-        define('URL_BLOG', 'http://' . $_SERVER['HTTP_HOST'] . '/Plataforma/sites/site-dev/');
+    define('URL_BLOG', 'http://' . $_SERVER['HTTP_HOST'] . "/Plataforma/sites/" . SITE["PATH"]);
     }
 
     if (!defined('DS')) {
@@ -27,8 +27,8 @@
         define('ENGINE', ROOT . DS . 'engine');
     }
 
-    if (file_exists(__DIR__ . '/../vendor' . DS . 'autoload.php')) {
-        include_once  __DIR__ . '/../vendor' . DS . 'autoload.php';
+    if (file_exists(ROOT . DS . "vendor" . DS . "autoload.php")) {
+        include_once  ROOT . DS . "vendor" . DS . "autoload.php";
     }
 
     /**
@@ -54,6 +54,7 @@
         die();
     }
 
-    // Session Start
+    ob_start();
     session_start();
-    require(ENGINE . DS . 'routes.php');
+        require ENGINE . DS . 'routes.php';
+    ob_end_flush();

@@ -2,7 +2,7 @@
 $v->layout("login/view/_theme", ["title" => "Cadastro"]); ?>
 
     <div class="card-body">
-        <form method="POST" action="<?= url("/registrar"); ?>">
+        <form method="POST" action="<?= url("registrar"); ?>">
             <div class="form-group row">
 <!--                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>-->
 

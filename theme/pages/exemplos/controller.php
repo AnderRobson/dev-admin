@@ -2,32 +2,44 @@
 
 namespace Theme\Pages\Exemplos;
 
-use League\Plates\Engine;
+use Source\Controllers\Controller;
 
-class ExemploController
+/**
+ * Class ExemploController
+ * @package Theme\Pages\Exemplos
+ */
+class ExemploController extends Controller
 {
-    /** @var Engine  */
-    private $view;
-
+    /**
+     * ExemploController constructor.
+     * @param $router
+     */
     public function __construct($router)
     {
-        $this->view = Engine::create(
-            ROOT . DS . 'theme/pages/',
-            'php'
-        );
-
-        $this->view->addData(["router" => $router]);
-
-        return $this;
+        parent::__construct($router);
     }
 
+    /**
+     * Página index exemplo
+     */
     public function index(): void
     {
+        $head = $this->seo->optimize(
+            "Bem vindo ao " . SITE["SHORT_NAME"],
+            SITE["DESCRIPTION"],
+            url("pages/exemplos"),
+            "",
+        )->render();
+
         echo $this->view->render("exemplos/view/index", [
-            "users" => (new ExemplosModel())->find()->order('name')->fetch(true)
+            "users" => (new ExemplosModel())->find()->order('first_name')->fetch(true),
+            'head' => $head
         ]);
     }
 
+    /**
+     * @param array $data
+     */
     public function create(array $data)
     {
         $data = filter_var_array($data, FILTER_SANITIZE_STRING);
@@ -49,6 +61,10 @@ class ExemploController
         echo json_encode($callback);
     }
 
+    /**
+     * @param array $data
+     * @return bool
+     */
     public function delete(array $data)
     {
         if (empty($data['id'])) {

@@ -10,7 +10,11 @@
     use Theme\Pages\Exemplos\ExemploController;
     use Theme\Pages\User\UserModel;
 
-    class Web
+    /**
+     * Class Web
+     * @package Source\Controllers
+     */
+    class Web extends Controller
     {
         /** @var UserModel */
         protected $user;
@@ -18,18 +22,19 @@
         /** @var Engine  */
         private $controller;
 
-        /** @var Router */
-        private $router;
-
+        /**
+         * Web constructor.
+         * @param $router
+         */
         public function __construct($router)
         {
-            $this->router = $router;
+            parent::__construct($router);
         }
 
         /**
          * @param Engine $controller
          */
-        public function setController($controllerName): void
+        public function setController(string $controllerName): void
         {
             $controller = null;
             switch ($controllerName) {
@@ -54,18 +59,24 @@
             }
         }
 
+        /**
+         *  redirect caso URL seja apenas /
+         */
         public function home(): void
         {
-            redirect("/pages/home");
+            redirect("pages/home");
         }
 
+        /**
+         * @param array $data
+         */
         public function pages(array $data): void
         {
             if (empty($_SESSION['user']) || ! $this->user = (new UserModel())->findById($_SESSION['user'])) {
                 unset($_SESSION["user"]);
 
 //                flash("error", "Acesso negado. Favor logue-se");
-                redirect("/login");
+                redirect("login");
             }
 
             require loadController($data['page']);
@@ -83,10 +94,13 @@
             }
         }
 
+        /**
+         * @param array|null $data
+         */
         public function login(array $data = null): void
         {
             if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("/pages/home");
+                redirect("pages/home");
             }
 
             require loadController('login');
@@ -99,18 +113,24 @@
             }
         }
 
+        /**
+         *
+         */
         public function logoff(): void
         {
             unset($_SESSION["user"]);
 
 //            flash("info", "Você saiu com sucesso, volte logo {$this->user->name}");
-            redirect("/login");
+            redirect("login");
         }
 
+        /**
+         * @param array|null $data
+         */
         public function register(array $data = null): void
         {
             if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("/pages/home");
+                redirect("pages/home");
             }
 
             require loadController('login');
@@ -123,12 +143,18 @@
             }
         }
 
+        /**
+         * @param $slugPost
+         */
         public function slugPost($slugPost)
         {
             echo "<h1 style='text-align: center'> Pesquisa de publicação pelo slug !</h1>";
             var_dump($slugPost);
         }
 
+        /**
+         * @param $data
+         */
         public function error($data)
         {
             echo "<h1 style='text-align: center'>Web Error " . $data['errcode'] . "</h1>";

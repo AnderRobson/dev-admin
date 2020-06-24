@@ -1,5 +1,5 @@
 <?php
-$v->layout("painel/view/_theme", ["title" => $title]); ?>
+$v->layout("painel/view/_theme"); ?>
 
         <div class="ajax_load">
             <div class="ajax_load_box">

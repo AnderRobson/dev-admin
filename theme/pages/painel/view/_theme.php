@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="<?= SITE["LOCALE"] ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title><?= $title; ?></title>
+        <?= $head; ?>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="//cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
@@ -16,7 +16,7 @@
     </head>
     <body>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow navbar-expand-md">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><?= $title; ?></a>
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"><?= SITE["SHORT_NAME"] ?></a>
             <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
             <ul class="navbar-nav px-3 ml-auto">
                 <li class="nav-item dropdown">
@@ -44,19 +44,19 @@
                     <div class="sidebar-sticky">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="<?= url("/pages/home"); ?>">
+                                <a class="nav-link" href="<?= url("pages/home"); ?>">
                                     <span data-feather="home"></span>
                                     Dashboard <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?= url("/pages/banner"); ?>">
+                                <a class="nav-link" href="<?= url("pages/banner"); ?>">
                                     <span data-feather="file"></span>
                                     Banners
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?= url("/pages/publication"); ?>">
+                                <a class="nav-link" href="<?= url("pages/publication"); ?>">
                                     <span data-feather="book-open"></span>
                                     Publication
                                 </a>
@@ -80,7 +80,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?= url("/pages/exemplos"); ?>">
+                                <a class="nav-link" href="<?= url("pages/exemplos"); ?>">
                                     <span data-feather="layers"></span>
                                     Exemplo
                                 </a>

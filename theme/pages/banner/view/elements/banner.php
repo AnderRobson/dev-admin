@@ -9,7 +9,7 @@
                 <span data-feather="image"></span>
             </a>
         <?php endif; ?>
-        <a href="#" data-action="<?= url("/pages/banner/delete"); ?>" data-id="<?= $banner->id; ?>" class="remove btn btn-outline-secondary active" role="button" aria-pressed="true">
+        <a href="#" data-action="<?= url("pages/banner/delete"); ?>" data-id="<?= $banner->id; ?>" class="remove btn btn-outline-secondary active" role="button" aria-pressed="true">
             <span data-feather="delete"></span>
         </a>
     </td>

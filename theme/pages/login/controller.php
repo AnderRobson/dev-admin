@@ -2,26 +2,27 @@
 
 namespace Theme\Pages\Login;
 
-use League\Plates\Engine;
+use Source\Controllers\Controller;
 use Theme\Pages\User\UserModel;
 
-class LoginController
+/**
+ * Class LoginController
+ * @package Theme\Pages\Login
+ */
+class LoginController extends Controller
 {
-    /** @var Engine  */
-    private $view;
-
+    /**
+     * LoginController constructor.
+     * @param $router
+     */
     public function __construct($router)
     {
-        $this->view = Engine::create(
-            ROOT . DS . 'theme/pages/',
-            'php'
-        );
-
-        $this->view->addData(["router" => $router]);
-
-        return $this;
+        parent::__construct($router);
     }
 
+    /**
+     * @param array|null $data
+     */
     public function index(array $data = null): void
     {
         if (! empty($data)) {
@@ -49,14 +50,26 @@ class LoginController
             }
 
             $_SESSION['user'] = $user->id;
-            redirect('/pages/home');
+            redirect('pages/home');
 
             return;
         }
 
-        echo $this->view->render("login/view/index");
+        $head = $this->seo->optimize(
+            "Bem vindo ao " . SITE["SHORT_NAME"],
+            SITE["DESCRIPTION"],
+            url("login"),
+            "",
+        )->render();
+
+        echo $this->view->render("login/view/index", [
+            "head" => $head
+        ]);
     }
 
+    /**
+     * @param array|null $data
+     */
     public function register(array $data = null): void
     {
         if (! empty($data)) {
@@ -70,8 +83,6 @@ class LoginController
             $user->password = $data['password'];
 
             if (! $user->save()) {
-                printrx($user->fail()->getMessage());
-
                 echo $this->ajaxResponse("message", [
                    "type" => "error",
                    "message" => $user->fail()->getMessage()
@@ -81,9 +92,18 @@ class LoginController
             }
 
             $_SESSION['user'] = $user->id;
-            redirect('/pages/home');
+            redirect('pages/home');
         }
 
-        echo $this->view->render("login/view/register");
+        $head = $this->seo->optimize(
+            "Bem vindo ao " . SITE["SHORT_NAME"],
+            SITE["DESCRIPTION"],
+            url("registrar"),
+            "",
+        )->render();
+
+        echo $this->view->render("login/view/register", [
+            "head" => $head
+        ]);
     }
 }

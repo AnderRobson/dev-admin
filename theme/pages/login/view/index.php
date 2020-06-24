@@ -2,7 +2,7 @@
 $v->layout("login/view/_theme", ["title" => "Login"]); ?>
 
     <div class="card-body">
-        <form method="POST" action="<?= url("/login"); ?>">
+        <form method="POST" action="<?= url("login"); ?>">
             <div class="form-group row">
 <!--                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>-->
 
