@@ -70,6 +70,3 @@ $v->layout("banner/view/_theme"); ?>
         });
     </script>
 <?php  $v->end(); ?>
-<?php $v->start("css"); ?>
-    <?= css('style'); ?>
-<?php $v->end(); ?>

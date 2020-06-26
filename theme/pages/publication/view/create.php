@@ -23,10 +23,3 @@ $v->layout("banner/view/_theme"); ?>
     </form>
 
 </main>
-
-<?php $v->start("js"); ?>
-
-<?php  $v->end(); ?>
-<?php $v->start("css"); ?>
-    <?= css('style'); ?>
-<?php $v->end(); ?>

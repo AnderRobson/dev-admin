@@ -21,11 +21,11 @@
 
     $router->get("login", "Web:login", "Web.login");
     $router->post("login", "Web:login", "Web.login");
-    $router->get("registrar", "Web:register", "Web.register");
-    $router->post("registrar", "Web:register", "Web.register");
-    $router->get("recuperar", "Web:forget", "Web.forget");
-    $router->post("recuperar", "Web:forget", "Web.forget");
-    $router->post("reset", "Web:reset", "Web.reset");
+    $router->get("register", "Web:register", "Web.register");
+    $router->post("register", "Web:register", "Web.register");
+    $router->get("forget", "Web:forget", "Web.forget");
+    $router->post("forget", "Web:forget", "Web.forget");
+    $router->get("reset/{email}/{forget}", "Web:reset", "Web.reset");
     $router->post("reset", "Web:reset", "Web.reset");
     $router->get("sair", "Web:logoff", "Web.logoff");
 

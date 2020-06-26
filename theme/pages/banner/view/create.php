@@ -26,5 +26,4 @@ $v->layout("banner/view/_theme"); ?>
 
 <?php  $v->end(); ?>
 <?php $v->start("css"); ?>
-    <?= css('style'); ?>
 <?php $v->end(); ?>

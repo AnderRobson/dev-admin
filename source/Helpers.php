@@ -51,42 +51,74 @@
         return URL_ADMIN . "/theme/upload/" . $path;
     }
 
-    /**
-     * @param string $file
-     * @return string
-     */
-    function css(string $file)
+
+    function css(string $file, $time = true)
     {
-        $file = "/Plataforma/dev-admin/theme/assets/css/" . $file . ".css";
-        return "<link rel='stylesheet' href='{$file}'>";
+        $file = "theme/assets/css/" . $file . ".css";
+        $fileOnDir = ROOT . DS . $file;
+
+        if ($time && file_exists($fileOnDir)) {
+            $file .= "?time=" . fileatime($fileOnDir);
+        }
+
+        return "<link rel='stylesheet' href='/Plataforma/dev-admin/{$file}'>";
     }
 
-    /**
-     * @param string $file
-     * @return string
-     */
-    function js(string $file)
+
+    function js(string $file, $time = true)
     {
-        $file = "/Plataforma/dev-admin/theme/assets/js/" . $file . ".js";
-        return "<script src='{$file}'></script>";
+        $file = "theme/assets/js/" . $file . ".js";
+        $fileOnDir = ROOT . DS . $file;
+
+        if ($time && file_exists($fileOnDir)) {
+            $file .= "?time=" . fileatime($fileOnDir);
+        }
+
+        return "<script src='/Plataforma/dev-admin/{$file}'></script>";
     }
 
-    /**
-     * @param string $file
-     * @return string|null
-     */
-    function plugins(string $file)
+
+    function plugins(string $file, $time = true)
     {
         $return = null;
         $type = explode('.', $file);
         $type = end($type);
-        $file = "/Plataforma/dev-admin/theme/assets/plugins/" . $file;
+        $file = "theme/assets/plugins/" . $file;
+        $fileOnDir = ROOT . DS . $file;
+
+        if ($time && file_exists($fileOnDir)) {
+            $file .= "?time=" . fileatime($fileOnDir);
+        }
 
         switch ($type) {
             case 'js':
-                $return = "<script src='{$file}'></script>";
+                $return = "<script src='/Plataforma/dev-admin/{$file}'></script>";
             case 'css':
-                $return = "<link rel='stylesheet' href='{$file}'>";
+                $return = "<link rel='stylesheet' href='/Plataforma/dev-admin/{$file}'>";
+        }
+
+        return $return;
+    }
+
+    function bootstrap(string $file, $time = true)
+    {
+        $return = null;
+        $type = explode('.', $file);
+        $type = end($type);
+
+        $file = "vendor/twbs/bootstrap/" . $file;
+        $fileOnDir = ROOT . DS . $file;
+
+        if ($time && file_exists($fileOnDir)) {
+            $file .= "?time=" . fileatime($fileOnDir);
+        }
+
+        switch ($type) {
+            case 'js':
+                $return = "<script src='/Plataforma/dev-admin/{$file}'></script>";
+                break;
+            case 'css':
+                $return = "<link rel='stylesheet' href='/Plataforma/dev-admin/{$file}'>";
         }
 
         return $return;
@@ -114,7 +146,7 @@
      */
     function message(string $message, string $type): string
     {
-        return utf8_encode("<div class=\"message {$type}\">{$message}</div>");
+        return utf8_encode("<div class=\"alert alert-{$type}\">{$message}</div>");
     }
 
     function flash(string $type = null, string $message = null): ?string
@@ -132,7 +164,7 @@
             $flash = $_SESSION['FLASH'];
             unset($_SESSION['FLASH']);
 
-            return "<div class=\"message {$flash['type']}\">{$flash['message']}</div>";
+            return message($flash['message'], $flash['type']);
         }
 
         return null;

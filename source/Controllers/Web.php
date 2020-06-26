@@ -8,6 +8,7 @@
     use Theme\Pages\Login\LoginController;
     use Theme\Pages\Publication\PublicationController;
     use Theme\Pages\Exemplos\ExemploController;
+    use Theme\Pages\User\UserController;
     use Theme\Pages\User\UserModel;
 
     /**
@@ -40,6 +41,9 @@
             switch ($controllerName) {
                 case 'home':
                     $controller = new HomeController($this->router);
+                    break;
+                case 'user':
+                    $controller = new UserController($this->router);
                     break;
                 case 'banner':
                     $controller = new BannerController($this->router);
@@ -75,7 +79,7 @@
             if (empty($_SESSION['user']) || ! $this->user = (new UserModel())->findById($_SESSION['user'])) {
                 unset($_SESSION["user"]);
 
-//                flash("error", "Acesso negado. Favor logue-se");
+                flash("error", "Acesso negado. Favor logue-se");
                 redirect("login");
             }
 
@@ -95,7 +99,7 @@
         }
 
         /**
-         * @param array|null $data
+         *
          */
         public function login(array $data = null): void
         {
@@ -106,7 +110,7 @@
             require loadController('login');
             $this->controller = new LoginController($this->router);
 
-            if (! empty($data)) {
+            if (!empty($data)) {
                 $this->controller->index($data);
             } else {
                 $this->controller->index();
@@ -120,12 +124,45 @@
         {
             unset($_SESSION["user"]);
 
-//            flash("info", "Você saiu com sucesso, volte logo {$this->user->name}");
+            flash("success", "Você saiu com sucesso, volte logo {$this->user->first_name}!");
+            unset($this->user);
+
             redirect("login");
         }
 
         /**
-         * @param array|null $data
+         *
+         */
+        public function forget(array $data = null): void
+        {
+            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+                redirect("pages/home");
+            }
+
+            require loadController('login');
+            $this->controller = new LoginController($this->router);
+
+            if (!empty($data)) {
+                $this->controller->forget($data);
+            } else {
+                $this->controller->forget();
+            }
+        }
+
+        public function reset(array $data): void
+        {
+            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+                redirect("pages/home");
+            }
+
+            require loadController('login');
+            $this->controller = new LoginController($this->router);
+
+            $this->controller->reset($data);
+        }
+
+        /**
+         *
          */
         public function register(array $data = null): void
         {
@@ -155,8 +192,20 @@
         /**
          * @param $data
          */
-        public function error($data)
+        public function error($errcode): void
         {
-            echo "<h1 style='text-align: center'>Web Error " . $data['errcode'] . "</h1>";
+            $errcode = filter_var($errcode["errcode"], FILTER_VALIDATE_INT);
+
+            $head = $this->seo->optimize(
+                "Bem vindo ao " . SITE["SHORT_NAME"],
+                SITE["DESCRIPTION"],
+                url("home"),
+                "",
+            )->render();
+
+            echo $this->view->render("error/error", [
+                'errcode' => $errcode,
+                'head' => $head
+            ]);
         }
     }

@@ -7,6 +7,7 @@ namespace Source\Controllers;
 use CoffeeCode\Optimizer\Optimizer;
 use CoffeeCode\Router\Router;
 use League\Plates\Engine;
+use Theme\Pages\Home\HomeModel;
 
 /**
  * Class Controller
@@ -23,6 +24,9 @@ abstract class Controller
     /** @var Optimizer */
     protected $seo;
 
+    /** @var HomeModel */
+    protected $user;
+
     /**
      * Controller constructor.
      * @param $router
@@ -38,6 +42,11 @@ abstract class Controller
             ->publisher(SOCIAL["FACEBOOK_PAGE"], SOCIAL["FACEBOOK_AUTHOR"])
             ->twitterCard(SOCIAL["TWITTER_CREATOR"], SOCIAL["TWITTER_SITE"], SITE["DOMAIN"])
             ->facebook(SOCIAL["FACEBOOK_APP_ID"]);
+
+        if (! empty($_SESSION["user"])) {
+            $this->user = (new HomeModel())->findById($_SESSION["user"]);
+            $this->view->addData(['user' => $this->user]);
+        }
     }
 
     /**

@@ -31,8 +31,8 @@ class LoginController extends Controller
 
             if (! $email || ! $password) {
                 echo $this->ajaxResponse("message", [
-                   "type" => "alert",
-                   "message" => "Informe seu e-mail e senha para logar"
+                   "type" => "danger",
+                   "message" => "Informe seu e-mail e senha para logar!"
                 ]);
 
                 return;
@@ -42,16 +42,17 @@ class LoginController extends Controller
 
             if (! $user || ! password_verify($password, $user->password)) {
                 echo $this->ajaxResponse("message", [
-                    "type" => "error",
-                    "message" => "E-mail ou senha informados não conferem"
+                    "type" => "danger",
+                    "message" => "E-mail ou senha informados não conferem!"
                 ]);
 
                 return;
             }
 
             $_SESSION['user'] = $user->id;
-            redirect('pages/home');
-
+            echo $this->ajaxResponse("redirect", [
+                "url" => url('pages/home')
+            ]);
             return;
         }
 
@@ -73,18 +74,27 @@ class LoginController extends Controller
     public function register(array $data = null): void
     {
         if (! empty($data)) {
-            if ($data['password'] != $data['password_confirmation']) {
-                printrx($data);
+//            $data = filter_var($data, FILTER_SANITIZE_STRIPPED);
+
+            if (in_array("", $data)) {
+                echo $this->ajaxResponse("message", [
+                    "type" => "danger",
+                    "message" => "Preencha todos os campos !"
+                ]);
+
+                return;
             }
 
             $user = new UserModel();
-            $user->name = $data['name'];
+            $user->first_name = $data['name'];
+            $user->last_name = $data['sobrenome'];
             $user->email = $data['email'];
-            $user->password = $data['password'];
+            $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
+
 
             if (! $user->save()) {
                 echo $this->ajaxResponse("message", [
-                   "type" => "error",
+                   "type" => "danger",
                    "message" => $user->fail()->getMessage()
                 ]);
 
@@ -92,18 +102,68 @@ class LoginController extends Controller
             }
 
             $_SESSION['user'] = $user->id;
-            redirect('pages/home');
+            echo $this->ajaxResponse("redirect", [
+                "url" => url('pages/home')
+            ]);
+            return;
         }
+
+        $formUser = new \stdClass();
+        $formUser->first_name = null;
+        $formUser->last_name = null;
+        $formUser->email = null;
 
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("registrar"),
+            url("register"),
             "",
         )->render();
 
         echo $this->view->render("login/view/register", [
-            "head" => $head
+            "head" => $head,
+            'formUser' => $formUser
+        ]);
+    }
+
+    /**
+     * @param array|null $data
+     */
+    public function forget(): void
+    {
+        $formUser = new \stdClass();
+        $formUser->first_name = null;
+        $formUser->last_name = null;
+        $formUser->email = null;
+
+        $head = $this->seo->optimize(
+            "Bem vindo ao " . SITE["SHORT_NAME"],
+            SITE["DESCRIPTION"],
+            url("login"),
+            "",
+        )->render();
+
+        echo $this->view->render("login/view/forget", [
+            "head" => $head,
+            'formUser' => $formUser
+        ]);
+    }
+
+    /**
+     * @param array|null $data
+     */
+    public function reset(array $data): void
+    {
+        $head = $this->seo->optimize(
+            "Bem vindo ao " . SITE["SHORT_NAME"],
+            SITE["DESCRIPTION"],
+            url("login"),
+            "",
+        )->render();
+
+        echo $this->view->render("login/view/reset", [
+            "head" => $head,
+            'data' => $data
         ]);
     }
 }
