@@ -3,10 +3,10 @@ $v->layout("login/view/_theme", ["title" => "Recuperar senha"]); ?>
 
     <div class="card-body">
         <form method="POST" action="<?= url("forget"); ?>">
+            <?= flash(); ?>
             <div class="form-group row">
                 <div class="col-md-12">
                     <input id="email" type="email" class="form-control" placeholder="E-mail" name="email" autocomplete="email" autofocus>
-
                 </div>
             </div>
 

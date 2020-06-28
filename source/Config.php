@@ -1,5 +1,8 @@
 <?php
 
+    /**
+     * Database config
+     */
     define("DATA_LAYER_CONFIG", [
         "driver" => "mysql",
         "host" => DATABASE["HOST"],
@@ -14,3 +17,13 @@
             PDO::ATTR_CASE => PDO::CASE_NATURAL
         ]
     ]);
+
+    /**
+     *  Social login: Facebook
+     */
+    define("FCEBOOK_LOGIN", []);
+
+    /**
+     *  Social login: Google
+     */
+    define("GOOGLE_LOGIN", []);

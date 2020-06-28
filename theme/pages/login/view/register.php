@@ -3,6 +3,7 @@ $v->layout("login/view/_theme", ["title" => "Cadastro"]); ?>
 
     <div class="card-body">
         <form method="POST" action="<?= url("register"); ?>">
+            <?= flash(); ?>
             <div class="form-group row">
                 <div class="col-md-12">
                     <input id="name" type="text" class="form-control" value="<?= $formUser->first_name; ?>"

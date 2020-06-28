@@ -161,6 +161,18 @@
             $this->controller->reset($data);
         }
 
+        public function resetPassword(array $data): void
+        {
+            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+                redirect("pages/home");
+            }
+
+            require loadController('login');
+            $this->controller = new LoginController($this->router);
+
+            $this->controller->resetPassword($data);
+        }
+
         /**
          *
          */

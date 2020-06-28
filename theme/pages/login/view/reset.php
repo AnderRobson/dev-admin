@@ -3,9 +3,10 @@ $v->layout("login/view/_theme", ["title" => "Criando nova senha"]); ?>
 
     <div class="card-body">
         <form method="POST" action="<?= url("reset"); ?>">
+            <?= flash(); ?>
             <div class="form-group row">
                 <div class="col-md-12">
-                    <input id="password" type="password" class="form-control" placeholder="Cadastrar uma nova senha" name="password" required autocomplete="new-password">
+                    <input id="password" type="password" class="form-control" placeholder="Cadastrar uma nova senha" name="password" required autocomplete="new-password" autofocus>
                 </div>
             </div>
 

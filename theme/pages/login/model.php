@@ -17,9 +17,9 @@
          */
         public function save(): bool
         {
-            if (! $this->validateEmail() ||
-                ! $this->validatePassword() ||
-                ! parent::save()
+            if (!$this->validateEmail() ||
+                !$this->validatePassword() ||
+                !parent::save()
             ) {
                 return false;
             }
