@@ -29,7 +29,13 @@
     $router->post("reset", "Web:resetPassword", "Web.resetPassword");
     $router->get("sair", "Web:logoff", "Web.logoff");
 
+    /**
+     * Redes sociais
+     */
+    $router->group(null);
 
+    $router->get("facebook", "Web:facebook", "Web.facebook");
+    $router->get("google", "Web:google", "Web.google");
 
 
     /**

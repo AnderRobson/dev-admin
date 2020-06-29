@@ -29,5 +29,17 @@ $v->layout("login/view/_theme", ["title" => "Login"]); ?>
                     </button>
                 </div>
             </div>
+            <div class="div-redesocial">
+                <a href="<?= url("facebook"); ?>">
+                    <button type="button" class="btn btn-lg btn-primary btn-facebook">
+                            Facebook
+                    </button>
+                </a>
+                <a href="<?= url("google"); ?>">
+                    <button type="button" class="btn btn-lg btn-danger btn-google">
+                            Google
+                    </button>
+                </a>
+            </div>
         </form>
     </div>

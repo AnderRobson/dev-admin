@@ -79,7 +79,7 @@
             if (empty($_SESSION['user']) || ! $this->user = (new UserModel())->findById($_SESSION['user'])) {
                 unset($_SESSION["user"]);
 
-                flash("error", "Acesso negado. Favor logue-se");
+                flash("danger", "Acesso negado. Favor logue-se");
                 redirect("login");
             }
 
@@ -192,6 +192,41 @@
             }
         }
 
+        public function facebook(array $data = null): void
+        {
+            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+                redirect("pages/home");
+            }
+
+            require loadController('login');
+            $this->controller = new LoginController($this->router);
+
+            if (! empty($data)) {
+                $this->controller->facebook($data);
+            } else {
+                $this->controller->facebook();
+            }
+        }
+
+        public function google(array $data = null): void
+        {
+            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+                redirect("pages/home");
+            }
+
+            require loadController('login');
+            $this->controller = new LoginController($this->router);
+
+            if (! empty($data)) {
+                $this->controller->google($data);
+            } else {
+                $this->controller->google();
+            }
+        }
+
+        /**
+         * Auxiliares
+         */
         /**
          * @param $slugPost
          */

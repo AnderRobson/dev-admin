@@ -2,6 +2,10 @@
 
 namespace Theme\Pages\Login;
 
+use League\OAuth2\Client\Provider\Facebook;
+use League\OAuth2\Client\Provider\FacebookUser;
+use League\OAuth2\Client\Provider\Google;
+use League\OAuth2\Client\Provider\GoogleUser;
 use Source\Controllers\Controller;
 use Source\Library\email\Email;
 use Source\Library\email\EmailModel;
@@ -9,6 +13,14 @@ use Theme\Pages\User\UserModel;
 
 /**
  * Class LoginController
+ *
+ * @property $email Email
+ * @property $emailBody EmailModel
+ * @property $google Google
+ * @property $googleUser GoogleUser
+ * @property $facebook Facebook
+ * @property $facebookUser FacebookUser
+ *
  * @package Theme\Pages\Login
  */
 class LoginController extends Controller
@@ -50,6 +62,9 @@ class LoginController extends Controller
 
                 return;
             }
+
+            /** Validação de rede-social */
+            $this->socialValidate($user);
 
             $_SESSION['user'] = $user->id;
             echo $this->ajaxResponse("redirect", [
@@ -93,6 +108,8 @@ class LoginController extends Controller
             $user->email = $data['email'];
             $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
 
+            /** Validação de rede-social */
+            $this->socialValidate($user);
 
             if (! $user->save()) {
                 echo $this->ajaxResponse("message", [
@@ -115,6 +132,22 @@ class LoginController extends Controller
         $formUser->last_name = null;
         $formUser->email = null;
 
+        $socialUser = (
+            ! empty($_SESSION["facebook_auth"])
+                ? unserialize($_SESSION["facebook_auth"])
+                : (
+                    ! empty($_SESSION["google_auth"])
+                        ? unserialize($_SESSION["google_auth"])
+                        : null
+                )
+        );
+
+        if (! empty($socialUser)) {
+            $formUser->first_name = $socialUser->getFirstName();
+            $formUser->last_name = $socialUser->getLastName();
+            $formUser->email = $socialUser->getEmail();
+        }
+
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
@@ -129,6 +162,8 @@ class LoginController extends Controller
     }
 
     /**
+     *  Responsavel por realizar a solicitação de recuperação de senha.
+     *
      * @param array|null $data
      */
     public function forget(array $data = null): void
@@ -204,6 +239,11 @@ class LoginController extends Controller
         ]);
     }
 
+    /**
+     *  Responsavel por salvar nova senha pos resetar a senha.
+     *
+     * @param array $data
+     */
     public function resetPassword(array $data): void
     {
         if (empty($_SESSION["forget"]) || ! $user = (new UserModel())->findById($_SESSION["forget"])) {
@@ -254,7 +294,9 @@ class LoginController extends Controller
     }
 
     /**
-     * @param array|null $data
+     *  Responsavel por resetar senhar, acessando url enviado para o e-mail.
+     *
+     * @param array $data
      */
     public function reset(array $data): void
     {
@@ -287,5 +329,187 @@ class LoginController extends Controller
             "head" => $head,
             'data' => $data
         ]);
+    }
+
+    /**
+     *  Realizando login via autenticação Facebook.
+     *
+     * @param array|null $data
+     */
+    public function facebook(): void
+    {
+        $configure = $this->getConfigure("facebook_login");
+
+        if (empty($configure)) {
+            flash("danger", "Login com o Facebook não configurado");
+            redirect("login");
+        }
+
+        $facebook = new Facebook([
+            "clientId" => $configure->clientId,
+            "clientSecret" => $configure->clientSecret,
+            "redirectUri" => $configure->redirectUri,
+            "graphApiVersion" => $configure->graphApiVersion
+        ]);
+
+        $error = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRIPPED);
+        $code = filter_input(INPUT_GET, "code", FILTER_SANITIZE_STRIPPED);
+
+        if (! $error && ! $code) {
+            $authUrl = $facebook->getAuthorizationUrl(["scope" => "email"]);
+            redirect($authUrl, true);
+            return;
+        }
+
+        if ($error) {
+            flash("danger", "Não foi possível logar com o Facebook");
+            redirect("login");
+            return;
+        }
+
+        if ($code && empty($_SESSION["facebook_auth"])) {
+            try {
+                $token = $facebook->getAccessToken("authorization_code", ["code" => $code]);
+                $_SESSION["facebook_auth"] = serialize($facebook->getResourceOwner($token));
+            } catch (\Exception $exception) {
+                flash("danger", "Não foi possível logar com o Facebook");
+                redirect("login");
+                return;
+            }
+        }
+
+        $facebookUser = unserialize($_SESSION["facebook_auth"]);
+
+        /** Login pelo Facebook */
+        $userById = (new UserModel())->find("facebook_id = :facebook_id", "facebook_id={$facebookUser->getId()}")->fetch();
+        if (! empty($userById)) {
+            unset($_SESSION["facebook_auth"]);
+            $_SESSION["user"] = $userById->id;
+            redirect("pages/home");
+            return;
+        }
+
+        /** Login pelo email */
+        $userByEmail = (new UserModel())->find("email = :email", "email={$facebookUser->getEmail()}")->fetch();
+        if (! empty($userByEmail)) {
+            flash("warning", "Olá {$facebookUser->getFirstName()}, faça login para conectar sua conta Facebook");
+            redirect("login");
+            return;
+        }
+
+        /** Registrar usuário via Facebook */
+        flash(
+            "warning",
+            "Olá {$facebookUser->getFirstName()}, <strong>se já tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
+        );
+        redirect("register");
+        return;
+    }
+
+    /**
+     *  Realizando login via autenticação Google.
+     *
+     */
+    public function google(): void
+    {
+        $configure = $this->getConfigure("google_login");
+
+        if (empty($configure)) {
+            flash("danger", "Login com o Google não configurado");
+            redirect("login");
+        }
+
+        $google = new Google([
+            "clientId" => $configure->clientId,
+            "clientSecret" => $configure->clientSecret,
+            "redirectUri" => $configure->redirectUri
+        ]);
+
+        $error = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRIPPED);
+        $code = filter_input(INPUT_GET, "code", FILTER_SANITIZE_STRIPPED);
+
+        if (! $error && ! $code) {
+            $authUrl = $google->getAuthorizationUrl();
+            redirect($authUrl, true);
+            return;
+        }
+
+        if ($error) {
+            flash("danger", "Não foi possível logar com o Google");
+            redirect("login");
+            return;
+        }
+
+        if ($code && empty($_SESSION["google_auth"])) {
+            try {
+                $token = $google->getAccessToken("authorization_code", ["code" => $code]);
+                $_SESSION["google_auth"] = serialize($google->getResourceOwner($token));
+            } catch (\Exception $exception) {
+                flash("danger", "Não foi possível logar com o Google");
+                redirect("login");
+                return;
+            }
+        }
+
+        $googleUser = unserialize($_SESSION["google_auth"]);
+
+        /** Login pelo Google */
+        $userById = (new UserModel())->find("google_id = :google_id", "google_id={$googleUser->getId()}")->fetch();
+        if (! empty($userById)) {
+            unset($_SESSION["google_auth"]);
+            $_SESSION["user"] = $userById->id;
+            redirect("pages/home");
+            return;
+        }
+
+        /** Login pelo email */
+        $userByEmail = (new UserModel())->find("email = :email", "email={$googleUser->getEmail()}")->fetch();
+        if (! empty($userByEmail)) {
+            flash("warning", "Olá {$googleUser->getFirstName()}, faça login para conectar sua conta Google");
+            redirect("login");
+            return;
+        }
+
+        /** Registrar usuário via Google */
+        flash(
+            "warning",
+            "Olá {$googleUser->getFirstName()}, <strong>se já tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
+        );
+        redirect("register");
+        return;
+    }
+
+    /**
+     *  Valida se existe uma Classe de rede social na seção e vincula ao usuário logado.
+     *
+     * @param UserModel $user
+     */
+    public function socialValidate(UserModel $user): void
+    {
+        /**
+         *  Facebook
+         */
+        if (! empty($_SESSION["facebook_auth"])) {
+            $facebookUser = unserialize($_SESSION["facebook_auth"]);
+
+            $user->facebook_id = $facebookUser->getId();
+            $user->photo = $facebookUser->getPictureUrl();
+            $user->save();
+
+            unset($_SESSION["facebook_auth"]);
+        }
+
+        /**
+         *  Google
+         */
+        if (! empty($_SESSION["google_auth"])) {
+            $googleUser = unserialize($_SESSION["google_auth"]);
+
+            $user->google_id = $googleUser->getId();
+            $user->photo = $googleUser->getAvatar();
+            $user->save();
+
+            unset($_SESSION["google_auth"]);
+        }
     }
 }
