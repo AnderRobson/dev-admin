@@ -41,6 +41,62 @@ class BannerController extends Controller
         ]);
     }
 
+    public function edit(array $data): void
+    {
+        $data = filter_var_array($data, FILTER_SANITIZE_STRING);
+        $slug = $data["slug"];
+        unset($data["slug"]);
+
+        if (! empty($data)) {
+            $banner = (new BannerModel())->findById($data["id"]);
+            $banner->title = $data["title"];
+            $banner->slug = slugify($data['title']);
+            $banner->description = $data["description"];
+
+            if (! empty($_FILES)) {
+                $upload = new Upload();
+                $upload->setArquivo($_FILES);
+                $upload->setDestinho("banner");
+                $nameImage = $upload->upload();
+
+                if (! $nameImage) {
+                    echo $this->ajaxResponse("message", [
+                        "type" => "danger",
+                        "message" => "Erro ao realizar o upload do arquivo"
+                    ]);
+                    return;
+                }
+
+                $banner->image = $nameImage;
+            }
+
+            if (! $banner->save()) {
+                echo $this->ajaxResponse("message", [
+                    "type" => "danger",
+                    "message" => "Erro ao editar o Banner"
+                ]);
+                return;
+            }
+
+            echo $this->ajaxResponse("message", [
+                "type" => "success",
+                "message" => "Banner editado com sucesso"
+            ]);
+            return;
+        }
+
+        $head = $this->seo->optimize(
+            "Bem vindo ao " . SITE["SHORT_NAME"],
+            SITE["DESCRIPTION"],
+            url("pages/banner"),
+            "",
+            )->render();
+
+        echo $this->view->render("banner/view/edit", [
+            "banner" => (new BannerModel())->find("slug = :slug", "slug={$slug}")->fetch(),
+            'head' => $head
+        ]);
+    }
     /**
      * @param array|null $data
      */
@@ -55,7 +111,7 @@ class BannerController extends Controller
 
             $banner = new BannerModel();
             $banner->title = $data["title"];
-            $banner->slug = str_replace(' ', '-', utf8_decode(strtolower($data['title'])));
+            $banner->slug = slugify($data['title']);
             $banner->description = $data["description"];
 
             if (! empty($_FILES)) {
