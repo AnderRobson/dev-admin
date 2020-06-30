@@ -106,7 +106,11 @@ class BannerController extends Controller
             $data = filter_var_array($data, FILTER_SANITIZE_STRING);
 
             if (empty($data["title"]) || empty($data["description"]) || ! empty($_FILES["file"]["error"])) {
-                redirect("pages/banner?type=error");
+                echo $this->ajaxResponse("message", [
+                    "type" => "danger",
+                    "message" => "Erro ao cadastrar o Banner"
+                ]);
+                return;
             }
 
             $banner = new BannerModel();
@@ -121,17 +125,29 @@ class BannerController extends Controller
                 $nameImage = $upload->upload();
 
                 if (! $nameImage) {
-                    redirect("pages/banner?type=error");
+                    echo $this->ajaxResponse("message", [
+                        "type" => "danger",
+                        "message" => "Erro ao realizar o upload do arquivo"
+                    ]);
+                    return;
                 }
 
                 $banner->image = $nameImage;
             }
 
             if (! $banner->save()) {
-                redirect("pages/banner?type=error");
+                echo $this->ajaxResponse("message", [
+                    "type" => "danger",
+                    "message" => "Erro ao cadastrar o Banner"
+                ]);
+                return;
             }
 
-            redirect("pages/banner?type=success");
+            flash("success", "Banner cadastrado com sucesso");
+            echo $this->ajaxResponse("redirect", [
+                "url" => url("pages/banner")
+            ]);
+            return;
         }
 
         $head = $this->seo->optimize(
