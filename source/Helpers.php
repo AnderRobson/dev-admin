@@ -70,7 +70,7 @@ function css(string $file, $time = true)
         $file .= "?time=" . fileatime($fileOnDir);
     }
 
-    return "<link rel='stylesheet' href='/Plataforma/dev-admin/{$file}'>";
+    return "<link rel='stylesheet' href='/dev-admin/{$file}'>";
 }
 
 
@@ -90,7 +90,7 @@ function js(string $file, $time = true)
         $file .= "?time=" . fileatime($fileOnDir);
     }
 
-    return "<script src='/Plataforma/dev-admin/{$file}'></script>";
+    return "<script src='/dev-admin/{$file}'></script>";
 }
 
 
@@ -115,9 +115,9 @@ function plugins(string $file, $time = true)
 
     switch ($type) {
         case 'js':
-            $return = "<script src='/Plataforma/dev-admin/{$file}'></script>";
+            $return = "<script src='/dev-admin/{$file}'></script>";
         case 'css':
-            $return = "<link rel='stylesheet' href='/Plataforma/dev-admin/{$file}'>";
+            $return = "<link rel='stylesheet' href='/dev-admin/{$file}'>";
     }
 
     return $return;
@@ -145,10 +145,10 @@ function bootstrap(string $file, $time = true)
 
     switch ($type) {
         case 'js':
-            $return = "<script src='/Plataforma/dev-admin/{$file}'></script>";
+            $return = "<script src='/dev-admin/{$file}'></script>";
             break;
         case 'css':
-            $return = "<link rel='stylesheet' href='/Plataforma/dev-admin/{$file}'>";
+            $return = "<link rel='stylesheet' href='/dev-admin/{$file}'>";
     }
 
     return $return;
