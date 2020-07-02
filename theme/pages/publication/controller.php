@@ -57,7 +57,7 @@ class PublicationController extends Controller
 
             $publication = new PublicationModel();
             $publication->title = $data['title'];
-            $publication->slug = slugify($data['title']);
+            $publication->slug = str_replace(' ', '-', utf8_decode(strtolower($data['title'])));
             $publication->description = $data['description'];
 
             if (! empty($_FILES["file"])) {
@@ -83,7 +83,7 @@ class PublicationController extends Controller
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("pages/publication/create"),
+            url("pages/banner/create"),
             "",
         )->render();
 
@@ -93,8 +93,6 @@ class PublicationController extends Controller
     }
 
     /**
-     * Responsavel por realizar a exlusão de uma publicação.
-     *
      * @param array $data
      * @return bool
      */
@@ -116,7 +114,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Método responsavel por gerar publicações automatico para debug.
+     * Método responsavel por gerar publicações automatico para debug
      */
     public function generatePublication ()
     {
