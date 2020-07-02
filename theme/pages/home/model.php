@@ -1,13 +1,10 @@
 <?php
 
-    namespace Theme\Pages\Home;
+namespace Theme\Pages\Home;
 
-    use CoffeeCode\DataLayer\DataLayer;
+use Source\Models\Model;
 
-    class HomeModel extends DataLayer
-    {
-        public function __construct()
-        {
-            parent::__construct("users", ["first_name", "last_name"]);
-        }
-    }
+class HomeModel extends Model
+{
+
+}

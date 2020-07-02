@@ -6,6 +6,7 @@
     use Theme\Pages\Home\HomeController;
     use Theme\Pages\Banner\BannerController;
     use Theme\Pages\Login\LoginController;
+    use Theme\pages\person\PersonController;
     use Theme\Pages\Publication\PublicationController;
     use Theme\Pages\Exemplos\ExemploController;
     use Theme\Pages\User\UserController;
@@ -50,6 +51,9 @@
                     break;
                 case 'publication':
                     $controller = new PublicationController($this->router);
+                    break;
+                case 'person':
+                    $controller = new PersonController($this->router);
                     break;
                 case 'exemplos':
                     $controller = new ExemploController($this->router);

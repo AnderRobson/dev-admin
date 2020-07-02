@@ -23,7 +23,6 @@ $v->layout("banner/view/_theme"); ?>
             <th scope="col">Título</th>
             <th scope="col">Link</th>
             <th scope="col">Descrição</th>
-            <th scope="col">Imagem</th>
             <th scope="col">Opções</th>
         </tr>
         </thead>

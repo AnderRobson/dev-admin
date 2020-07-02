@@ -7,12 +7,14 @@ namespace Source\Controllers;
 use CoffeeCode\Optimizer\Optimizer;
 use CoffeeCode\Router\Router;
 use League\Plates\Engine;
-use Theme\Pages\Home\HomeModel;
 use Source\Models\Configures;
+use Theme\Pages\User\UserModel;
 
 /**
  * Class Controller
  * @package Source\Controllers
+ *
+ * @property UserModel $user
  */
 abstract class Controller
 {
@@ -25,7 +27,7 @@ abstract class Controller
     /** @var Optimizer */
     protected $seo;
 
-    /** @var HomeModel */
+    /** @var UserModel */
     protected $user;
 
     /** @var Configures */
@@ -37,19 +39,21 @@ abstract class Controller
      */
     public function __construct($router)
     {
-        $this->configures = new Configures();
         $this->router = $router;
         $this->view = Engine::create(ROOT . DS . "theme" . DS . "pages", "php");
         $this->view->addData(["router" => $this->router]);
 
         $this->seo = new Optimizer();
-        $this->seo->openGraph(SITE['NAME'], SITE['LOCALE'], "article")
-            ->publisher(SOCIAL["FACEBOOK_PAGE"], SOCIAL["FACEBOOK_AUTHOR"])
-            ->twitterCard(SOCIAL["TWITTER_CREATOR"], SOCIAL["TWITTER_SITE"], SITE["DOMAIN"])
-            ->facebook(SOCIAL["FACEBOOK_APP_ID"]);
 
-        if (! empty($_SESSION["user"])) {
-            $this->user = (new HomeModel())->findById($_SESSION["user"]);
+        $facebookInformation = $this->getConfigure("facebook_login");
+        if (! empty($facebookInformation)) {
+            $this->seo->openGraph(SITE['NAME'], SITE['LOCALE'], "article")
+                ->publisher(SOCIAL["FACEBOOK_PAGE"], SOCIAL["FACEBOOK_AUTHOR"])
+                ->twitterCard(SOCIAL["TWITTER_CREATOR"], SOCIAL["TWITTER_SITE"], SITE["DOMAIN"])
+                ->facebook($facebookInformation->clientId);
+        }
+
+        if (! empty($_SESSION["user"]) && $this->user = (new UserModel())->findById($_SESSION['user'])->getPerson()) {
             $this->view->addData(['user' => $this->user]);
         }
     }

@@ -4,13 +4,11 @@
 namespace Source\Models;
 
 
-use CoffeeCode\DataLayer\DataLayer;
-
 /**
  * Class Configures
  * @package Source\Models
  */
-class Configures extends DataLayer
+class Configures extends Model
 {
 
     /** @var Identificador da configure */

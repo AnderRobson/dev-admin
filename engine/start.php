@@ -1,18 +1,18 @@
 <?php
+    if (!defined('DS')) {
+        define('DS', DIRECTORY_SEPARATOR);
+    }
+
     if (!defined("URL_BASE")) {
-        define("URL_BASE", "https://" . $_SERVER['HTTP_HOST'] . "/Plataforma/sites/" . SITE["PATH"] . "/admin");
+        define("URL_BASE", "https://" . $_SERVER['HTTP_HOST'] . DS . SITE["PATH"] . DS . "admin");
     }
 
     if (!defined('URL_ADMIN')) {
-        define('URL_ADMIN', 'https://' . $_SERVER['HTTP_HOST'] . '/Plataforma/dev-admin');
+        define('URL_ADMIN', 'https://' . $_SERVER['HTTP_HOST'] . DS . 'dev-admin');
     }
 
     if (!defined('URL_BLOG')) {
-        define('URL_BLOG', 'https://' . $_SERVER['HTTP_HOST'] . "/Plataforma/sites/" . SITE["PATH"]);
-    }
-
-    if (!defined('DS')) {
-        define('DS', DIRECTORY_SEPARATOR);
+        define('URL_BLOG', 'https://' . $_SERVER['HTTP_HOST'] . DS . SITE["PATH"]);
     }
 
     if (!defined('BASE_PATH')) {
