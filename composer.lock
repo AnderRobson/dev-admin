@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4878e2d92625a86e4ae9b9accf0952c0",
+    "content-hash": "dbf248a10048af036077ee7e2296365d",
     "packages": [
         {
             "name": "coffeecode/datalayer",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robsonvleite/datalayer.git",
-                "reference": "17fecff8edb8fb5287648875f182acbb80389614"
+                "reference": "cd8e91edfe30d221be50de542f2d89dda9975696"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robsonvleite/datalayer/zipball/17fecff8edb8fb5287648875f182acbb80389614",
-                "reference": "17fecff8edb8fb5287648875f182acbb80389614",
+                "url": "https://api.github.com/repos/robsonvleite/datalayer/zipball/cd8e91edfe30d221be50de542f2d89dda9975696",
+                "reference": "cd8e91edfe30d221be50de542f2d89dda9975696",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 "save",
                 "upinside"
             ],
-            "time": "2019-10-29T13:34:17+00:00"
+            "time": "2020-06-23T13:24:09+00:00"
         },
         {
             "name": "coffeecode/optimizer",
@@ -102,20 +102,24 @@
                 "twitter card",
                 "upinside"
             ],
+            "support": {
+                "issues": "https://github.com/robsonvleite/optimizer/issues",
+                "source": "https://github.com/robsonvleite/optimizer/tree/master"
+            },
             "time": "2019-08-29T14:26:45+00:00"
         },
         {
             "name": "coffeecode/paginator",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robsonvleite/paginator.git",
-                "reference": "98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d"
+                "reference": "7ee353b183fa2915ba2e2d7296108c075b7d0917"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robsonvleite/paginator/zipball/98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d",
-                "reference": "98b6a42ab7ee4a9ec08faa37e5cfb0a073143d2d",
+                "url": "https://api.github.com/repos/robsonvleite/paginator/zipball/7ee353b183fa2915ba2e2d7296108c075b7d0917",
+                "reference": "7ee353b183fa2915ba2e2d7296108c075b7d0917",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +150,7 @@
                 "paginator",
                 "upinside"
             ],
-            "time": "2019-03-12T14:38:13+00:00"
+            "time": "2020-06-29T14:43:29+00:00"
         },
         {
             "name": "coffeecode/router",
@@ -308,6 +312,10 @@
                 "rest",
                 "web service"
             ],
+            "support": {
+                "issues": "https://github.com/guzzle/guzzle/issues",
+                "source": "https://github.com/guzzle/guzzle/tree/6.5"
+            },
             "time": "2020-06-16T21:01:06+00:00"
         },
         {
@@ -359,6 +367,10 @@
             "keywords": [
                 "promise"
             ],
+            "support": {
+                "issues": "https://github.com/guzzle/promises/issues",
+                "source": "https://github.com/guzzle/promises/tree/master"
+            },
             "time": "2016-12-20T10:07:11+00:00"
         },
         {
@@ -430,6 +442,10 @@
                 "uri",
                 "url"
             ],
+            "support": {
+                "issues": "https://github.com/guzzle/psr7/issues",
+                "source": "https://github.com/guzzle/psr7/tree/1.6.1"
+            },
             "time": "2019-07-01T23:21:34+00:00"
         },
         {
@@ -497,6 +513,10 @@
                 "oauth2",
                 "single sign on"
             ],
+            "support": {
+                "issues": "https://github.com/thephpleague/oauth2-client/issues",
+                "source": "https://github.com/thephpleague/oauth2-client/tree/master"
+            },
             "time": "2018-11-22T18:33:57+00:00"
         },
         {
@@ -548,6 +568,10 @@
                 "oauth",
                 "oauth2"
             ],
+            "support": {
+                "issues": "https://github.com/thephpleague/oauth2-facebook/issues",
+                "source": "https://github.com/thephpleague/oauth2-facebook/tree/master"
+            },
             "time": "2017-07-22T01:25:00+00:00"
         },
         {
@@ -599,6 +623,10 @@
                 "oauth",
                 "oauth2"
             ],
+            "support": {
+                "issues": "https://github.com/thephpleague/oauth2-google/issues",
+                "source": "https://github.com/thephpleague/oauth2-google/tree/master"
+            },
             "time": "2019-11-16T14:11:06+00:00"
         },
         {
@@ -731,6 +759,10 @@
                 "minifier",
                 "minify"
             ],
+            "support": {
+                "issues": "https://github.com/matthiasmullie/minify/issues",
+                "source": "https://github.com/matthiasmullie/minify/tree/master"
+            },
             "time": "2018-11-26T23:10:39+00:00"
         },
         {
@@ -780,6 +812,10 @@
                 "paths",
                 "relative"
             ],
+            "support": {
+                "issues": "https://github.com/matthiasmullie/path-converter/issues",
+                "source": "https://github.com/matthiasmullie/path-converter/tree/1.1.3"
+            },
             "time": "2019-02-05T23:41:09+00:00"
         },
         {
@@ -825,6 +861,11 @@
                 "pseudorandom",
                 "random"
             ],
+            "support": {
+                "email": "info@paragonie.com",
+                "issues": "https://github.com/paragonie/random_compat/issues",
+                "source": "https://github.com/paragonie/random_compat"
+            },
             "time": "2018-07-02T15:55:56+00:00"
         },
         {
@@ -887,12 +928,6 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "funding": [
-                {
-                    "url": "https://github.com/synchro",
-                    "type": "github"
-                }
-            ],
             "time": "2020-05-27T12:24:03+00:00"
         },
         {
@@ -943,6 +978,9 @@
                 "request",
                 "response"
             ],
+            "support": {
+                "source": "https://github.com/php-fig/http-message/tree/master"
+            },
             "time": "2016-08-06T14:39:51+00:00"
         },
         {
@@ -983,6 +1021,10 @@
                 }
             ],
             "description": "A polyfill for getallheaders.",
+            "support": {
+                "issues": "https://github.com/ralouphie/getallheaders/issues",
+                "source": "https://github.com/ralouphie/getallheaders/tree/develop"
+            },
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
@@ -1049,20 +1091,9 @@
                 "portable",
                 "shim"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.17.1"
+            },
             "time": "2020-06-06T08:46:27+00:00"
         },
         {
@@ -1126,20 +1157,9 @@
                 "portable",
                 "shim"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/master"
+            },
             "time": "2020-06-06T08:46:27+00:00"
         },
         {
@@ -1195,20 +1215,9 @@
                 "portable",
                 "shim"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php72/tree/master"
+            },
             "time": "2020-05-12T16:47:27+00:00"
         },
         {
@@ -1260,12 +1269,6 @@
                 "sass",
                 "web"
             ],
-            "funding": [
-                {
-                    "url": "https://opencollective.com/bootstrap",
-                    "type": "open_collective"
-                }
-            ],
             "time": "2020-05-12T17:44:42+00:00"
         }
     ],
@@ -1280,6 +1283,5 @@
     "platform": {
         "ext-json": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "platform-dev": []
 }

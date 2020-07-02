@@ -1,6 +1,7 @@
 {
-    "name": "ander/dev-admin",
+    "name": "ander-robson/dev-admin",
     "description": "Painel adiministrativo",
+    "minimum-stability": "stable",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -32,6 +33,5 @@
             "name": "Ander Robson",
             "email": "ander.robson@hotmail.com"
         }
-    ],
-    "minimum-stability": "stable"
+    ]
 }
