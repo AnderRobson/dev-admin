@@ -2,9 +2,9 @@
 
     namespace Theme\Pages\Publication;
 
-    use CoffeeCode\DataLayer\DataLayer;
+    use Source\Models\Model;
 
-    class PublicationModel extends DataLayer
+    class PublicationModel extends Model
     {
         public function __construct()
         {

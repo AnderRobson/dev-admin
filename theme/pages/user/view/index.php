@@ -1,12 +1,20 @@
 <?php
-$v->layout("painel/view/_theme"); ?>
+$v->layout("user/view/_theme"); ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-    <div class="jumbotron jumbotron-fluid">
-        <img src="<?= $user->photo; ?>" class="img-thumbnail" alt="<?= $user->first_name . " " . $user->last_name;?>">
-        <div class="container float-right">
-            <h1 class="display-6"><?= $user->first_name . " " . $user->last_name;?></h1>
-            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-        </div>
-    </div>
+    <section class="row box">
+        <article class="col-12 box-top-profile">
+            <img src="<?= $user->photo; ?>" class="img-thumbnail block" alt="<?= $user->person->first_name . " " . $user->person->last_name;?>">
+            <div id="menu" class="float-right">
+                    <h2 class="float-left"><?= $user->person->first_name . " " . $user->person->last_name;?></h2>
+            </div>
+        </article>
+    </section>
+    <section class="row box">
+
+    </section>
 </main>
+<?php
+    $v->start("css");
+        echo css("profile");
+    $v->end();

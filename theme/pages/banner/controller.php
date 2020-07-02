@@ -16,6 +16,7 @@ class BannerController extends Controller
 {
     /**
      * BannerController constructor.
+     *
      * @param $router
      */
     public function __construct($router)
@@ -41,6 +42,11 @@ class BannerController extends Controller
         ]);
     }
 
+    /**
+     * Página Edit do Banner.
+     *
+     * @param array $data
+     */
     public function edit(array $data): void
     {
         $data = filter_var_array($data, FILTER_SANITIZE_STRING);
@@ -78,9 +84,9 @@ class BannerController extends Controller
                 return;
             }
 
-            echo $this->ajaxResponse("message", [
-                "type" => "success",
-                "message" => "Banner editado com sucesso"
+            flash("success", "Banner editado com sucesso");
+            echo $this->ajaxResponse("redirect", [
+                "url" => url("pages/banner/edit/" . $banner->slug)
             ]);
             return;
         }
@@ -97,7 +103,10 @@ class BannerController extends Controller
             'head' => $head
         ]);
     }
+
     /**
+     * Página de cadastro de Banner.
+     *
      * @param array|null $data
      */
     public function create(array $data = null)
@@ -124,7 +133,7 @@ class BannerController extends Controller
                 $upload->setDestinho("banner");
                 $nameImage = $upload->upload();
 
-                if (! $nameImage) {
+                if (empty($nameImage)) {
                     echo $this->ajaxResponse("message", [
                         "type" => "danger",
                         "message" => "Erro ao realizar o upload do arquivo"
@@ -163,13 +172,18 @@ class BannerController extends Controller
     }
 
     /**
+     * Responsavel por deletar Banner via Ajax.
+     *
      * @param array $data
      * @return bool
      */
-    public function delete(array $data)
+    public function delete(array $data): void
     {
         if (empty($data['id'])) {
-            return false;
+            $callback['remove'] = false;
+            echo json_encode($callback);
+
+            return;
         }
 
         $id = filter_var($data['id'], FILTER_VALIDATE_INT);
@@ -177,11 +191,17 @@ class BannerController extends Controller
 
         if (! empty($user)) {
             if (! $user->destroy()) {
-                return false;
+                $callback['remove'] = false;
+                echo json_encode($callback);
+
+                return;
             }
         }
 
         $callback['remove'] = true;
         echo json_encode($callback);
+
+        return;
     }
+
 }

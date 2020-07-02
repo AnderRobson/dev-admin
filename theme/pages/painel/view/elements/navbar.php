@@ -4,7 +4,7 @@
     <ul class="navbar-nav px-3 ml-auto">
         <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                <?= $user->first_name . " " . $user->last_name;?> <span class="caret"></span>
+                <?= $user->person->first_name . " " . $user->person->last_name;?> <span class="caret"></span>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" >

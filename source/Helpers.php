@@ -3,7 +3,7 @@
 /**
  * Responsavel por minificar arquivos da pasta assets.
  */
-if ($_SERVER["SERVER_NAME"] == "localhost" OR $_SERVER["SERVER_NAME"] == "192.168.0.11") {
+if ($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "192.168.0.11") {
     require __DIR__ . DS . "Minify.php";
 }
 
@@ -39,7 +39,7 @@ function loadController(string $controller)
 }
 
 /**
- * Retorna a URL de arquivos
+ * Responsavel por retorna a URL de arquivos
  *
  * @param string $path
  * @return string
@@ -217,6 +217,16 @@ function flash(string $type = null, string $message = null): ?string
  * @param $string
  * @return string
  */
-function slugify($string){
-    return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
+function slugify($string): string
+{
+    return
+        strtolower(
+            trim(
+                preg_replace(
+                    '/[^A-Za-z0-9-]+/',
+                    '-', $string
+                ),
+                '-'
+            )
+        );
 }

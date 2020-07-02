@@ -2,7 +2,9 @@
 
 namespace Theme\Pages\Home;
 
-class HomeModel
+use Source\Models\Model;
+
+class HomeModel extends Model
 {
 
 }

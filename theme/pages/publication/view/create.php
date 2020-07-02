@@ -18,10 +18,10 @@ $v->layout("banner/view/_theme"); ?>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Descrição</label>
-                <textarea class="form-control" id="textdescricao" rows="3" maxlength="250" name="description"></textarea>
+                <textarea class="form-control" id="textpublication" rows="3" maxlength="250" name="description"></textarea>
             </div>
             <script>
-                CKEDITOR.replace('textdescricao');
+                CKEDITOR.replace('textpublication');
             </script>
 
             <input type="file" id="btnupload" name="file" class="btn btn-success float-left">
@@ -34,6 +34,7 @@ $v->layout("banner/view/_theme"); ?>
             </a>
         </form>
     </main>
-<?php $v->start("js"); ?>
-    <?= js("form"); ?>
-<?php $v->end(); ?>
+<?php
+    $v->start("js");
+        echo js("form");
+    $v->end();

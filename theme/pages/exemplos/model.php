@@ -2,9 +2,9 @@
 
     namespace Theme\Pages\Exemplos;
 
-    use CoffeeCode\DataLayer\DataLayer;
+    use Source\Models\Model;
 
-    class ExemplosModel extends DataLayer
+    class ExemplosModel extends Model
     {
         public function __construct()
         {

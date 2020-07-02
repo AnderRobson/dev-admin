@@ -5,6 +5,7 @@ $v->layout("painel/view/_theme"); ?>
     <?= $v->section("content"); ?>
 </div>
 
-<?php $v->start("js"); ?>
-    <?= $v->section("js"); ?>
-<?php  $v->end(); ?>
+<?php
+    $v->start("js");
+        echo $v->section("js");
+    $v->end();

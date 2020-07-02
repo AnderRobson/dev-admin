@@ -2,7 +2,9 @@
 
 namespace Theme\Pages\Login;
 
-class LoginModel
+use Source\Models\Model;
+
+class LoginModel extends Model
 {
 
 }

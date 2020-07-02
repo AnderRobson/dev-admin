@@ -2,9 +2,9 @@
 
     namespace Theme\Pages\Banner;
 
-    use CoffeeCode\DataLayer\DataLayer;
+    use Source\Models\Model;
 
-    class BannerModel extends DataLayer
+    class BannerModel extends Model
     {
         public function __construct()
         {

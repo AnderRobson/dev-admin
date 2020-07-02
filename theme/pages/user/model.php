@@ -2,14 +2,28 @@
 
 namespace Theme\Pages\User;
 
-use CoffeeCode\DataLayer\DataLayer;
 use Exception;
+use Source\Models\Model;
+use Theme\pages\person\PersonModel;
 
-class UserModel extends DataLayer
+/**
+ * Class UserModel
+ * @package Theme\Pages\User
+ *
+ * @property PersonModel $person
+ */
+class UserModel extends Model
 {
     public function __construct()
     {
-        parent::__construct("users", ["first_name", "last_name", "email", "password"]);
+        parent::__construct("users", ["id_person", "email", "password"]);
+    }
+
+    public function getPerson()
+    {
+        $this->person = (new PersonModel())->findById($this->id_person);
+
+        return $this;
     }
 
     /**
@@ -17,9 +31,9 @@ class UserModel extends DataLayer
      */
     public function save(): bool
     {
-        if (!$this->validateEmail() ||
-            !$this->validatePassword() ||
-            !parent::save()
+        if (! $this->validateEmail() ||
+            ! $this->validatePassword() ||
+            ! parent::save()
         ) {
             return false;
         }

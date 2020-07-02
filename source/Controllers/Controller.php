@@ -13,6 +13,8 @@ use Theme\Pages\User\UserModel;
 /**
  * Class Controller
  * @package Source\Controllers
+ *
+ * @property UserModel $user
  */
 abstract class Controller
 {
@@ -51,7 +53,7 @@ abstract class Controller
                 ->facebook($facebookInformation->clientId);
         }
 
-        if (! empty($_SESSION["user"]) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+        if (! empty($_SESSION["user"]) && $this->user = (new UserModel())->findById($_SESSION['user'])->getPerson()) {
             $this->view->addData(['user' => $this->user]);
         }
     }
