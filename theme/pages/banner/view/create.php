@@ -5,13 +5,6 @@ $v->layout("banner/view/_theme"); ?>
             <h1 class="h2">Cadastrando Banner</h1>
         </div>
         <form action="<?= url("pages/banner/create"); ?>" method="post" enctype="multipart/form-data">
-            <div class="ajax_load">
-                <div class="ajax_load_box">
-                    <div class="ajax_load_box_circle"></div>
-                    <div class="ajax_load_box_title jumbotrom">Aguarde, carregando!</div>
-                </div>
-            </div>
-            <div class="form_ajax" style="display: none"></div>
             <div class="form-group">
                 <label for="exampleFormControlInput1">Título</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" maxlength="100" name="title" required>
@@ -26,14 +19,11 @@ $v->layout("banner/view/_theme"); ?>
 
             <input type="file" id="btnupload" name="file" class="btn btn-success float-left">
 
-            <button type="submit" class="btn btn-success float-right ml-3">Salvar Banner</button>
-            <a href="<?= url("pages/banner"); ?>">
-                <button type="button" class="btn btn-danger float-right">
-                    Cancelar
-                </button>
-            </a>
+            <button type="submit" class="btn btn-success float-right">Salvar Banner</button>
         </form>
     </main>
 <?php $v->start("js"); ?>
-    <?= js("form"); ?>
+
+<?php  $v->end(); ?>
+<?php $v->start("css"); ?>
 <?php $v->end(); ?>

@@ -1,7 +1,6 @@
 <?php
 $v->layout("banner/view/_theme"); ?>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <?= flash(); ?>
         <div class="ajax_load">
             <div class="ajax_load_box">
                 <div class="ajax_load_box_circle"></div>
@@ -24,6 +23,7 @@ $v->layout("banner/view/_theme"); ?>
                 <th scope="col">Título</th>
                 <th scope="col">Link</th>
                 <th scope="col">Descrição</th>
+                <th scope="col">Imagem</th>
                 <th scope="col">Opções</th>
             </tr>
             </thead>
