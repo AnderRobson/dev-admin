@@ -7,12 +7,12 @@
 <p>
     URL de acesso ao painel administrativo:
     
-    /sites/site-dev/admin/
+    /site-dev/admin/
 </p>
 <p>
     URL de acesso ao Blog:
 
-    /sites/site-dev/
+    /site-dev/
 </p>
 <p>
     Observação:
