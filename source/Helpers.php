@@ -230,3 +230,21 @@ function slugify($string): string
             )
         );
 }
+
+function mountFilters(array $filters): array
+{
+    $return = [
+        "keysFilter" => null,
+        "valueToFilter" => null
+    ];
+
+    foreach ($filters as $keysFilter => $valueToFilter) {
+        $return["keysFilter"][] = $keysFilter . " = :" . $keysFilter;
+        $return["valueToFilter"][] =$keysFilter . "=" . $valueToFilter;
+    }
+
+    return [
+        "keysFilter" => implode(" AND ", $return["keysFilter"]),
+        "valueToFilter" => implode(" AND ", $return["valueToFilter"]),
+    ];
+}

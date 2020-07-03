@@ -25,7 +25,7 @@ class Upload
         $this->arquivo = $arquivo;
 
         $name = date("YmdHis");
-        $this->nomeArquivo = $name . $arquivo["file"]["name"];
+        $this->nomeArquivo = $name;
     }
 
     /**
