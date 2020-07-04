@@ -116,6 +116,7 @@ function plugins(string $file, $time = true)
     switch ($type) {
         case 'js':
             $return = "<script src='/dev-admin/{$file}'></script>";
+            break;
         case 'css':
             $return = "<link rel='stylesheet' href='/dev-admin/{$file}'>";
     }

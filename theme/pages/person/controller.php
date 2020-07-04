@@ -33,7 +33,7 @@ class PersonController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/person"),
-            "",
+            ""
             )->render();
 
         $var = (new PersonModel());

@@ -16,7 +16,7 @@ use CoffeeCode\DataLayer\DataLayer;
 abstract class Model extends DataLayer
 {
     /**
-     * @var \PDO|null
+     * @var Connect
      */
     protected $connect;
 

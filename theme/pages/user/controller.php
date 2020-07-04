@@ -20,7 +20,7 @@ class UserController extends Controller
     }
 
     /**
-     * Página index exemplo
+     * Pï¿½gina index exemplo
      */
     public function index(): void
     {
@@ -28,10 +28,10 @@ class UserController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/user"),
-            "",
+            ""
         )->render();
 
-        echo $this->view->render("User/view/index", [
+        echo $this->view->render("user/view/index", [
             'head' => $head
         ]);
     }

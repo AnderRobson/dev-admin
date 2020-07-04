@@ -33,7 +33,7 @@ class BannerController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/banner"),
-            "",
+            ""
         )->render();
 
         echo $this->view->render("banner/view/index", [
@@ -95,7 +95,7 @@ class BannerController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/banner"),
-            "",
+            ""
             )->render();
 
         echo $this->view->render("banner/view/edit", [
@@ -163,7 +163,7 @@ class BannerController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/banner/create"),
-            "",
+            ""
         )->render();
 
         echo $this->view->render("banner/view/create", [
