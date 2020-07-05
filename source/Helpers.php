@@ -155,6 +155,13 @@ function bootstrap(string $file, $time = true)
     return $return;
 }
 
+/**
+ * Responsavel por carregar arquivos do ChartJS da vendor.
+ *
+ * @param string $file
+ * @param bool $time
+ * @return string|null
+ */
 function chartjs(string $file, $time = true)
 {
     $return = null;
@@ -209,7 +216,7 @@ function message(string $message, string $type): string
 }
 
 /**
- * Respons?vel por criar e renderizar mensagens gravadas na sess?o.
+ * Responsável por criar e renderizar mensagens gravadas na sessão.
  *
  * @param string|null $type
  * @param string|null $message
@@ -256,6 +263,12 @@ function slugify($string): string
         );
 }
 
+/**
+ * Responsavel por montar filtros para find.
+ *
+ * @param array $filters
+ * @return array
+ */
 function mountFilters(array $filters): array
 {
     $return = [
@@ -274,6 +287,13 @@ function mountFilters(array $filters): array
     ];
 }
 
+/**
+ * Responsavel pormatar o valor no padrão brasileiro.
+ *
+ * @param string $currency
+ * @param bool $full
+ * @return string
+ */
 function currencyFormatter(string $currency, bool $full = true): string
 {
     $currency = number_format($currency, 2, ",", ".");
