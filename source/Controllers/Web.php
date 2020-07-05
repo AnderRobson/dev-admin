@@ -6,7 +6,7 @@
     use Theme\Pages\Home\HomeController;
     use Theme\Pages\Banner\BannerController;
     use Theme\Pages\Login\LoginController;
-    use Theme\pages\person\PersonController;
+    use Theme\Pages\Person\PersonController;
     use Theme\Pages\Product\ProductController;
     use Theme\Pages\Publication\PublicationController;
     use Theme\Pages\Exemplos\ExemploController;
