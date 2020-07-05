@@ -45,4 +45,4 @@ $(function () {
                     data.message +
                 '</div>';
     }
-})
+});

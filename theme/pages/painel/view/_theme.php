@@ -5,10 +5,11 @@
         <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <?= $head; ?>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="//cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
         <?php
+            echo $head;
             echo bootstrap("dist/css/bootstrap.min.css");
             echo css("style.min");
             echo $v->section("css");
@@ -23,19 +24,18 @@
         <div class="container-fluid">
             <?= $v->section("content"); ?>
         </div>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>-->
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>-->
+        <?php
+            echo chartjs("dist/Chart.bundle.js");
+            echo plugins("feather-icons/feather.min.js");
+            echo js("style.min");
+            echo bootstrap("dist/js/bootstrap.bundle.min.js");
+            echo $v->section("js");
+        ?>
         <!-- Responsavel por carregar os icones -->
         <script>
             feather.replace();
         </script>
-
-        <?php
-            echo js("admin");
-            echo bootstrap("dist/js/bootstrap.bundle.min.js");
-            echo $v->section("js");
-        ?>
     </body>
 </html>

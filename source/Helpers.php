@@ -137,7 +137,7 @@ function bootstrap(string $file, $time = true)
     $type = explode('.', $file);
     $type = end($type);
 
-    $file = "vendor/twbs/bootstrap/" . $file;
+    $file = "/dev-admin/vendor/twbs/bootstrap/" . $file;
     $fileOnDir = ROOT . DS . $file;
 
     if ($time && file_exists($fileOnDir)) {
@@ -146,10 +146,34 @@ function bootstrap(string $file, $time = true)
 
     switch ($type) {
         case 'js':
-            $return = "<script src='/dev-admin/{$file}'></script>";
+            $return = "<script src='{$file}'></script>";
             break;
         case 'css':
-            $return = "<link rel='stylesheet' href='/dev-admin/{$file}'>";
+            $return = "<link rel='stylesheet' href='{$file}'>";
+    }
+
+    return $return;
+}
+
+function chartjs(string $file, $time = true)
+{
+    $return = null;
+    $type = explode('.', $file);
+    $type = end($type);
+
+    $file = "/dev-admin/vendor/nnnick/chartjs/" . $file;
+    $fileOnDir = ROOT . DS . $file;
+
+    if ($time && file_exists($fileOnDir)) {
+        $file .= "?time=" . fileatime($fileOnDir);
+    }
+
+    switch ($type) {
+        case 'js':
+            $return = "<script src='{$file}'></script>";
+            break;
+        case 'css':
+            $return = "<link rel='stylesheet' href='{$file}'>";
     }
 
     return $return;
@@ -185,7 +209,7 @@ function message(string $message, string $type): string
 }
 
 /**
- * Responsável por criar e renderizar mensagens gravadas na sessão.
+ * Respons?vel por criar e renderizar mensagens gravadas na sess?o.
  *
  * @param string|null $type
  * @param string|null $message
@@ -248,4 +272,14 @@ function mountFilters(array $filters): array
         "keysFilter" => implode(" AND ", $return["keysFilter"]),
         "valueToFilter" => implode(" AND ", $return["valueToFilter"]),
     ];
+}
+
+function currencyFormatter(string $currency, bool $full = true): string
+{
+    $currency = number_format($currency, 2, ",", ".");
+
+    if ($full) {
+        $currency = "R$ " . $currency;
+    }
+    return $currency;
 }

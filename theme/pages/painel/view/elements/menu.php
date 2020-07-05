@@ -9,17 +9,26 @@
                             Dashboard <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= url("pages/banner"); ?>">
-                            <span data-feather="file"></span>
-                            Banners
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                            <span data-feather="plus-square"></span>
+                            Register
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= url("pages/publication"); ?>">
-                            <span data-feather="book-open"></span>
-                            Publication
-                        </a>
+
+                        <div class="dropdown-menu" >
+                            <a class="nav-link" href="<?= url("pages/product"); ?>">
+                                <span data-feather="file-plus"></span>
+                                Products
+                            </a>
+                            <a class="nav-link" href="<?= url("pages/banner"); ?>">
+                                <span data-feather="image"></span>
+                                Banners
+                            </a>
+                            <a class="nav-link" href="<?= url("pages/publication"); ?>">
+                                <span data-feather="book-open"></span>
+                                Publication
+                            </a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= url("pages/person"); ?>">
@@ -29,8 +38,8 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <span data-feather="bar-chart-2"></span>
-                            Reports
+                            <span data-feather="shopping-bag"></span>
+                            Orders
                         </a>
                     </li>
                     <li class="nav-item">
@@ -40,9 +49,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= url("pages/exemplos"); ?>">
-                            <span data-feather="layers"></span>
-                            Exemplo
+                        <a class="nav-link" href="<?= url("pages/settings"); ?>">
+                            <span data-feather="settings"></span>
+                            Settings
                         </a>
                     </li>
                 </ul>
