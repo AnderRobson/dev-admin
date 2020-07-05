@@ -2,38 +2,62 @@
 
 namespace Source\Controllers;
 
+use Exception;
+
+/**
+ * Class Upload
+ * @package Source\Controllers
+ */
 class Upload
 {
-    private $arquivo;
+    /** @var $fail Exception */
+    private $fail;
 
-    private $nomeArquivo;
+    /**
+     * @var
+     */
+    private $file;
 
-    private $destinho = ROOT . DS . 'theme' . DS . 'upload' . DS;
+    /**
+     * @var
+     */
+    private $fileName;
 
+    /**
+     * @var string
+     */
+    private $destiny = ROOT . DS . 'theme' . DS . 'upload' . DS;
+
+    /**
+     * @var
+     */
     private $link;
 
+    /**
+     * Upload constructor.
+     */
     public function __construct()
     {
 
     }
 
     /**
-     * @param mixed $arquivo
+     * @param mixed $file
      */
-    public function setArquivo($arquivo): void
+    public function setArquivo($file): void
     {
-        $this->arquivo = $arquivo;
+        $this->file = $file;
 
-        $name = date("YmdHis");
-        $this->nomeArquivo = $name . $arquivo["file"]["name"];
+        $name = date("YmdHis") . "." . $this->getType();
+        $this->fileName = $name;
     }
 
     /**
-     * @param mixed $destinho
+     * @param mixed $destiny
      */
-    public function setDestinho(string $destinho): void
+    public function setDestinho(string $destiny): void
     {
-        $this->destinho .= $destinho . DS;
+        $this->destiny .= $destiny . DS;
     }
 
     /**
@@ -41,16 +65,19 @@ class Upload
      */
     public function getNomeArquivo()
     {
-        return $this->nomeArquivo;
+        return $this->fileName;
     }
 
+    /**
+     * @return string
+     */
     public function upload(): string
     {
-        move_uploaded_file($this->arquivo["file"]["tmp_name"], $this->destinho . DS . $this->nomeArquivo);
+        move_uploaded_file($this->file["file"]["tmp_name"], $this->destiny . DS . $this->fileName);
 
-        $this->link = $this->destinho . DS . $this->nomeArquivo;
+        $this->link = $this->destiny . DS . $this->fileName;
 
-        return $this->nomeArquivo;
+        return $this->fileName;
     }
 
     /**
@@ -59,5 +86,22 @@ class Upload
     public function getLink()
     {
         return $this->link;
+    }
+
+    /**
+     * @return string|null
+     */
+    private function getType(): ?string
+    {
+        $type = null;
+        switch ($this->file["file"]["type"]) {
+            case "image/jpeg":
+                $type = "jpg";
+                break;
+            default:
+                $this->fail = new Exception("Formato de arquivo inválido !");
+        }
+
+        return $type;
     }
 }

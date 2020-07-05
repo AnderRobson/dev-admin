@@ -17,5 +17,5 @@
 <p>
     Observação:
     
-    Colocar o projeto Blog dev dentro da pasta sites. 
+    Colocar o projeto Blog dev na mesma pasta que os outros projetos. 
 </p>

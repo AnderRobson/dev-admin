@@ -23,8 +23,13 @@ class Email extends Controller
 
     /** @var Exception */
     private $error;
+
+    /** @var Nome da pessoa que vai receber o E-mail */
     private $fromName;
+
+    /** @var E-mail cujo qual vai ser enviado */
     private $fromEmail;
+
     /**
      * Email constructor.
      */
@@ -68,6 +73,7 @@ class Email extends Controller
         $this->data->body = $body;
         $this->data->recipient_name = $recipient_name;
         $this->data->recipient_email = $recipient_email;
+
         return $this;
     }
 

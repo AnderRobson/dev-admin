@@ -3,14 +3,13 @@
 
 namespace Source\Library\email;
 
-
-use CoffeeCode\DataLayer\DataLayer;
+use Source\Models\Model;
 
 /**
  * Class EmailModel
  * @package Source\Library\email
  */
-class EmailModel extends DataLayer
+class EmailModel extends Model
 {
     /**
      * EmailModel constructor.

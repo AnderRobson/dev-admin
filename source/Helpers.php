@@ -116,6 +116,7 @@ function plugins(string $file, $time = true)
     switch ($type) {
         case 'js':
             $return = "<script src='/dev-admin/{$file}'></script>";
+            break;
         case 'css':
             $return = "<link rel='stylesheet' href='/dev-admin/{$file}'>";
     }
@@ -229,4 +230,22 @@ function slugify($string): string
                 '-'
             )
         );
+}
+
+function mountFilters(array $filters): array
+{
+    $return = [
+        "keysFilter" => null,
+        "valueToFilter" => null
+    ];
+
+    foreach ($filters as $keysFilter => $valueToFilter) {
+        $return["keysFilter"][] = $keysFilter . " = :" . $keysFilter;
+        $return["valueToFilter"][] =$keysFilter . "=" . $valueToFilter;
+    }
+
+    return [
+        "keysFilter" => implode(" AND ", $return["keysFilter"]),
+        "valueToFilter" => implode(" AND ", $return["valueToFilter"]),
+    ];
 }
