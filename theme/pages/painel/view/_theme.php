@@ -7,10 +7,10 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        <script src="//cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
         <?php
             echo $head;
             echo bootstrap("dist/css/bootstrap.min.css");
+            echo plugins("ckeditor5-build-classic/ckeditor.js");
             echo css("style.min");
             echo $v->section("css");
         ?>
@@ -24,8 +24,6 @@
         <div class="container-fluid">
             <?= $v->section("content"); ?>
         </div>
-<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>-->
-<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>-->
         <?php
             echo chartjs("dist/Chart.bundle.js");
             echo plugins("feather-icons/feather.min.js");

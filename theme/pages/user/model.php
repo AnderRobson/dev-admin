@@ -16,6 +16,8 @@ class UserModel extends Model
 {
     public function __construct()
     {
+        $this->setTable("users");
+
         parent::__construct("users", ["id_person", "email", "password"]);
     }
 

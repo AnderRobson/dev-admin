@@ -19,6 +19,7 @@ $v->layout("stock/view/_theme"); ?>
                     </select>
                 </div>
             </div>
+            <?= flash(); ?>
             <div class="ajax_load">
                 <div class="ajax_load_box">
                     <div class="ajax_load_box_circle"></div>
@@ -26,21 +27,24 @@ $v->layout("stock/view/_theme"); ?>
                 </div>
             </div>
             <div class="form_ajax" style="display: none"></div>
-            <?= flash(); ?>
-            <input type="text" class="form-control" id="exampleFormControlInput1" maxlength="100" value="<?= $stock->id ?>" name="id"  hidden required>
+            <input type="text" class="form-control" maxlength="100" value="<?= $stock->id ?>" name="id"  hidden required>
             <div class="form-group">
                 <label for="exampleFormControlInput1 ">Título</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" maxlength="100" value="<?= $stock->title ?>" name="title" required>
+                <input type="text" class="form-control"exampleFormControlInput1 maxlength="100" value="<?= $stock->title ?>" name="title" required>
             </div>
 
             <div class="form-group my-3">
                 <label for="exampleFormControlTextarea1">Descrição</label>
                 <textarea class="form-control" id="description" rows="3" maxlength="250" name="description" required>
-                    <?= $stock->description ?>
+                    <?= $stock->description; ?>
                 </textarea>
             </div>
             <script>
-                CKEDITOR.replace('description');
+                ClassicEditor
+                    .create(document.querySelector('#description'))
+                    .catch( error => {
+                        console.error( error );
+                    } );
             </script>
             <div class="form-row mb-3">
                 <div class="col-3">

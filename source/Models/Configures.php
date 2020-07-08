@@ -25,6 +25,8 @@ class Configures extends Model
      */
     public function __construct()
     {
+        $this->setTable("configures");
+
         parent::__construct("configures", ["name", "value"]);
     }
 

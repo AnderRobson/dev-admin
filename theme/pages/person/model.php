@@ -10,13 +10,25 @@ class PersonModel extends Model
 {
     public function __construct()
     {
+        $this->setTable("persons");
+
         parent::__construct("persons", ["first_name", "last_name", "date_birth"]);
     }
 
-    public function getAddress(): PersonModel
+    public function getAllInformationFromPersons()
     {
-        $this->address = (new AddressModel())->findByIdPerson($this->id);
-
-        return $this;
+        return $this->search([
+            'join' => [
+                'person_address' => [
+                    'Person_address.id_person' => "Persons.id"
+                ],
+                'address' => [
+                    'Address.id' => "Person_address.id_address"
+                ]
+            ],
+            'where' => [
+                'Persons.id' => 1,
+            ]
+        ]);
     }
 }

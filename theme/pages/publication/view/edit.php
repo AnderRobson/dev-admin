@@ -5,6 +5,7 @@ $v->layout("publication/view/_theme"); ?>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Editando Publicação</h1>
             </div>
+            <?= flash(); ?>
             <div class="ajax_load">
                 <div class="ajax_load_box">
                     <div class="ajax_load_box_circle"></div>
@@ -19,12 +20,16 @@ $v->layout("publication/view/_theme"); ?>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Descrição</label>
-                <textarea class="form-control" id="textpublication" rows="3" maxlength="250" name="description" required>
+                <textarea class="form-control" id="description" rows="3" maxlength="250" name="description" required>
                     <?= $publication->description ?>
                 </textarea>
             </div>
             <script>
-                CKEDITOR.replace('textpublication');
+                ClassicEditor
+                    .create(document.querySelector('#description'))
+                    .catch( error => {
+                        console.error( error );
+                    } );
             </script>
 
             <input type="file" id="btnupload" name="file" class="btn btn-success float-left">

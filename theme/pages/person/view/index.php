@@ -1,13 +1,7 @@
 <?php
 $v->layout("person/view/_theme"); ?>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div class="ajax_load">
-            <div class="ajax_load_box">
-                <div class="ajax_load_box_circle"></div>
-                <div class="ajax_load_box_title jumbotrom">Aguarde, carregando!</div>
-            </div>
-        </div>
-        <div class="form_ajax" style="display: none"></div>
+
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Pessoas Cadastradas</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
@@ -17,6 +11,14 @@ $v->layout("person/view/_theme"); ?>
                 </a>
             </div>
         </div>
+        <?= flash(); ?>
+        <div class="ajax_load">
+            <div class="ajax_load_box">
+                <div class="ajax_load_box_circle"></div>
+                <div class="ajax_load_box_title jumbotrom">Aguarde, carregando!</div>
+            </div>
+        </div>
+        <div class="form_ajax" style="display: none"></div>
         <form method="post" class="mb-5" action="<?= url("pages/person/index"); ?>">
             <div class="form-row">
                 <div class="col-3 mb-1">
@@ -55,11 +57,6 @@ $v->layout("person/view/_theme"); ?>
                     Filtrar
                 </button>
             </div>
-    <!--        <div class="col-md-4 offset-md-0">-->
-    <!--            <button type="submit" class="btn btn-lg btn-outline-primary btn-block">-->
-    <!--                Logar-se-->
-    <!--            </button>-->
-    <!--        </div>-->
         </form>
         <table class="table text-center">
             <thead class="thead-dark">

@@ -8,13 +8,6 @@ $v->layout("stock/view/_theme"); ?>
                 "active" => "stock"
             ]);
         ?>
-        <div class="ajax_load">
-            <div class="ajax_load_box">
-                <div class="ajax_load_box_circle"></div>
-                <div class="ajax_load_box_title jumbotrom">Aguarde, carregando!</div>
-            </div>
-        </div>
-        <div class="form_ajax" style="display: none"></div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h4">Estoques do produto <?= $product->title; ?></h1>
             <div class="btn-toolbar mb-2 mb-md-0">
@@ -25,6 +18,13 @@ $v->layout("stock/view/_theme"); ?>
             </div>
         </div>
         <?= flash(); ?>
+        <div class="ajax_load">
+            <div class="ajax_load_box">
+                <div class="ajax_load_box_circle"></div>
+                <div class="ajax_load_box_title jumbotrom">Aguarde, carregando!</div>
+            </div>
+        </div>
+        <div class="form_ajax" style="display: none"></div>
         <table class="table text-center">
             <thead class="thead-dark">
             <tr>

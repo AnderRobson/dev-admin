@@ -18,6 +18,7 @@ $v->layout("product/view/_theme"); ?>
                     </select>
                 </div>
             </div>
+            <?= flash(); ?>
             <div class="ajax_load">
                 <div class="ajax_load_box">
                     <div class="ajax_load_box_circle"></div>
@@ -25,7 +26,6 @@ $v->layout("product/view/_theme"); ?>
                 </div>
             </div>
             <div class="form_ajax" style="display: none"></div>
-            <?= flash(); ?>
             <div class="form-group">
                 <label for="exampleFormControlInput1 ">Título</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" maxlength="100" name="title" required>
@@ -36,7 +36,11 @@ $v->layout("product/view/_theme"); ?>
                 <textarea class="form-control" id="description" rows="3" maxlength="250" name="description" required></textarea>
             </div>
             <script>
-                CKEDITOR.replace('description');
+                ClassicEditor
+                    .create(document.querySelector('#description'))
+                    .catch( error => {
+                        console.error( error );
+                    } );
             </script>
             <div class="form-row mb-3">
                 <div class="col-3">
