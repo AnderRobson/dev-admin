@@ -1,14 +1,6 @@
 <?php
 $v->layout("banner/view/_theme"); ?>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <?= flash(); ?>
-        <div class="ajax_load">
-            <div class="ajax_load_box">
-                <div class="ajax_load_box_circle"></div>
-                <div class="ajax_load_box_title jumbotrom">Aguarde, carregando!</div>
-            </div>
-        </div>
-        <div class="form_ajax" style="display: none"></div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Banners</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
@@ -18,6 +10,14 @@ $v->layout("banner/view/_theme"); ?>
                 </a>
             </div>
         </div>
+        <?= flash(); ?>
+        <div class="ajax_load">
+            <div class="ajax_load_box">
+                <div class="ajax_load_box_circle"></div>
+                <div class="ajax_load_box_title jumbotrom">Aguarde, carregando!</div>
+            </div>
+        </div>
+        <div class="form_ajax" style="display: none"></div>
         <table class="table text-center">
             <thead class="thead-dark">
             <tr>

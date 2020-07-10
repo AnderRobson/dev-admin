@@ -8,6 +8,8 @@
     {
         public function __construct()
         {
+            $this->setTable("users");
+
             parent::__construct("users", ["first_name"]);
         }
     }

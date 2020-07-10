@@ -27,8 +27,6 @@ class PersonController extends Controller
 
     public function index(array $filters = null): void
     {
-        $filter = $this->setFilters($filters);
-
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
@@ -36,16 +34,10 @@ class PersonController extends Controller
             ""
             )->render();
 
-        $var = (new PersonModel());
-
-        if (! empty($filter)) {
-            $var->find($filter['keysFilter'], $filter['valueToFilter']);
-        } else {
-            $var->find();
-        }
+        $persons = (new PersonModel())->getAllInformationFromPersons();
 
         echo $this->view->render("person/view/index", [
-            "persons" => $var->order('first_name')->fetch(true),
+            "persons" => $persons,
             "states" => (new AddressModel())->getAllState(),
             "head" => $head
         ]);
@@ -53,6 +45,10 @@ class PersonController extends Controller
 
     private function setFilters($filters = null): ?array
     {
+        if (empty($filters)) {
+            return null;
+        }
+
         $filter = [
             "first_name" => null,
             "last_name" => null,
@@ -72,7 +68,7 @@ class PersonController extends Controller
             }
         }
 
-        if (empty($filter) || empty($filters)) {
+        if (empty($filter)) {
             return null;
         }
 

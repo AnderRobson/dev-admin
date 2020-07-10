@@ -13,6 +13,6 @@ $minCss->minify(ROOT . DS . "theme" . DS . "assets" . DS . "css" . DS . "style.m
  * JS
  */
 $minJs = new \MatthiasMullie\Minify\JS();
-$minJs->add(ROOT . DS . "theme" . DS . "assets" . DS . "js" . DS . "jquery.js");
-$minJs->add(ROOT . DS . "theme" . DS . "assets" . DS . "js" . DS . "admin.js");
-$minCss->minify(ROOT . DS . "theme" . DS . "assets" . DS . "js" . DS . "style.min.js");
+//$minJs->add(ROOT . DS . "theme" . DS . "assets" . DS . "js" . DS . "jquery.js");
+//$minJs->add(ROOT . DS . "theme" . DS . "assets" . DS . "js" . DS . "admin.js");
+$minJs->minify(ROOT . DS . "theme" . DS . "assets" . DS . "js" . DS . "style.min.js");

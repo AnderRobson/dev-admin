@@ -6,9 +6,11 @@
     use Theme\Pages\Home\HomeController;
     use Theme\Pages\Banner\BannerController;
     use Theme\Pages\Login\LoginController;
-    use Theme\pages\person\PersonController;
+    use Theme\Pages\Person\PersonController;
+    use Theme\Pages\Product\ProductController;
     use Theme\Pages\Publication\PublicationController;
     use Theme\Pages\Exemplos\ExemploController;
+    use Theme\Pages\Stock\StockController;
     use Theme\Pages\User\UserController;
     use Theme\Pages\User\UserModel;
 
@@ -55,6 +57,12 @@
                 case 'person':
                     $controller = new PersonController($this->router);
                     break;
+                case 'product':
+                    $controller = new ProductController($this->router);
+                    break;
+                case 'stock':
+                    $controller = new StockController($this->router);
+                    break;
                 case 'exemplos':
                     $controller = new ExemploController($this->router);
                     break;
@@ -63,7 +71,7 @@
             if (! empty($controller)) {
                 $this->controller = $controller;
             } else {
-                printrx(utf8_encode("<h1 style='text-align: center'>Construtor da controller {$controllerName}, n?o implementado</h1>"));
+                printrx(utf8_encode("<h1 style='text-align: center'>Construtor da controller {$controllerName}, não implementado</h1>"));
             }
         }
 

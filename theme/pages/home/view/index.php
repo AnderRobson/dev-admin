@@ -7,3 +7,7 @@ $v->layout("painel/view/_theme"); ?>
         $v->insert("home/view/elements/table");
     ?>
 </main>
+<?php
+    $v->start("js");
+        echo js("admin");
+    $v->end();

@@ -185,7 +185,7 @@ class LoginController extends Controller
             if (empty($user)) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",
-                    "message" => "O e-mail informado não é cadastrado"
+                    "message" => "O e-mail informado não está cadastrado"
                 ]);
 
                 return;
@@ -213,7 +213,7 @@ class LoginController extends Controller
                 $user->email
             )->send();
 
-            flash("success", "Enviamos um lik de recuperação para seu e-mail");
+            flash("success", "Enviamos um lik de recuperação de senha para seu e-mail");
 
             echo $this->ajaxResponse("redirect", [
                 "url" => url('forget')
@@ -348,7 +348,7 @@ class LoginController extends Controller
         $facebook = new Facebook([
             "clientId" => $configure->clientId,
             "clientSecret" => $configure->clientSecret,
-            "redirectUri" => $configure->redirectUri,
+            "redirectUri" => $configure->redirectUri->admin,
             "graphApiVersion" => $configure->graphApiVersion
         ]);
 
@@ -422,7 +422,7 @@ class LoginController extends Controller
         $google = new Google([
             "clientId" => $configure->clientId,
             "clientSecret" => $configure->clientSecret,
-            "redirectUri" => $configure->redirectUri
+            "redirectUri" => $configure->redirectUri->admin
         ]);
 
         $error = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRIPPED);

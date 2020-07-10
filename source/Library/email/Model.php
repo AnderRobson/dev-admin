@@ -16,6 +16,8 @@ class EmailModel extends Model
      */
     public function __construct()
     {
+        $this->setTable("emails");
+
         parent::__construct("emails", ["name", "type", "status", "value"]);
     }
 

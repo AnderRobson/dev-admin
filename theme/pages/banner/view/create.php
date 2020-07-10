@@ -5,6 +5,7 @@ $v->layout("banner/view/_theme"); ?>
             <h1 class="h2">Cadastrando Banner</h1>
         </div>
         <form action="<?= url("pages/banner/create"); ?>" method="post" enctype="multipart/form-data">
+            <?= flash(); ?>
             <div class="ajax_load">
                 <div class="ajax_load_box">
                     <div class="ajax_load_box_circle"></div>
@@ -18,10 +19,14 @@ $v->layout("banner/view/_theme"); ?>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Descrição</label>
-                <textarea class="form-control" id="textbanner" rows="3" maxlength="250" name="description" required></textarea>
+                <textarea class="form-control" id="description" rows="3" maxlength="250" name="description" required></textarea>
             </div>
             <script>
-                CKEDITOR.replace('textbanner');
+                ClassicEditor
+                    .create(document.querySelector('#description'))
+                    .catch( error => {
+                        console.error( error );
+                    } );
             </script>
 
             <input type="file" id="btnupload" name="file" class="btn btn-success float-left">
