@@ -3,8 +3,8 @@ $v->layout("stock/view/_theme"); ?>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <?php
             $v->insert("product/view/elements/navbar", [
-                'urlProduto' => "edit/" . $product->slug,
-                "urlStock" => $product->id,
+                'productUrl' => "edit/" . $product->slug,
+                "productId" => $product->id,
                 "active" => "stock"
             ]);
         ?>

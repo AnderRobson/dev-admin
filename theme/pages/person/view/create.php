@@ -18,10 +18,14 @@ $v->layout("banner/view/_theme"); ?>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Descrição</label>
-                <textarea class="form-control" id="textpublication" rows="3" maxlength="250" name="description"></textarea>
+                <textarea class="form-control" id="description" rows="3" maxlength="250" name="description"></textarea>
             </div>
             <script>
-                CKEDITOR.replace('textpublication');
+                ClassicEditor
+                    .create(document.querySelector('#description'))
+                    .catch( error => {
+                        console.error( error );
+                    } );
             </script>
 
             <input type="file" id="btnupload" name="file" class="btn btn-success float-left">

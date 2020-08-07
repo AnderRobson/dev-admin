@@ -58,11 +58,12 @@ class BannerController extends Controller
             $banner->title = $data["title"];
             $banner->slug = slugify($data['title']);
             $banner->description = $data["description"];
+            $banner->status = (bool) $data["status"];
 
             if (! empty($_FILES)) {
                 $upload = new Upload();
-                $upload->setArquivo($_FILES);
-                $upload->setDestinho("banner");
+                $upload->setFile($_FILES);
+                $upload->setDestiny("banner");
                 $nameImage = $upload->upload();
 
                 if (! $nameImage) {
@@ -126,11 +127,12 @@ class BannerController extends Controller
             $banner->title = $data["title"];
             $banner->slug = slugify($data['title']);
             $banner->description = $data["description"];
+            $banner->status = (bool) $data["status"];
 
             if (! empty($_FILES)) {
                 $upload = new Upload();
-                $upload->setArquivo($_FILES);
-                $upload->setDestinho("banner");
+                $upload->setFile($_FILES);
+                $upload->setDestiny("banner");
                 $nameImage = $upload->upload();
 
                 if (empty($nameImage)) {

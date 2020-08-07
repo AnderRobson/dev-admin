@@ -74,4 +74,21 @@ class PersonController extends Controller
 
         return mountFilters($filter);
     }
+
+    public function edit($data = null)
+    {
+        $head = $this->seo->optimize(
+            "Bem vindo ao " . SITE["SHORT_NAME"],
+            SITE["DESCRIPTION"],
+            url("pages/person/edit"),
+            ""
+        )->render();
+
+        $person = (new PersonModel())->getAllInformationFromPersonById($data["slug"]);
+
+        echo $this->view->render("person/view/edit", [
+            "person" => $person,
+            "head" => $head
+        ]);
+    }
 }

@@ -65,7 +65,7 @@ abstract class Model extends DataLayer
      * @param array $data
      * @return array|null
      */
-    public function search(array $data): ?array
+    public function search(array $data, $forceArray = false)
     {
         $filds = null;
         $joins = [];
@@ -124,7 +124,7 @@ abstract class Model extends DataLayer
         }
 
         $returnToArray = null;
-        if ($return && ! is_array($return)) {
+        if ($return && ! is_array($return) && $forceArray) {
             $returnToArray[] = $return;
         }
 

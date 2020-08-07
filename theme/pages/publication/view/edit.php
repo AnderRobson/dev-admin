@@ -4,6 +4,13 @@ $v->layout("publication/view/_theme"); ?>
         <form method="post" action="<?= url("pages/publication/edit/" . $publication->slug); ?>"  enctype="multipart/form-data">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Editando Publicação</h1>
+                <div class="form-group text-center">
+                    <h6>Status da Publicação: </h6>
+                    <select name="status" class="custom-select">
+                        <option value="0" <?= ! $publication->status? "selected='selected'": ""?> >Desativado</option>
+                        <option value="1" <?= $publication->status? "selected='selected'": ""?> >Ativado</option>
+                    </select>
+                </div>
             </div>
             <?= flash(); ?>
             <div class="ajax_load">

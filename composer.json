@@ -15,6 +15,7 @@
     },
     "require": {
         "ext-json": "*",
+        "digitalnature/php-ref": "*",
         "fzaninotto/faker": "1.8.*",
         "coffeecode/datalayer": "^1.0",
         "coffeecode/paginator": "^1.0",

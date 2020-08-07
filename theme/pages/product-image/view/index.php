@@ -1,19 +1,19 @@
 <?php
-$v->layout("stock/view/_theme"); ?>
+$v->layout("product-image/view/_theme"); ?>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <?php
             $v->insert("product/view/elements/navbar", [
                 'productUrl' => "edit/" . $product->slug,
                 "productId" => $product->id,
-                "active" => "stock"
+                "active" => "image"
             ]);
         ?>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h4">Estoques do produto <?= $product->title; ?></h1>
+            <h1 class="h4">Imagens do produto <?= $product->title; ?></h1>
             <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="<?= url("pages/stock/create/" . $product->slug); ?>" class="btn btn-outline-secondary active" role="button" aria-pressed="true">
+                <a href="<?= url("pages/product-image/create/" . $product->slug); ?>" class="btn btn-outline-secondary active" role="button" aria-pressed="true">
                     <span data-feather="plus"></span>
-                    Cadastrar Estoque
+                    Cadastrar Imagens
                 </a>
             </div>
         </div>
@@ -25,31 +25,20 @@ $v->layout("stock/view/_theme"); ?>
             </div>
         </div>
         <div class="form_ajax" style="display: none"></div>
-        <table class="table text-center">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">Código</th>
-                <th scope="col">Título</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Quantidade</th>
-                <th scope="col">Preço Antigo</th>
-                <th scope="col">Preço Atual</th>
-                <th scope="col">Status</th>
-                <th scope="col">Opções</th>
-            </tr>
-            </thead>
-            <tbody>
-                <section class="product">
-                    <?php
-                        if (! empty($stock)):
-                            foreach ($stock as $stock):
-                                $v->insert("stock/view/elements/stock", ['stock' => $stock]);
-                            endforeach;
-                        endif;
-                    ?>
-                </section>
-            </tbody>
-        </table>
+        <div class="card-deck">
+            <?php
+                if (! empty($productImages)):
+                    foreach ($productImages as $productImage):
+                        $v->insert(
+                                "product-image/view/elements/cardImage",
+                                [
+                                    'productImage' => $productImage,
+                                    'altImage' => $product->title
+                                ]);
+                    endforeach;
+                endif;
+            ?>
+        </div>
     </main>
 <?php $v->start("js"); ?>
     <script>

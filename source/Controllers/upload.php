@@ -44,7 +44,7 @@ class Upload
     /**
      * @param mixed $file
      */
-    public function setArquivo($file): void
+    public function setFile($file): void
     {
         $this->file = $file;
 
@@ -55,15 +55,23 @@ class Upload
     /**
      * @param mixed $destiny
      */
-    public function setDestinho(string $destiny): void
+    public function setDestiny(string $destiny): void
     {
         $this->destiny .= $destiny . DS;
     }
 
     /**
+     * @return string
+     */
+    public function getDestiny(): string
+    {
+        return $this->destiny;
+    }
+
+    /**
      * @return mixed
      */
-    public function getNomeArquivo()
+    public function getFileName()
     {
         return $this->fileName;
     }
@@ -103,5 +111,10 @@ class Upload
         }
 
         return $type;
+    }
+
+    public static function fileDestroy($file): bool
+    {
+        return unlink($file);
     }
 }

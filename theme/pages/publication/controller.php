@@ -59,11 +59,12 @@ class PublicationController extends Controller
             $publication->title = $data["title"];
             $publication->slug = slugify($data['title']);
             $publication->description = $data["description"];
+            $publication->status = (bool) $data["status"];
 
             if (! empty($_FILES)) {
                 $upload = new Upload();
-                $upload->setArquivo($_FILES);
-                $upload->setDestinho("publication");
+                $upload->setFile($_FILES);
+                $upload->setDestiny("publication");
                 $nameImage = $upload->upload();
 
                 if (empty($nameImage)) {
@@ -116,7 +117,10 @@ class PublicationController extends Controller
             $data = filter_var_array($data, FILTER_SANITIZE_STRING);
 
             if (empty($data["title"]) || empty($data["description"]) || ! empty($_FILES["file"]["error"])) {
-                redirect("pages/publication?type=error");
+                echo $this->ajaxResponse("message", [
+                    "type" => "danger",
+                    "message" => "Erro ao cadastrar a Publibação"
+                ]);
                 return;
             }
 
@@ -124,25 +128,38 @@ class PublicationController extends Controller
             $publication->title = $data['title'];
             $publication->slug = slugify($data['title']);
             $publication->description = $data['description'];
+            $publication->status = (bool) $data["status"];
 
             if (! empty($_FILES["file"])) {
                 $upload = new Upload();
-                $upload->setArquivo($_FILES);
-                $upload->setDestinho("publication");
+                $upload->setFile($_FILES);
+                $upload->setDestiny("publication");
                 $nameImage = $upload->upload();
 
                 if (! $nameImage) {
-                    redirect("pages/publication?type=error");
+                    echo $this->ajaxResponse("message", [
+                        "type" => "danger",
+                        "message" => "Erro ao realizar o upload do arquivo"
+                    ]);
+                    return;
                 }
 
                 $publication->image = $nameImage;
             }
 
             if (! $publication->save()) {
-                redirect("pages/publication?type=error");
+                echo $this->ajaxResponse("message", [
+                    "type" => "danger",
+                    "message" => "Erro ao cadastrar a Publicação"
+                ]);
+                return;
             }
 
-            redirect("pages/publication?type=success");
+            flash("success", "Publicação cadastrada com sucesso");
+            echo $this->ajaxResponse("redirect", [
+                "url" => url("pages/publication/edit/" . $publication->slug)
+            ]);
+            return;
         }
 
         $head = $this->seo->optimize(

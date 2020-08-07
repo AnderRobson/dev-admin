@@ -13,6 +13,7 @@
     use Theme\Pages\Stock\StockController;
     use Theme\Pages\User\UserController;
     use Theme\Pages\User\UserModel;
+    use Theme\Pages\ProductImage\ProductImageController;
 
     /**
      * Class Web
@@ -62,6 +63,9 @@
                     break;
                 case 'stock':
                     $controller = new StockController($this->router);
+                    break;
+                case 'product-image':
+                    $controller = new ProductImageController($this->router);
                     break;
                 case 'exemplos':
                     $controller = new ExemploController($this->router);

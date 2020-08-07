@@ -63,7 +63,7 @@ $v->layout("person/view/_theme"); ?>
             <tr>
                 <th scope="col">Nome</th>
                 <th scope="col">Data de aniversário</th>
-                <th scope="col">Descrição</th>
+                <th scope="col">Cidade</th>
                 <th scope="col">Opções</th>
             </tr>
             </thead>

@@ -3,7 +3,7 @@ $v->layout("product/view/_theme"); ?>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <?php
             $v->insert("product/view/elements/navbar", [
-                'urlProduto' => "create",
+                'productUrl' => "create",
                 "active" => "product"
             ]);
         ?>
