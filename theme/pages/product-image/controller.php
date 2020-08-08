@@ -124,10 +124,8 @@ class ProductImageController extends Controller
 
         if (! empty($_FILES)) {
             if ($_FILES['error'] != 0) {
-                echo $this->ajaxResponse("message", [
-                    "type" => "danger",
-                    "message" => "Erro ao cadastrar o Estoque"
-                ]);
+                flash("danger", "Erro ao realizar o upload do arquivo");
+                redirect("pages/product-image/create/" . $product->id);
                 return;
             }
 
@@ -140,20 +138,16 @@ class ProductImageController extends Controller
             $nameImage = $upload->upload();
 
             if (empty($nameImage)) {
-                echo $this->ajaxResponse("message", [
-                    "type" => "danger",
-                    "message" => "Erro ao realizar o upload do arquivo"
-                ]);
+                flash("danger", "Erro ao realizar o upload do arquivo");
+                redirect("pages/product-image/create/" . $product->id);
                 return;
             }
 
             $productImage->image = $nameImage;
 
             if (! $productImage->save()) {
-                echo $this->ajaxResponse("message", [
-                    "type" => "danger",
-                    "message" => "Erro ao cadastrar a imagem"
-                ]);
+                flash("danger", "Erro ao cadastrar a Imagem");
+                redirect("pages/product-image/create/" . $product->id);
                 return;
             }
 
