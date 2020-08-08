@@ -3,6 +3,7 @@
 namespace Theme\Pages\ProductImage;
 
 use Source\Controllers\Controller;
+use Source\Controllers\Upload;
 use Theme\Pages\Product\ProductModel;
 
 /**
@@ -121,8 +122,8 @@ class ProductImageController extends Controller
             redirect("pages/product");
         }
 
-        if (! empty($data)) {
-            if (empty($data["title"]) || empty($data["description"]) || empty($data["code"])) {
+        if (! empty($_FILES)) {
+            if ($_FILES['error'] != 0) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",
                     "message" => "Erro ao cadastrar o Estoque"
@@ -132,34 +133,39 @@ class ProductImageController extends Controller
 
             $productImage = new ProductImageModel();
             $productImage->id_product = $product->id;
-            $productImage->status = $data["status"];
-            $productImage->title = $data["title"];
-            $productImage->slug = slugify($data['title']);
-            $productImage->description = trim($data["description"]) ?: '';
-            $productImage->old_value = $data["old_value"] ?: 0;
-            $productImage->current_value = $data["current_value"];
-            $productImage->stock = (int) $data["stock"];
-            $productImage->code = $data["code"];
 
-            if (! $productImage->save()) {
+            $upload = new Upload();
+            $upload->setFile($_FILES);
+            $upload->setDestiny("product");
+            $nameImage = $upload->upload();
+
+            if (empty($nameImage)) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",
-                    "message" => "Erro ao cadastrar o Estoque"
+                    "message" => "Erro ao realizar o upload do arquivo"
                 ]);
                 return;
             }
 
-            flash("success", "Estoque cadastrado com sucesso");
-            echo $this->ajaxResponse("redirect", [
-                "url" => url("pages/product-image/edit/" . $productImage->id)
-            ]);
+            $productImage->image = $nameImage;
+
+            if (! $productImage->save()) {
+                echo $this->ajaxResponse("message", [
+                    "type" => "danger",
+                    "message" => "Erro ao cadastrar a imagem"
+                ]);
+                return;
+            }
+
+            flash("success", "Imagem cadastrado com sucesso");
+            redirect("pages/product-image?product_id=" . $productImage->id_product);
             return;
         }
 
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("pages/product-image/create/" . $product->id),
+            url("pages/product-image/create/" . $product->slug),
             ""
         )->render();
 

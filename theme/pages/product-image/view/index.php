@@ -44,7 +44,7 @@ $v->layout("product-image/view/_theme"); ?>
     <script>
         $(function () {
             function load(action) {
-                var load_div = $(".ajax_load");
+                let load_div = $(".ajax_load");
                 if (action === "open") {
                     load_div.fadeIn().css("display", "flex");
                 } else {
@@ -59,8 +59,8 @@ $v->layout("product-image/view/_theme"); ?>
 
                 load("open");
 
-                var data = $(this).data();
-                var div = $(this).parent().parent();
+                let data = $(this).data();
+                let div = $(this).parent().parent();
 
                 $.post(data.action, data, function () {
                     load('close');

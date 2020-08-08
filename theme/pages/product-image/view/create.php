@@ -1,23 +1,16 @@
 <?php
-$v->layout("stock/view/_theme"); ?>
+$v->layout("product-image/view/_theme"); ?>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <?php
             $v->insert("product/view/elements/navbar", [
                 'productUrl' => "edit/" . $product->slug,
                 "productId" => $product->id,
-                "active" => "stock"
+                "active" => "image"
             ]);
         ?>
-        <form method="post" action="<?= url("pages/stock/create/" . $product->slug); ?>" enctype="multipart/form-data">
+        <form method="post" action="<?= url("pages/product-image/create/" . $product->slug); ?>" enctype="multipart/form-data">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Cadastrando Estoque</h1>
-                <div class="form-group text-center">
-                    <h6 for="exampleFormControlInput1">Status do Estoque: </h6>
-                    <select name="status" class="custom-select">
-                        <option value="0">Desativado</option>
-                        <option value="1" selected="selected">Ativado</option>
-                    </select>
-                </div>
+                <h1 class="h2">Cadastrando Imagem</h1>
             </div>
             <?= flash(); ?>
             <div class="ajax_load">
@@ -27,48 +20,49 @@ $v->layout("stock/view/_theme"); ?>
                 </div>
             </div>
             <div class="form_ajax" style="display: none"></div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1 ">Título</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" maxlength="100" name="title" required>
-            </div>
-
-            <div class="form-group my-3">
-                <label for="exampleFormControlTextarea1">Descrição</label>
-                <textarea class="form-control" id="description" rows="3" maxlength="250" name="description"></textarea>
-            </div>
-            <script>
-                ClassicEditor
-                    .create(document.querySelector('#description'))
-                    .catch( error => {
-                        console.error( error );
-                    } );
-            </script>
-            <div class="form-row mb-3">
-                <div class="col-3">
-                    <label for="exampleFormControlInput1 ">Preço antigo</label>
-                    <input type="text" class="form-control" maxlength="100" name="old_value" placeholder="Preço antigo">
-                </div>
-                <div class="col-3">
-                    <label for="exampleFormControlInput1 ">Preço atual</label>
-                    <input type="text" class="form-control" maxlength="100" name="current_value" placeholder="Preço atual" required>
-                </div>
-                <div class="col-3">
-                    <label for="exampleFormControlInput1 ">Quantidade em estoque</label>
-                    <input type="text" class="form-control" maxlength="11" name="stock" placeholder="Quantidade em estoque" required>
-                </div>
-                <div class="col-3">
-                    <label for="exampleFormControlInput1 ">Código do Estoque</label>
-                    <input type="text" class="form-control" maxlength="100" name="code" placeholder="Código de identificação" required>
+            <div class="row mb-3">
+                <div class="col-12 text-center">
+                    <div id="imgLocal">
+                        <img src="<?= urlFile('product/semimage.png')?>" class="rounded img-fluid" id="preview" alt="...">
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success float-right ml-3 my-5">Salvar Produto</button>
-            <a href="<?= url("pages/stock?product_id=" . $product->id); ?>">
-                <button type="button" class="btn btn-danger float-right my-5">
-                    Cancelar
-                </button>
-            </a>
+            <div class="row">
+                <div class="col-12">
+                    <input id="inputImage" type="file" name="file" onchange="pegaArquivo(this.files)" class="btn btn-success float-left my-5">
+                    <button type="submit" class="btn btn-success float-right ml-3 my-5">Salvar Produto</button>
+                    <a href="<?= url("pages/stock?product_id=" . $product->id); ?>">
+                        <button type="button" class="btn btn-danger float-right my-5">
+                            Cancelar
+                        </button>
+                    </a>
+                </div>
+            </div>
         </form>
     </main>
 <?php $v->start("js"); ?>
-    <?= js("form"); ?>
+    <script>
+        function pegaArquivo(files) {
+            let imgLoca = document.getElementById('imgLocal');
+            let file = files[0];
+            let img = document.createElement("img");
+            let preview = document.getElementById("preview");
+            img.file = file;
+
+            imgLocal.appendChild(img)
+
+            let reader = new FileReader();
+            reader.onload = (function (aImg) {
+                    return function (e) {
+                        aImg.src = e.target.result;
+                        aImg.className = 'rounded img-fluid';
+                        aImg.id = 'preview';
+                    };
+                }
+            )(img);
+
+            preview.remove();
+            reader.readAsDataURL(file);
+        }
+    </script>
 <?php $v->end(); ?>
