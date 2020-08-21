@@ -48,5 +48,4 @@ $v->layout("banner/view/_theme"); ?>
     </main>
 <?php
     $v->start("js");
-        echo js("form");
     $v->end();

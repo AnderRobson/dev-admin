@@ -114,7 +114,7 @@ class BannerController extends Controller
     {
         if (! empty($data)) {
             $data = filter_var_array($data, FILTER_SANITIZE_STRING);
-
+            $data["description"] = 'asadasd';
             if (empty($data["title"]) || empty($data["description"]) || ! empty($_FILES["file"]["error"])) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",

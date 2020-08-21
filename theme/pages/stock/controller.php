@@ -66,13 +66,12 @@ class StockController extends Controller
         $product = (new ProductModel())->findById($stock->id_product);
 
         if (! empty($data)) {
-            printrx($data);
             $stock->status = $data["status"];
             $stock->title = $data["title"];
             $stock->slug = slugify($data['title']);
             $stock->description = ! empty($data["description"]) ? trim($data["description"]) : '';
-            $stock->old_value = $data["old_value"] ?: 0;
-            $stock->current_value = $data["current_value"];
+            $stock->old_value = $data["old_value"] ? number_format(str_replace(',', '.', $data["old_value"]), 2) : 0;
+            $stock->current_value = number_format(str_replace(',', '.', $data["current_value"]), 2);
             $stock->stock = (int) $data["stock"];
             $stock->code = $data["code"];
 

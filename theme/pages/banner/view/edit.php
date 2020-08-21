@@ -11,7 +11,8 @@ $v->layout("banner/view/_theme"); ?>
                 </select>
             </div>
         </div>
-        <form method="post" action="<?= url("pages/banner/edit/" . $banner->slug); ?>" enctype="multipart/form-data">
+        <div class="row">
+            <form method="post" action="<?= url("pages/banner/edit/" . $banner->slug); ?>" enctype="multipart/form-data">
             <?= flash(); ?>
             <div class="ajax_load">
                 <div class="ajax_load_box">
@@ -48,7 +49,20 @@ $v->layout("banner/view/_theme"); ?>
                 </button>
             </a>
         </form>
+        </div>
+        <div class="row">
+            <div class="card">
+                <img src="<?= urlFile("banner" . DS . $banner->image); ?>" class="card-img-top" alt="<?= $banner->title; ?>">
+                <div class="card-footer">
+                    <small class="text-muted">Imagem cadastrado em: <?= $banner->created_at; ?></small>
+                    <a href="#" data-action="<?= url("pages/product-image/delete"); ?>" data-id="<?= $banner->id; ?>">
+                        <button type="button" class="btn btn-danger float-right">
+                            Deletar Imagem
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </main>
 <?php $v->start("js"); ?>
-    <?= js("form"); ?>
 <?php $v->end(); ?>

@@ -51,5 +51,4 @@ $v->layout("publication/view/_theme"); ?>
     </main>
 <?php
     $v->start("js");
-        echo js("form");
     $v->end();

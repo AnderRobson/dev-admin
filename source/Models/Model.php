@@ -28,6 +28,13 @@ abstract class Model extends DataLayer
     protected $table;
 
     /**
+     * Antiga tabela setada para realizar consulta.
+     *
+     * @var $oldTable
+     */
+    protected $oldTable;
+
+    /**
      * Model constructor.
      * @param $entity
      * @param $required
@@ -46,6 +53,10 @@ abstract class Model extends DataLayer
      */
     public function setTable(string $table): void
     {
+        if (! empty($this->table)) {
+            $this->oldTable = $this->table;
+        }
+
         $this->table = $table;
     }
 
@@ -57,6 +68,14 @@ abstract class Model extends DataLayer
     public function getTable(): string
     {
         return $this->table;
+    }
+
+    /**
+     * Responsavel por retirar a tabela setada para realizar a consulta.
+     */
+    public function reset()
+    {
+        $this->table = $this->oldTable;
     }
 
     /**
@@ -118,7 +137,7 @@ abstract class Model extends DataLayer
         }
 
         try {
-            $return = $this->connect->query($query)->fetch(true);
+            $return = $this->connect->query($query)->fetchAll();
         } catch (\Exception $exception) {
             $return = null;
         }
