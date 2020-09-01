@@ -33,8 +33,7 @@ class PublicationController extends Controller
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("pages/publication"),
-            "",
+            url("pages/publication")
         )->render();
 
         echo $this->view->render("publication/view/index", [
@@ -97,7 +96,7 @@ class PublicationController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/publication"),
-            "",
+            ""
             )->render();
 
         echo $this->view->render("publication/view/edit", [
@@ -166,7 +165,7 @@ class PublicationController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/publication/create"),
-            "",
+            ""
         )->render();
 
         echo $this->view->render("publication/view/create", [
@@ -193,9 +192,6 @@ class PublicationController extends Controller
         $publication = (new PublicationModel())->findById($id);
 
         if (! empty($publication)) {
-            $callback['remove'] = false;
-            echo json_encode($callback);
-
             $publication->destroy();
         }
 

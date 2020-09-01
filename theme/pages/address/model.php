@@ -18,7 +18,7 @@ class AddressModel extends Model
     {
         $this->setTable("address");
 
-        parent::__construct("address", ["street", "number", "district", "city", "id_state"]);
+        parent::__construct("address", ["street", "number", "district", "city", "zip_code", "id_state"]);
     }
 
     public function getAllState()

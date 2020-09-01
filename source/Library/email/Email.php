@@ -37,7 +37,7 @@ class Email extends Controller
     {
         $configure = $this->getConfigure('email');
 
-        if (empty($configure)) {
+        if (empty((int) $configure->id)) {
             printrx("Email não configurado !");
         }
 
@@ -52,12 +52,12 @@ class Email extends Controller
         $this->mail->SMTPSecure = "tls";
         $this->mail->CharSet = "utf-8";
 
-        $this->mail->Host = $configure->host;
-        $this->mail->Port = $configure->port;
-        $this->mail->Username = $configure->user;
-        $this->mail->Password = $configure->password;
-        $this->fromName = $configure->from_name;
-        $this->fromEmail = $configure->from_email;
+        $this->mail->Host = $configure->value['host'];
+        $this->mail->Port = $configure->value['port'];
+        $this->mail->Username = $configure->value['user'];
+        $this->mail->Password = $configure->value['password'];
+        $this->fromName = $configure->value['from_name'];
+        $this->fromEmail = $configure->value['from_email'];
     }
 
     /**

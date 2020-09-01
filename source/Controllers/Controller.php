@@ -29,10 +29,6 @@ abstract class Controller
 
     /** @var UserModel */
     protected $user;
-
-    /** @var Configures */
-    private $configures;
-
     /**
      * Controller constructor.
      * @param $router
@@ -46,11 +42,11 @@ abstract class Controller
         $this->seo = new Optimizer();
 
         $facebookInformation = $this->getConfigure("facebook_login");
-        if (! empty($facebookInformation)) {
+        if (! empty((int) $facebookInformation->id)) {
             $this->seo->openGraph(SITE['NAME'], SITE['LOCALE'], "article")
                 ->publisher(SOCIAL["FACEBOOK_PAGE"], SOCIAL["FACEBOOK_AUTHOR"])
                 ->twitterCard(SOCIAL["TWITTER_CREATOR"], SOCIAL["TWITTER_SITE"], SITE["DOMAIN"])
-                ->facebook($facebookInformation->clientId);
+                ->facebook($facebookInformation->value['clientId']);
         }
 
         if (! empty($_SESSION["user"]) && $this->user = (new UserModel())->findById($_SESSION['user'])->getPerson()) {
@@ -58,7 +54,7 @@ abstract class Controller
         }
     }
 
-    public function getConfigure(string $name): ?\stdClass
+    public function getConfigure(string $name)
     {
         return (new Configures())->getConfigure($name);
     }

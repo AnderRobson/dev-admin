@@ -57,13 +57,13 @@ class LoginController extends Controller
             if (! $user || ! password_verify($password, $user->password)) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",
-                    "message" => "E-mail ou senha informados não conferem!"
+                    "message" => "E-mail ou senha informados nï¿½o conferem!"
                 ]);
 
                 return;
             }
 
-            /** Validação de rede-social */
+            /** Validaï¿½ï¿½o de rede-social */
             $this->socialValidate($user);
 
             $_SESSION['user'] = $user->id;
@@ -91,8 +91,6 @@ class LoginController extends Controller
     public function register(array $data = null): void
     {
         if (! empty($data)) {
-//            $data = filter_var($data, FILTER_SANITIZE_STRIPPED);
-
             if (in_array("", $data)) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",
@@ -108,7 +106,7 @@ class LoginController extends Controller
             $user->email = $data['email'];
             $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
 
-            /** Validação de rede-social */
+            /** ValidaÃ§Ã£o de rede-social */
             $this->socialValidate($user);
 
             if (! $user->save()) {
@@ -151,8 +149,7 @@ class LoginController extends Controller
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("register"),
-            "",
+            url("register")
         )->render();
 
         echo $this->view->render("login/view/register", [
@@ -162,7 +159,7 @@ class LoginController extends Controller
     }
 
     /**
-     *  Responsavel por realizar a solicitação de recuperação de senha.
+     *  Responsavel por realizar a solicitaï¿½ï¿½o de recuperaï¿½ï¿½o de senha.
      *
      * @param array|null $data
      */
@@ -185,7 +182,7 @@ class LoginController extends Controller
             if (empty($user)) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",
-                    "message" => "O e-mail informado não está cadastrado"
+                    "message" => "O e-mail informado nï¿½o estï¿½ cadastrado"
                 ]);
 
                 return;
@@ -213,7 +210,7 @@ class LoginController extends Controller
                 $user->email
             )->send();
 
-            flash("success", "Enviamos um lik de recuperação de senha para seu e-mail");
+            flash("success", "Enviamos um lik de recuperaï¿½ï¿½o de senha para seu e-mail");
 
             echo $this->ajaxResponse("redirect", [
                 "url" => url('forget')
@@ -229,8 +226,7 @@ class LoginController extends Controller
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("login"),
-            "",
+            url("login")
         )->render();
 
         echo $this->view->render("login/view/forget", [
@@ -248,7 +244,7 @@ class LoginController extends Controller
     {
         if (empty($_SESSION["forget"]) || ! $user = (new UserModel())->findById($_SESSION["forget"])) {
             if ($data["password"] != $data["password_confirmation"]) {
-                flash("danger", "Não foi possível recuperar, tente novamente");
+                flash("danger", "Nï¿½o foi possï¿½vel recuperar, tente novamente");
                 echo $this->ajaxResponse("redirect", [
                     "url" => url("forget")
                 ]);
@@ -267,7 +263,7 @@ class LoginController extends Controller
         if ($data["password"] != $data["password_confirmation"]) {
             echo $this->ajaxResponse("message", [
                 "type" => "warning",
-                "message" => "Você informou duas senhas diferentes"
+                "message" => "Vocï¿½ informou duas senhas diferentes"
             ]);
             return;
         }
@@ -303,7 +299,7 @@ class LoginController extends Controller
         $email = filter_var($data["email"], FILTER_VALIDATE_EMAIL);
         $forget = filter_var($data["forget"], FILTER_DEFAULT);
 
-        $errorForget = "Não foi possível recuperar, tente novamente";
+        $errorForget = "Nï¿½o foi possï¿½vel recuperar, tente novamente";
 
         if (empty($email) || empty($forget) || empty($_SESSION["forget"])) {
             flash("danger", $errorForget);
@@ -321,8 +317,7 @@ class LoginController extends Controller
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("login"),
-            "",
+            url("login")
         )->render();
 
         echo $this->view->render("login/view/reset", [
@@ -332,7 +327,7 @@ class LoginController extends Controller
     }
 
     /**
-     *  Realizando login via autenticação Facebook.
+     *  Realizando login via autenticaï¿½ï¿½o Facebook.
      *
      * @param array|null $data
      */
@@ -340,16 +335,16 @@ class LoginController extends Controller
     {
         $configure = $this->getConfigure("facebook_login");
 
-        if (empty($configure)) {
-            flash("danger", "Login com o Facebook não configurado");
+        if (empty((int) $configure->id)) {
+            flash("danger", "Login com o Facebook nï¿½o configurado");
             redirect("login");
         }
 
         $facebook = new Facebook([
-            "clientId" => $configure->clientId,
-            "clientSecret" => $configure->clientSecret,
-            "redirectUri" => $configure->redirectUri->admin,
-            "graphApiVersion" => $configure->graphApiVersion
+            "clientId" => $configure->value['clientId'],
+            "clientSecret" => $configure->value['clientSecret'],
+            "redirectUri" => url("facebook"),
+            "graphApiVersion" => $configure->value['graphApiVersion']
         ]);
 
         $error = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRIPPED);
@@ -362,7 +357,7 @@ class LoginController extends Controller
         }
 
         if ($error) {
-            flash("danger", "Não foi possível logar com o Facebook");
+            flash("danger", "Nï¿½o foi possï¿½vel logar com o Facebook");
             redirect("login");
             return;
         }
@@ -372,7 +367,7 @@ class LoginController extends Controller
                 $token = $facebook->getAccessToken("authorization_code", ["code" => $code]);
                 $_SESSION["facebook_auth"] = serialize($facebook->getResourceOwner($token));
             } catch (\Exception $exception) {
-                flash("danger", "Não foi possível logar com o Facebook");
+                flash("danger", "Nï¿½o foi possï¿½vel logar com o Facebook");
                 redirect("login");
                 return;
             }
@@ -392,37 +387,37 @@ class LoginController extends Controller
         /** Login pelo email */
         $userByEmail = (new UserModel())->find("email = :email", "email={$facebookUser->getEmail()}")->fetch();
         if (! empty($userByEmail)) {
-            flash("warning", "Olá {$facebookUser->getFirstName()}, faça login para conectar sua conta Facebook");
+            flash("warning", "Olï¿½ {$facebookUser->getFirstName()}, faï¿½a login para conectar sua conta Facebook");
             redirect("login");
             return;
         }
 
-        /** Registrar usuário via Facebook */
+        /** Registrar usuï¿½rio via Facebook */
         flash(
             "warning",
-            "Olá {$facebookUser->getFirstName()}, <strong>se já tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
+            "Olï¿½ {$facebookUser->getFirstName()}, <strong>se jï¿½ tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
         );
         redirect("register");
         return;
     }
 
     /**
-     *  Realizando login via autenticação Google.
+     *  Realizando login via autenticaï¿½ï¿½o Google.
      *
      */
     public function google(): void
     {
         $configure = $this->getConfigure("google_login");
 
-        if (empty($configure)) {
-            flash("danger", "Login com o Google não configurado");
+        if (empty((int) $configure->id)) {
+            flash("danger", "Login com o Google nï¿½o configurado");
             redirect("login");
         }
 
         $google = new Google([
-            "clientId" => $configure->clientId,
-            "clientSecret" => $configure->clientSecret,
-            "redirectUri" => $configure->redirectUri->admin
+            "clientId" => $configure->value['clientId'],
+            "clientSecret" => $configure->value['clientSecret'],
+            "redirectUri" => url("google")
         ]);
 
         $error = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRIPPED);
@@ -435,7 +430,7 @@ class LoginController extends Controller
         }
 
         if ($error) {
-            flash("danger", "Não foi possível logar com o Google");
+            flash("danger", "Nï¿½o foi possï¿½vel logar com o Google");
             redirect("login");
             return;
         }
@@ -445,7 +440,7 @@ class LoginController extends Controller
                 $token = $google->getAccessToken("authorization_code", ["code" => $code]);
                 $_SESSION["google_auth"] = serialize($google->getResourceOwner($token));
             } catch (\Exception $exception) {
-                flash("danger", "Não foi possível logar com o Google");
+                flash("danger", "Nï¿½o foi possï¿½vel logar com o Google");
                 redirect("login");
                 return;
             }
@@ -465,22 +460,22 @@ class LoginController extends Controller
         /** Login pelo email */
         $userByEmail = (new UserModel())->find("email = :email", "email={$googleUser->getEmail()}")->fetch();
         if (! empty($userByEmail)) {
-            flash("warning", "Olá {$googleUser->getFirstName()}, faça login para conectar sua conta Google");
+            flash("warning", "Olï¿½ {$googleUser->getFirstName()}, faï¿½a login para conectar sua conta Google");
             redirect("login");
             return;
         }
 
-        /** Registrar usuário via Google */
+        /** Registrar usuï¿½rio via Google */
         flash(
             "warning",
-            "Olá {$googleUser->getFirstName()}, <strong>se já tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
+            "Olï¿½ {$googleUser->getFirstName()}, <strong>se jï¿½ tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
         );
         redirect("register");
         return;
     }
 
     /**
-     *  Valida se existe uma Classe de rede social na seção e vincula ao usuário logado.
+     *  Valida se existe uma Classe de rede social na seï¿½ï¿½o e vincula ao usuï¿½rio logado.
      *
      * @param UserModel $user
      */

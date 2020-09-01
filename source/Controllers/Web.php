@@ -10,6 +10,7 @@
     use Theme\Pages\Product\ProductController;
     use Theme\Pages\Publication\PublicationController;
     use Theme\Pages\Exemplos\ExemploController;
+    use Theme\pages\settings\SettingsController;
     use Theme\Pages\Stock\StockController;
     use Theme\Pages\User\UserController;
     use Theme\Pages\User\UserModel;
@@ -69,6 +70,9 @@
                     break;
                 case 'exemplos':
                     $controller = new ExemploController($this->router);
+                    break;
+                case 'settings':
+                    $controller = new SettingsController($this->router);
                     break;
             }
 

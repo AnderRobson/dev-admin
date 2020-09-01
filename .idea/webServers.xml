@@ -5,7 +5,7 @@
       <webServer id="89d6caa4-b783-4d0d-a2e8-a3d5fb182543" name="Plataforma Web" url="http://files.000webhost.com">
         <fileTransfer host="files.000webhost.com" port="21" rootFolder="/public_html/">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
           <option name="port" value="21" />
         </fileTransfer>

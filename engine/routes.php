@@ -43,8 +43,8 @@
     /**
      *  APIs Restful
      */
-    $router->get('webservice/getpostagens', "Api:getPosts");
-    $router->post("webservice/getpost", "Api:getPost");
+    $router->get('webservice/{function}', "Api:get");
+    $router->post("webservice/{function}", "Api:post");
 
     /**
      * Group Error
