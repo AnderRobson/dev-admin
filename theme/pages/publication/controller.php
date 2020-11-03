@@ -33,7 +33,8 @@ class PublicationController extends Controller
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("pages/publication")
+            url("pages/publication"),
+            ""
         )->render();
 
         echo $this->view->render("publication/view/index", [
@@ -97,7 +98,7 @@ class PublicationController extends Controller
             SITE["DESCRIPTION"],
             url("pages/publication"),
             ""
-            )->render();
+        )->render();
 
         echo $this->view->render("publication/view/edit", [
             "publication" => (new PublicationModel())->find("slug = :slug", "slug={$slug}")->fetch(),

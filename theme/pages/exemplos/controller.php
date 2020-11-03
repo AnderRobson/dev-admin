@@ -27,7 +27,8 @@ class ExemploController extends Controller
         $head = $this->seo->optimize(
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
-            url("pages/exemplos")
+            url("pages/exemplos"),
+            ""
         )->render();
 
         echo $this->view->render("exemplos/view/index", [

@@ -1,278 +1,232 @@
 <?php
 
-    namespace Source\Controllers;
+namespace Source\Controllers;
 
-    use League\Plates\Engine;
-    use Theme\Pages\Home\HomeController;
-    use Theme\Pages\Banner\BannerController;
-    use Theme\Pages\Login\LoginController;
-    use Theme\Pages\Person\PersonController;
-    use Theme\Pages\Product\ProductController;
-    use Theme\Pages\Publication\PublicationController;
-    use Theme\Pages\Exemplos\ExemploController;
-    use Theme\pages\settings\SettingsController;
-    use Theme\Pages\Stock\StockController;
-    use Theme\Pages\User\UserController;
-    use Theme\Pages\User\UserModel;
-    use Theme\Pages\ProductImage\ProductImageController;
+use League\Plates\Engine;
+use Theme\Pages\Login\LoginController;
+use Theme\Pages\User\UserModel;
+
+/**
+ * Class Web
+ * @package Source\Controllers
+ */
+class Web extends Controller
+{
+    /** @var UserModel */
+    protected $user;
+
+    /** @var Engine  */
+    private $controller;
 
     /**
-     * Class Web
-     * @package Source\Controllers
+     * Web constructor.
+     * @param $router
      */
-    class Web extends Controller
+    public function __construct($router)
     {
-        /** @var UserModel */
-        protected $user;
+        parent::__construct($router);
+    }
 
-        /** @var Engine  */
-        private $controller;
+    /**
+     * Responsavel por instanciar Controller
+     *
+     * @param string $controllerName
+     */
+    private function setController(string $controllerName): void
+    {
+        $controller = null;
+        $namespace = 'Theme\Pages\\' . ucfirst($controllerName);
+        $className = $namespace . '\\' . ucfirst($controllerName) . 'Controller';
 
-        /**
-         * Web constructor.
-         * @param $router
-         */
-        public function __construct($router)
-        {
-            parent::__construct($router);
+        if (class_exists($className)) {
+            $controller = new $className($this->router);
         }
 
-        /**
-         * @param Engine $controller
-         */
-        public function setController(string $controllerName): void
-        {
-            $controller = null;
-            switch ($controllerName) {
-                case 'home':
-                    $controller = new HomeController($this->router);
-                    break;
-                case 'user':
-                    $controller = new UserController($this->router);
-                    break;
-                case 'banner':
-                    $controller = new BannerController($this->router);
-                    break;
-                case 'publication':
-                    $controller = new PublicationController($this->router);
-                    break;
-                case 'person':
-                    $controller = new PersonController($this->router);
-                    break;
-                case 'product':
-                    $controller = new ProductController($this->router);
-                    break;
-                case 'stock':
-                    $controller = new StockController($this->router);
-                    break;
-                case 'product-image':
-                    $controller = new ProductImageController($this->router);
-                    break;
-                case 'exemplos':
-                    $controller = new ExemploController($this->router);
-                    break;
-                case 'settings':
-                    $controller = new SettingsController($this->router);
-                    break;
-            }
-
-            if (! empty($controller)) {
-                $this->controller = $controller;
-            } else {
-                printrx(utf8_encode("<h1 style='text-align: center'>Construtor da controller {$controllerName}, não implementado</h1>"));
-            }
+        if (! empty($controller)) {
+            $this->controller = $controller;
+        } else {
+            redirect('pages/home');
         }
+    }
 
-        /**
-         *  redirect caso URL seja apenas /
-         */
-        public function home(): void
-        {
-            redirect("pages/home");
-        }
+    /**
+     *  redirect caso URL seja apenas /
+     */
+    public function home(): void
+    {
+        redirect("pages/home");
+    }
 
-        /**
-         * @param array $data
-         */
-        public function pages(array $data): void
-        {
-            if (empty($_SESSION['user']) || ! $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                unset($_SESSION["user"]);
-
-                flash("danger", "Acesso negado. Favor logue-se");
-                redirect("login");
-            }
-
-            require loadController($data['page']);
-            $this->setController($data['page']);
-            $function = ! empty($data['function']) ? $data['function'] : "index";
-
-            unset($data['page']);
-            unset($data['function']);
-            unset($data['action']);
-
-            if (!empty($data)) {
-                $this->controller->$function($data);
-            } else {
-                $this->controller->$function();
-            }
-        }
-
-        /**
-         *
-         */
-        public function login(array $data = null): void
-        {
-            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("pages/home");
-            }
-
-            require loadController('login');
-            $this->controller = new LoginController($this->router);
-
-            if (!empty($data)) {
-                $this->controller->index($data);
-            } else {
-                $this->controller->index();
-            }
-        }
-
-        /**
-         *
-         */
-        public function logoff(): void
-        {
+    /**
+     * @param array $data
+     */
+    public function pages(array $data): void
+    {
+        if (empty($_SESSION['user']) || ! $this->user = (new UserModel())->findById($_SESSION['user'])) {
             unset($_SESSION["user"]);
 
-            flash("success", "Você saiu com sucesso, volte logo {$this->user->first_name}!");
-            unset($this->user);
-
+            flash("danger", "Acesso negado. Favor logue-se");
             redirect("login");
         }
 
-        /**
-         *
-         */
-        public function forget(array $data = null): void
-        {
-            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("pages/home");
-            }
+        $this->setController($data['page']);
+        $function = ! empty($data['function']) ? $data['function'] : "index";
 
-            require loadController('login');
-            $this->controller = new LoginController($this->router);
+        unset($data['page']);
+        unset($data['function']);
+        unset($data['action']);
 
-            if (!empty($data)) {
-                $this->controller->forget($data);
-            } else {
-                $this->controller->forget();
-            }
-        }
-
-        public function reset(array $data): void
-        {
-            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("pages/home");
-            }
-
-            require loadController('login');
-            $this->controller = new LoginController($this->router);
-
-            $this->controller->reset($data);
-        }
-
-        public function resetPassword(array $data): void
-        {
-            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("pages/home");
-            }
-
-            require loadController('login');
-            $this->controller = new LoginController($this->router);
-
-            $this->controller->resetPassword($data);
-        }
-
-        /**
-         *
-         */
-        public function register(array $data = null): void
-        {
-            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("pages/home");
-            }
-
-            require loadController('login');
-            $this->controller = new LoginController($this->router);
-
-            if (! empty($data)) {
-                $this->controller->register($data);
-            } else {
-                $this->controller->register();
-            }
-        }
-
-        public function facebook(array $data = null): void
-        {
-            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("pages/home");
-            }
-
-            require loadController('login');
-            $this->controller = new LoginController($this->router);
-
-            if (! empty($data)) {
-                $this->controller->facebook($data);
-            } else {
-                $this->controller->facebook();
-            }
-        }
-
-        public function google(array $data = null): void
-        {
-            if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
-                redirect("pages/home");
-            }
-
-            require loadController('login');
-            $this->controller = new LoginController($this->router);
-
-            if (! empty($data)) {
-                $this->controller->google($data);
-            } else {
-                $this->controller->google();
-            }
-        }
-
-        /**
-         * Auxiliares
-         */
-        /**
-         * @param $slugPost
-         */
-        public function slugPost($slugPost)
-        {
-            echo "<h1 style='text-align: center'> Pesquisa de publicação pelo slug !</h1>";
-            var_dump($slugPost);
-        }
-
-        /**
-         * @param $data
-         */
-        public function error($errcode): void
-        {
-            $errcode = filter_var($errcode["errcode"], FILTER_VALIDATE_INT);
-
-            $head = $this->seo->optimize(
-                "Bem vindo ao " . SITE["SHORT_NAME"],
-                SITE["DESCRIPTION"],
-                url("home"),
-                "",
-            )->render();
-
-            echo $this->view->render("error/error", [
-                'errcode' => $errcode,
-                'head' => $head
-            ]);
+        if (! empty($data)) {
+            $this->controller->$function($data);
+        } else {
+            $this->controller->$function();
         }
     }
+
+    /**
+     * Responsavel por tratar rota de login
+     *
+     * @param array $data
+     */
+    public function login(array $data = []): void
+    {
+        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+            redirect("pages/home");
+        }
+
+        $this->controller = new LoginController($this->router);
+
+        $this->controller->index($data);
+    }
+
+    /**
+     * Responsavel por desconectar usuário
+     */
+    public function logoff(): void
+    {
+        unset($_SESSION["user"]);
+
+        flash("success", "Você saiu com sucesso, volte logo {$this->user->person->first_name}!");
+        unset($this->user);
+
+        redirect("login");
+    }
+
+    /**
+     * Responsavel por tratar rota de recuperação de senha
+     *
+     * @param array $data
+     */
+    public function forget(array $data = []): void
+    {
+        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+            redirect("pages/home");
+        }
+
+        $this->controller = new LoginController($this->router);
+
+        $this->controller->forget($data);
+    }
+
+    public function reset(array $data): void
+    {
+        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+            redirect("pages/home");
+        }
+
+        $this->controller = new LoginController($this->router);
+
+        $this->controller->reset($data);
+    }
+
+    public function resetPassword(array $data): void
+    {
+        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+            redirect("pages/home");
+        }
+
+        $this->controller = new LoginController($this->router);
+
+        $this->controller->resetPassword($data);
+    }
+
+    /**
+     * @param array $data
+     */
+    public function register(array $data = []): void
+    {
+        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+            redirect("pages/home");
+        }
+
+        $this->controller = new LoginController($this->router);
+
+        if (! empty($data)) {
+            $this->controller->register($data);
+        } else {
+            $this->controller->register();
+        }
+    }
+
+    public function facebook(array $data = []): void
+    {
+        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+            redirect("pages/home");
+        }
+
+        $this->controller = new LoginController($this->router);
+
+        if (! empty($data)) {
+            $this->controller->facebook($data);
+        } else {
+            $this->controller->facebook();
+        }
+    }
+
+    public function google(array $data = []): void
+    {
+        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+            redirect("pages/home");
+        }
+
+        $this->controller = new LoginController($this->router);
+
+        if (! empty($data)) {
+            $this->controller->google($data);
+        } else {
+            $this->controller->google();
+        }
+    }
+
+    /**
+     * Auxiliares
+     */
+    /**
+     * @param $slugPost
+     */
+    public function slugPost($slugPost)
+    {
+        echo "<h1 style='text-align: center'> Pesquisa de publicação pelo slug !</h1>";
+        var_dump($slugPost);
+    }
+
+    /**
+     * @param $errcode
+     */
+    public function error($errcode): void
+    {
+        $errcode = filter_var($errcode["errcode"], FILTER_VALIDATE_INT);
+
+        $head = $this->seo->optimize(
+            "Bem vindo ao " . SITE["SHORT_NAME"],
+            SITE["DESCRIPTION"],
+            url("home"),
+            ""
+        )->render();
+
+        echo $this->view->render("error/error", [
+            'errcode' => $errcode,
+            'head' => $head
+        ]);
+    }
+}

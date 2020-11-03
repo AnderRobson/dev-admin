@@ -97,7 +97,7 @@ class ProductImageController extends Controller
             SITE["DESCRIPTION"],
             url("pages/product-image/edit/$slug"),
             ""
-            )->render();
+        )->render();
 
         echo $this->view->render("product-image/view/edit", [
             "product" => $product,

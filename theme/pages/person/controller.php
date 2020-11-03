@@ -32,7 +32,7 @@ class PersonController extends Controller
             SITE["DESCRIPTION"],
             url("pages/person"),
             ""
-            )->render();
+        )->render();
 
         $persons = (new PersonModel())->getAllInformationFromPersons();
 

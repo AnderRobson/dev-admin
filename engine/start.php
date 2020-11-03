@@ -4,15 +4,15 @@
     }
 
     if (!defined("URL_BASE")) {
-        define("URL_BASE", "https://" . $_SERVER['HTTP_HOST'] . "/" . SITE["PATH"] . "/admin");
+        define("URL_BASE", "http://" . $_SERVER['HTTP_HOST'] . "/" . SITE["PATH"] . "/admin");
     }
 
     if (!defined('URL_ADMIN')) {
-        define('URL_ADMIN', 'https://' . $_SERVER['HTTP_HOST'] . '/dev-admin');
+        define('URL_ADMIN', 'http://' . $_SERVER['HTTP_HOST'] . '/dev-admin');
     }
 
     if (!defined('URL_BLOG')) {
-        define('URL_BLOG', 'https://' . $_SERVER['HTTP_HOST'] . "/" . SITE["PATH"]);
+        define('URL_BLOG', 'http://' . $_SERVER['HTTP_HOST'] . "/" . SITE["PATH"]);
     }
 
     if (!defined('BASE_PATH')) {

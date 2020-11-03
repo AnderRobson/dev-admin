@@ -23,25 +23,11 @@ function url(string $path = null): string
 }
 
 /**
- * Responsavel por carregar Controller da pasta pages para definir controlador da url acessada.
- *
- * @param string $controller
- * @return string
- */
-function loadController(string $controller)
-{
-    $route = ROOT . DS . 'theme' . DS . 'pages' . DS . $controller . DS . 'controller.php';
-
-    if (file_exists($route))
-        return $route;
-    else
-        printrx(utf8_encode("<h1 style='text-align: center'>Página {$controller} não encontrada</h1>"));
-}
-
-/**
  * Responsavel por retorna a URL de arquivos
  *
  * @param string $path
+ * @param bool $theme
+ *
  * @return string
  */
 function urlFile(string $path, bool $theme = false): string

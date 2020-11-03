@@ -97,7 +97,7 @@ class BannerController extends Controller
             SITE["DESCRIPTION"],
             url("pages/banner"),
             ""
-            )->render();
+        )->render();
 
         echo $this->view->render("banner/view/edit", [
             "banner" => (new BannerModel())->find("slug = :slug", "slug={$slug}")->fetch(),

@@ -95,7 +95,7 @@ class StockController extends Controller
             SITE["DESCRIPTION"],
             url("pages/stock/edit/$slug"),
             ""
-            )->render();
+        )->render();
 
         echo $this->view->render("stock/view/edit", [
             "product" => $product,

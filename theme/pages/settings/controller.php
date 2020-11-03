@@ -25,8 +25,8 @@ class SettingsController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/settings"),
-            "",
-            )->render();
+            ""
+        )->render();
 
         echo $this->view->render("settings/view/index", [
             "head" => $head,
@@ -72,8 +72,8 @@ class SettingsController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/settings"),
-            "",
-            )->render();
+            ""
+        )->render();
 
         echo $this->view->render("settings/view/edit", [
             "head" => $head,

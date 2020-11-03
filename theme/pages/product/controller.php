@@ -81,7 +81,7 @@ class ProductController extends Controller
             SITE["DESCRIPTION"],
             url("pages/product/edit/$slug"),
             ""
-            )->render();
+        )->render();
 
         echo $this->view->render("product/view/edit", [
             "product" => (new ProductModel())->find("slug = :slug", "slug={$slug}")->fetch(),
