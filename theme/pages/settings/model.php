@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Theme\pages\settings;
+namespace Theme\Pages\Settings;
 
 
 class SettingsModel

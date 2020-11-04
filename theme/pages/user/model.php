@@ -4,7 +4,7 @@ namespace Theme\Pages\User;
 
 use Exception;
 use Source\Models\Model;
-use Theme\pages\person\PersonModel;
+use Theme\Pages\Person\PersonModel;
 
 /**
  * Class UserModel

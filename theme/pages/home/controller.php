@@ -10,16 +10,6 @@ use Source\Controllers\Controller;
  */
 class HomeController extends Controller
 {
-
-    /**
-     * HomeController constructor.
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
     /**
      * Página index home
      */

@@ -19,15 +19,6 @@ class Web extends Controller
     private $controller;
 
     /**
-     * Web constructor.
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
-    /**
      * Responsavel por instanciar Controller
      *
      * @param string $controllerName
@@ -35,8 +26,9 @@ class Web extends Controller
     private function setController(string $controllerName): void
     {
         $controller = null;
-        $namespace = 'Theme\Pages\\' . ucfirst($controllerName);
-        $className = $namespace . '\\' . ucfirst($controllerName) . 'Controller';
+        $controllerName = str_replace('-', '', ucwords($controllerName, '-'));
+        $namespace = 'Theme\Pages\\' . $controllerName;
+        $className = $namespace . '\\' . $controllerName . 'Controller';
 
         if (class_exists($className)) {
             $controller = new $className($this->router);

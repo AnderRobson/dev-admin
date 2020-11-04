@@ -19,13 +19,13 @@ use Theme\Pages\User\UserModel;
 abstract class Controller
 {
     /** @var Engine */
-    protected $view;
+    protected Engine $view;
 
     /** @var Router */
-    protected $router;
+    protected Router $router;
 
     /** @var Optimizer */
-    protected $seo;
+    protected Optimizer $seo;
 
     /** @var UserModel */
     protected $user;

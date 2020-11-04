@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Source\Library\webservice;
+namespace Source\Library\Webservice;
 
 
-use Source\Library\webservice\resources\Order;
-use Theme\pages\address\AddressModel;
-use Theme\pages\order\OrderModel;
-use Theme\pages\orderProduct\OrderProductModel;
+use Source\Library\Webservice\Resources\Order;
+use Theme\Pages\Address\AddressModel;
+use Theme\Pages\Order\OrderModel;
+use Theme\Pages\OrderProduct\OrderProductModel;
 use Theme\Pages\Stock\StockModel;
 
 class Webservice
@@ -48,17 +48,18 @@ class Webservice
         return;
     }
 
-    public function createOrder($data)
+    public function postCreateOrder($data)
     {
         try {
             $order = new Order($data);
-            $order->validateRequest();
-            $order->constructAddress((new AddressModel()));
-            $order->constructOrder((new OrderModel()));
-            $order->constructOrderProduct(
-                (new OrderProductModel()),
-                (new StockModel())
-            );
+            $order
+                ->validateRequest()
+                ->constructAddress(new AddressModel())
+                ->constructOrder(new OrderModel())
+                ->constructOrderProduct(
+                    new OrderProductModel(),
+                    new StockModel()
+                );
 
             echo $order->toJson();
         } catch (\Exception $exception) {

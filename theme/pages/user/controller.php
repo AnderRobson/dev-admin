@@ -11,15 +11,6 @@ use Source\Controllers\Controller;
 class UserController extends Controller
 {
     /**
-     * ExemploController constructor.
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
-    /**
      * P�gina index exemplo
      */
     public function index(): void

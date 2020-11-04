@@ -14,16 +14,6 @@ use Theme\Pages\Product\ProductModel;
 class StockController extends Controller
 {
     /**
-     * StockController constructor.
-     *
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
-    /**
      * Página index do Estoque.
      */
     public function index(): void

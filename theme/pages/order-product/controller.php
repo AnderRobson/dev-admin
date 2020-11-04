@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Theme\pages\orderProduct;
+namespace Theme\Pages\OrderProduct;
 
 
 use Source\Controllers\Controller;

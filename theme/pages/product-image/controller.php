@@ -15,16 +15,6 @@ use Theme\Pages\Product\ProductModel;
 class ProductImageController extends Controller
 {
     /**
-     * ProductImageController constructor.
-     *
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
-    /**
      * Página index do Produtos Imagem.
      */
     public function index(): void

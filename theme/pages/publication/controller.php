@@ -14,17 +14,6 @@ use Source\Controllers\Upload;
  */
 class PublicationController extends Controller
 {
-
-    /**
-     * PublicationController constructor.
-     *
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
     /**
      * Página index publicação
      */

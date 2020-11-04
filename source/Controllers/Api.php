@@ -1,60 +1,56 @@
 <?php
 
-    namespace Source\Controllers;
+namespace Source\Controllers;
 
-    use Source\Library\webservice\Webservice;
+use Source\Library\webservice\Webservice;
 
-    class Api
+class Api
+{
+    /**
+     * @var Webservice
+     */
+    private $webservice;
+
+    public function __construct($request = null)
     {
-        /**
-         * @var Webservice
-         */
-        private $webservice;
+        $this->webservice = new Webservice();
+    }
 
-        public function __construct($request = null)
-        {
-            $this->webservice = new Webservice();
-        }
+    public function get($data): void
+    {
+        $function = $data['function'];
+        unset($data['function']);
 
-        public function get($data = null)
-        {
-            $function = $data['function'];
-            unset($data['function']);
-
-            if (method_exists($this->webservice, $function)) {
-                $this->webservice->$function($data);
-            }
-
-            return;
-        }
-
-        public function post($data = null)
-        {
-            $function = $data['function'];
-            unset($data['function']);
-
-            if (method_exists($this->webservice, $function)) {
-                $this->webservice->$function($this->convertToArray($data));
-            }
-
-            return;
-        }
-
-        public function convertToArray($data)
-        {
-            if (is_array($data) && count($data) == 1) {
-                $data = reset($data);
-            }
-
-            $response = null;
-
-            if (is_string($data)) {
-                $response = json_decode($data, true);
-                if (! $response) {
-                    $response = $data;
-                }
-            }
-
-            return $response;
+        if (method_exists($this->webservice, $function)) {
+            $this->webservice->$function($data);
         }
     }
+
+    public function post($data): void
+    {
+        $function = 'post' . ucfirst($data['function']);
+        unset($data['function']);
+
+        if (method_exists($this->webservice, $function)) {
+            $this->webservice->$function($this->convertToArray($data));
+        }
+    }
+
+    public function convertToArray($data)
+    {
+        $response = null;
+
+        if (is_array($data)) {
+            $response = count($data) == 1 ? reset($data) : $data;
+        }
+
+        if (is_string($data)) {
+            $response = json_decode($data, true);
+            if (! $response) {
+                $response = $data;
+            }
+        }
+
+        return $response;
+    }
+}

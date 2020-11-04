@@ -7,6 +7,10 @@ namespace Source\Library\webservice\resources;
 use Exception;
 use Source\Models\Model;
 
+/**
+ * Class Order
+ * @package Source\Library\webservice\resources
+ */
 class Order
 {
     /** @var int Requisição inválida */
@@ -18,6 +22,7 @@ class Order
     /** @var int Status pendente */
     public const ORDER_STATUS = 1;
 
+    /** @var array Dados da requisição a ser processada */
     private $request;
 
     /** @var Model Model de Endereço*/
@@ -29,12 +34,24 @@ class Order
     /** @var array Models de Produtos do Pedido*/
     private $orderProduct;
 
+    /**
+     * Order constructor.
+     *
+     * @param $request
+     */
     public function __construct($request)
     {
-        $this->request = $request;        
+        $this->request = $request;
     }
 
-    public function validateRequest()
+    /**
+     * Responsavel por validar os dados da requisição.
+     *
+     * @return Order
+     *
+     * @throws Exception
+     */
+    public function validateRequest(): Order
     {
         if (
             empty($this->request['user'])
@@ -49,9 +66,20 @@ class Order
                 self::INVALID_REQUEST
             );
         }
+
+        return $this;
     }
 
-    public function constructAddress(Model $model)
+    /**
+     * Responsavel por cadastrar ou obter do banco o endereço de entrega do pedido.
+     *
+     * @param Model $model
+     *
+     * @return Order
+     *
+     * @throws Exception
+     */
+    public function constructAddress(Model $model): Order
     {
         $cart = $this->getRequest('cart');
         $freight = $cart['freight'];
@@ -86,7 +114,16 @@ class Order
         }
     }
 
-    public function constructOrder(Model $model)
+    /**
+     * Responsavel por cadastrar pedido.
+     *
+     * @param Model $model
+     *
+     * @return Order
+     *
+     * @throws Exception
+     */
+    public function constructOrder(Model $model): Order
     {
         $cart = $this->getRequest('cart');
 
@@ -108,7 +145,17 @@ class Order
         );
     }
 
-    public function constructOrderProduct(Model $model, Model $productModel)
+    /**
+     * Responsavel por cadastrar produtos do pedido.
+     *
+     * @param Model $model
+     * @param Model $productModel
+     *
+     * @return Order
+     *
+     * @throws Exception
+     */
+    public function constructOrderProduct(Model $model, Model $productModel): Order
     {
         $cart = $this->getRequest('cart');
 
@@ -163,12 +210,19 @@ class Order
 
     /**
      * @param mixed $request
+     *
+     * @return Order
      */
-    public function setRequest($request): void
+    public function setRequest($request): Order
     {
         $this->request = $request;
+
+        return $this;
     }
 
+    /**
+     * @return false|string
+     */
     public function toJson()
     {
         $return = [

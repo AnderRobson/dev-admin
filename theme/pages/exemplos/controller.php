@@ -11,15 +11,6 @@ use Source\Controllers\Controller;
 class ExemploController extends Controller
 {
     /**
-     * ExemploController constructor.
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
-    /**
      * Página index exemplo
      */
     public function index(): void

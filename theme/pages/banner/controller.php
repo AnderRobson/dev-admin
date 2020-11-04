@@ -15,16 +15,6 @@ use Source\Controllers\Upload;
 class BannerController extends Controller
 {
     /**
-     * BannerController constructor.
-     *
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
-    /**
      * Página index banner
      */
     public function index(): void

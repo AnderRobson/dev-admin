@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Theme\pages\address;
+namespace Theme\Pages\Address;
 
 use CoffeeCode\DataLayer\Connect;
 use Source\Models\Model;
 
 /**
  * Class AddressModel
- * @package Theme\pages\address
+ * @package Theme\Pages\Address
  *
  * @property Connect $connect
  */

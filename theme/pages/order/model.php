@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Theme\pages\order;
+namespace Theme\Pages\Order;
 
 
 use Source\Models\Model;

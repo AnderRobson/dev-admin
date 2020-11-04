@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Theme\pages\person;
+namespace Theme\Pages\Person;
 
 use Source\Models\Model;
-use Theme\pages\address\AddressModel;
+use Theme\Pages\Address\AddressModel;
 
 class PersonModel extends Model
 {

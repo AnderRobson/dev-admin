@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Theme\pages\orderProduct;
+namespace Theme\Pages\OrderProduct;
 
 
 use Source\Models\Model;
@@ -16,7 +16,7 @@ class OrderProductModel extends Model
         parent::__construct("orders_products", ["id_order", "id_product", "id_stock", "status", "value", "old_value", "quantity"]);
     }
 
-    public function reset()
+    public function reset(): OrderProductModel
     {
         return new OrderProductModel();
     }

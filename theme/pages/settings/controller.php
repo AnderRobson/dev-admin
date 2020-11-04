@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Theme\pages\settings;
+namespace Theme\Pages\Settings;
 
 
 use Source\Controllers\Controller;
@@ -9,16 +9,6 @@ use Source\Models\Configures;
 
 class SettingsController extends Controller
 {
-    /**
-     * StockController constructor.
-     *
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
     public function index($data = null)
     {
         $head = $this->seo->optimize(

@@ -26,15 +26,6 @@ use Theme\Pages\User\UserModel;
 class LoginController extends Controller
 {
     /**
-     * LoginController constructor.
-     * @param $router
-     */
-    public function __construct($router)
-    {
-        parent::__construct($router);
-    }
-
-    /**
      * @param array|null $data
      */
     public function index(array $data = []): void
