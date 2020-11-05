@@ -2,6 +2,7 @@
 
 namespace Theme\Pages\Publication;
 
+use Exception;
 use Source\Controllers\Controller;
 use Source\Controllers\Upload;
 
@@ -51,15 +52,17 @@ class PublicationController extends Controller
             $publication->status = (bool) $data["status"];
 
             if (! empty($_FILES)) {
-                $upload = new Upload();
-                $upload->setFile($_FILES);
-                $upload->setDestiny("publication");
-                $nameImage = $upload->upload();
+                try {
 
-                if (empty($nameImage)) {
+                    $upload = new Upload();
+                    $upload->setFile($_FILES);
+                    $upload->setDestiny("publication");
+                    $nameImage = $upload->upload();
+
+                } catch (Exception $exception) {
                     echo $this->ajaxResponse("message", [
                         "type" => "danger",
-                        "message" => "Erro ao realizar o upload do arquivo"
+                        "message" => $exception->getMessage()
                     ]);
                     return;
                 }
@@ -120,15 +123,17 @@ class PublicationController extends Controller
             $publication->status = (bool) $data["status"];
 
             if (! empty($_FILES["file"])) {
-                $upload = new Upload();
-                $upload->setFile($_FILES);
-                $upload->setDestiny("publication");
-                $nameImage = $upload->upload();
+                try {
 
-                if (! $nameImage) {
+                    $upload = new Upload();
+                    $upload->setFile($_FILES);
+                    $upload->setDestiny("publication");
+                    $nameImage = $upload->upload();
+
+                } catch (Exception $exception) {
                     echo $this->ajaxResponse("message", [
                         "type" => "danger",
-                        "message" => "Erro ao realizar o upload do arquivo"
+                        "message" => $exception->getMessage()
                     ]);
                     return;
                 }

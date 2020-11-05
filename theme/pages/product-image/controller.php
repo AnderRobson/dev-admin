@@ -2,6 +2,7 @@
 
 namespace Theme\Pages\ProductImage;
 
+use Exception;
 use Source\Controllers\Controller;
 use Source\Controllers\Upload;
 use Theme\Pages\Product\ProductModel;
@@ -113,22 +114,18 @@ class ProductImageController extends Controller
         }
 
         if (! empty($_FILES)) {
-            if ($_FILES['error'] != 0) {
-                flash("danger", "Erro ao realizar o upload do arquivo");
-                redirect("pages/product-image/create/" . $product->id);
-                return;
-            }
-
             $productImage = new ProductImageModel();
             $productImage->id_product = $product->id;
 
-            $upload = new Upload();
-            $upload->setFile($_FILES);
-            $upload->setDestiny("product");
-            $nameImage = $upload->upload();
+            try {
 
-            if (empty($nameImage)) {
-                flash("danger", "Erro ao realizar o upload do arquivo");
+                $upload = new Upload();
+                $upload->setFile($_FILES);
+                $upload->setDestiny("product");
+                $nameImage = $upload->upload();
+
+            } catch (Exception $exception) {
+                flash("danger", $exception->getMessage());
                 redirect("pages/product-image/create/" . $product->id);
                 return;
             }

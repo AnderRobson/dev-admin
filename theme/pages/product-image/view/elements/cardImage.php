@@ -1,5 +1,5 @@
 <div class="card">
-    <img src="<?= urlFile("product" . DS . $productImage->image); ?>" class="card-img-top" alt="<?= $altImage; ?>">
+    <img src="<?= urlFile("upload/product" . DS . $productImage->image, true); ?>" class="card-img-top" alt="<?= $altImage; ?>">
     <div class="card-footer">
         <small class="text-muted">Imagem cadastrado em: <?= $productImage->created_at; ?></small>
         <a href="#" data-action="<?= url("pages/product-image/delete"); ?>" data-id="<?= $productImage->id; ?>">

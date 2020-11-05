@@ -52,7 +52,7 @@ $v->layout("banner/view/_theme"); ?>
         </div>
         <div class="row">
             <div class="card">
-                <img src="<?= urlFile("banner" . DS . $banner->image); ?>" class="card-img-top" alt="<?= $banner->title; ?>">
+                <img src="<?= urlFile("upload/banner" . DS . $banner->image, true); ?>" class="card-img-top" alt="<?= $banner->title; ?>">
                 <div class="card-footer">
                     <small class="text-muted">Imagem cadastrado em: <?= $banner->created_at; ?></small>
                     <a href="#" data-action="<?= url("pages/product-image/delete"); ?>" data-id="<?= $banner->id; ?>">

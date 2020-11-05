@@ -279,7 +279,6 @@ class LoginController extends Controller
         echo $this->ajaxResponse("redirect", [
             "url" => url("login")
         ]);
-        return;
     }
 
     /**
@@ -392,7 +391,6 @@ class LoginController extends Controller
             "Olá {$facebookUser->getFirstName()}, <strong>se já tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
         );
         redirect("register");
-        return;
     }
 
     /**
@@ -465,7 +463,6 @@ class LoginController extends Controller
             "Olá {$googleUser->getFirstName()}, <strong>se já tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
         );
         redirect("register");
-        return;
     }
 
     /**

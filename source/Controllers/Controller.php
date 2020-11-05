@@ -6,15 +6,16 @@ namespace Source\Controllers;
 
 use CoffeeCode\Optimizer\Optimizer;
 use CoffeeCode\Router\Router;
+use Exception;
 use League\Plates\Engine;
 use Source\Models\Configures;
-use Theme\Pages\User\UserModel;
+use Source\Models\User;
 
 /**
  * Class Controller
  * @package Source\Controllers
  *
- * @property UserModel $user
+ * @property User $user
  */
 abstract class Controller
 {
@@ -27,11 +28,17 @@ abstract class Controller
     /** @var Optimizer */
     protected Optimizer $seo;
 
-    /** @var UserModel */
-    protected $user;
+    /** @var User */
+    protected User $user;
+
+    /** @var array */
+    protected array $configures = [];
+
     /**
      * Controller constructor.
      * @param $router
+     *
+     * @throws Exception
      */
     public function __construct($router)
     {
@@ -49,14 +56,22 @@ abstract class Controller
                 ->facebook($facebookInformation->value['clientId']);
         }
 
-        if (! empty($_SESSION["user"]) && $this->user = (new UserModel())->findById($_SESSION['user'])->getPerson()) {
-            $this->view->addData(['user' => $this->user]);
+        $this->user = new User();
+
+        if ($this->user->validateLogged()) {
+            $this->view->addData(['user' => $this->user->getUser()->getPerson()]);
         }
     }
 
     public function getConfigure(string $name)
     {
-        return (new Configures())->getConfigure($name);
+        if ($this->configures[$name]) {
+            return $this->configures[$name];
+        }
+
+        $this->configures[$name] = (new Configures())->getConfigure($name);
+
+        return $this->configures[$name];
     }
 
     /**

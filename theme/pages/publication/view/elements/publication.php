@@ -4,7 +4,7 @@
     <td><?= substr($publication->description, 0, 90); ?></td>
     <td class="text-center">
         <?php if (! empty($publication->image)): ?>
-            <a href="<?= urlFile('publication' . DS . $publication->image); ?>" target="_blank" class="btn btn-outline-secondary active" role="button" aria-pressed="true">
+            <a href="<?= urlFile('upload/publication' . DS . $publication->image, true); ?>" target="_blank" class="btn btn-outline-secondary active" role="button" aria-pressed="true">
                 <span data-feather="image"></span>
             </a>
         <?php endif; ?>

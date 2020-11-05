@@ -12,9 +12,6 @@ use Theme\Pages\User\UserModel;
  */
 class Web extends Controller
 {
-    /** @var UserModel */
-    protected $user;
-
     /** @var Engine  */
     private $controller;
 
@@ -54,9 +51,7 @@ class Web extends Controller
      */
     public function pages(array $data): void
     {
-        if (empty($_SESSION['user']) || ! $this->user = (new UserModel())->findById($_SESSION['user'])) {
-            unset($_SESSION["user"]);
-
+        if (! $this->user->validateLogged()) {
             flash("danger", "Acesso negado. Favor logue-se");
             redirect("login");
         }
@@ -82,7 +77,7 @@ class Web extends Controller
      */
     public function login(array $data = []): void
     {
-        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+        if (! $this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -111,7 +106,7 @@ class Web extends Controller
      */
     public function forget(array $data = []): void
     {
-        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+        if (! $this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -122,7 +117,7 @@ class Web extends Controller
 
     public function reset(array $data): void
     {
-        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+        if (! $this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -133,7 +128,7 @@ class Web extends Controller
 
     public function resetPassword(array $data): void
     {
-        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+        if (! $this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -147,7 +142,7 @@ class Web extends Controller
      */
     public function register(array $data = []): void
     {
-        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+        if (! $this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -162,7 +157,7 @@ class Web extends Controller
 
     public function facebook(array $data = []): void
     {
-        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+        if (! $this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -177,7 +172,7 @@ class Web extends Controller
 
     public function google(array $data = []): void
     {
-        if (! empty($_SESSION['user']) && $this->user = (new UserModel())->findById($_SESSION['user'])) {
+        if (! $this->user->validateLogged()) {
             redirect("pages/home");
         }
 

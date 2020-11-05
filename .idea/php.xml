@@ -22,7 +22,6 @@
       <path value="$PROJECT_DIR$/vendor/coffeecode/optimizer" />
       <path value="$PROJECT_DIR$/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
-      <path value="$PROJECT_DIR$/vendor/nnnick/chartjs" />
       <path value="$PROJECT_DIR$/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/vendor/digitalnature/php-ref" />
     </include_path>

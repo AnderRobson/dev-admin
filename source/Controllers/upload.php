@@ -10,28 +10,18 @@ use Exception;
  */
 class Upload
 {
-    /** @var $fail Exception */
-    private $fail;
 
-    /**
-     * @var
-     */
+    /** @var Arquivo */
     private $file;
 
-    /**
-     * @var
-     */
-    private $fileName;
+    /** @var string */
+    private string $fileName;
 
-    /**
-     * @var string
-     */
-    private $destiny = ROOT . DS . 'theme' . DS . 'upload' . DS;
+    /** @var string */
+    private string $destiny = URL_BLOG . DS . 'upload' . DS;
 
-    /**
-     * @var
-     */
-    private $link;
+    /** @var */
+    private string $link;
 
     /**
      * Upload constructor.
@@ -43,10 +33,16 @@ class Upload
 
     /**
      * @param mixed $file
+     *
+     * @throws Exception
      */
     public function setFile($file): void
     {
         $this->file = $file;
+
+        if ($this->file != 0) {
+            throw new Exception("Erro ao realizar o upload do arquivo");
+        }
 
         $name = date("YmdHis") . "." . $this->getType();
         $this->fileName = $name;
@@ -78,10 +74,14 @@ class Upload
 
     /**
      * @return string
+     *
+     * @throws Exception
      */
     public function upload(): string
     {
-        move_uploaded_file($this->file["file"]["tmp_name"], $this->destiny . DS . $this->fileName);
+        if (! move_uploaded_file($this->file["file"]["tmp_name"], $this->destiny . DS . $this->fileName)) {
+            throw new Exception("Erro ao realizar o upload do arquivo");
+        }
 
         $this->link = $this->destiny . DS . $this->fileName;
 
@@ -107,7 +107,7 @@ class Upload
                 $type = "jpg";
                 break;
             default:
-                $this->fail = new Exception("Formato de arquivo inválido !");
+                $fail = new Exception("Formato de arquivo inválido !");
         }
 
         return $type;

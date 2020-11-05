@@ -10,7 +10,7 @@ if ($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "192.16
 /**
  * Responsavel por montar url para redirecionamentos dentro da plataforma.
  *
- * @param string $path
+ * @param string|null $path
  * @return string
  */
 function url(string $path = null): string
@@ -85,11 +85,11 @@ function js(string $file, $time = true)
  *
  * @param string $file
  * @param bool $time
- * @return string|null
+ * @return string
  */
 function plugins(string $file, $time = true)
 {
-    $return = null;
+    $return = '';
     $type = explode('.', $file);
     $type = end($type);
     $file = "theme/assets/plugins/" . $file;
@@ -105,68 +105,6 @@ function plugins(string $file, $time = true)
             break;
         case 'css':
             $return = "<link rel='stylesheet' href='/dev-admin/{$file}'>";
-    }
-
-    return $return;
-}
-
-/**
- * Responsavel por carregar arquivos do Bootstrap da vendor.
- *
- * @param string $file
- * @param bool $time
- * @return string|null
- */
-function bootstrap(string $file, $time = true)
-{
-    $return = null;
-    $type = explode('.', $file);
-    $type = end($type);
-
-    $file = "/dev-admin/vendor/twbs/bootstrap/" . $file;
-    $fileOnDir = ROOT . DS . $file;
-
-    if ($time && file_exists($fileOnDir)) {
-        $file .= "?time=" . fileatime($fileOnDir);
-    }
-
-    switch ($type) {
-        case 'js':
-            $return = "<script src='{$file}'></script>";
-            break;
-        case 'css':
-            $return = "<link rel='stylesheet' href='{$file}'>";
-    }
-
-    return $return;
-}
-
-/**
- * Responsavel por carregar arquivos do ChartJS da vendor.
- *
- * @param string $file
- * @param bool $time
- * @return string|null
- */
-function chartjs(string $file, $time = true)
-{
-    $return = null;
-    $type = explode('.', $file);
-    $type = end($type);
-
-    $file = "/dev-admin/vendor/nnnick/chartjs/" . $file;
-    $fileOnDir = ROOT . DS . $file;
-
-    if ($time && file_exists($fileOnDir)) {
-        $file .= "?time=" . fileatime($fileOnDir);
-    }
-
-    switch ($type) {
-        case 'js':
-            $return = "<script src='{$file}'></script>";
-            break;
-        case 'css':
-            $return = "<link rel='stylesheet' href='{$file}'>";
     }
 
     return $return;
