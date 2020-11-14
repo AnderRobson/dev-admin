@@ -19,7 +19,7 @@ class HomeController extends Controller
             "Bem vindo ao " . SITE["SHORT_NAME"],
             SITE["DESCRIPTION"],
             url("pages/home"),
-            urlFile("images/logo.png", true)
+            urlFile("upload/images/logo.png", true)
         )->render();
 
         echo $this->view->render("home/view/index", [

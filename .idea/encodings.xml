@@ -6,7 +6,10 @@
     <file url="file://$PROJECT_DIR$/source/Helpers.php" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/source/Library/webservice/Webservice.php" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/theme/pages/login/controller.php" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/theme/pages/order/view/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/theme/pages/publication/controller.php" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/theme/pages/settings/controller.php" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/theme/pages/user/controller.php" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/theme/pages/user/view/index.php" charset="UTF-8" />
   </component>
 </project>

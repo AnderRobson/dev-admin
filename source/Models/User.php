@@ -5,6 +5,7 @@ namespace Source\Models;
 
 
 use Exception;
+use Theme\Pages\Order\OrderModel;
 use Theme\Pages\User\UserModel;
 
 /**
@@ -14,17 +15,22 @@ use Theme\Pages\User\UserModel;
 class User
 {
     /** @var UserModel */
-    private UserModel $user;
+    private $user;
 
     /** @var bool */
     private bool $islogged;
+
+    /** @var array OrderModel Pedidos do usuário */
+    private array $orders = [];
 
     /**
      * User constructor.
      */
     public function __construct()
     {
-        $this->user = (new UserModel())->findById($_SESSION['user']);
+        $usarId = filter_var($_SESSION['user'], FILTER_VALIDATE_INT);
+
+        $this->user = ! empty($usarId) ? (new UserModel())->findById($usarId) : false;
 
         $this->islogged = (bool) $this->user;
     }
@@ -35,6 +41,31 @@ class User
     public function destruct(): void
     {
         unset($_SESSION["user"]);
+        $this->islogged = false;
+    }
+
+    public function login(string $email, string $password): bool
+    {
+        if (! empty($_SESSION['user'])) {
+            return true;
+        }
+
+        $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+        $password = filter_var($password, FILTER_DEFAULT);
+
+        $user = (new UserModel())->find("email = :email", "email={$email}")->fetch();
+
+        if (! $user || ! password_verify($password, $user->password)) {
+            return false;
+        }
+
+        $_SESSION['user'] = $user->id;
+        $this->user = $user;
+
+        /** Validação de rede-social */
+        $this->socialValidate();
+
+        return true;
     }
 
     /**
@@ -44,11 +75,10 @@ class User
      */
     public function validateLogged(): bool
     {
-        if ($this->islogged) {
-            return $this->islogged;
+        if (! $this->islogged) {
+            $this->destruct();
         }
 
-        $this->destruct();
         return $this->islogged;
     }
 
@@ -67,5 +97,66 @@ class User
 
         $this->destruct();
         throw new Exception('Você não esta logado !');
+    }
+
+    /**
+     *  Valida se existe uma Classe de rede social na sessão e vincula ao usuário logado.
+     *
+     * @param UserModel $user
+     */
+    private function socialValidate(): void
+    {
+        /**
+         *  Facebook
+         */
+        if (! empty($_SESSION["facebook_auth"])) {
+            $facebookUser = unserialize($_SESSION["facebook_auth"]);
+
+            $this->user->facebook_id = $facebookUser->getId();
+
+            if (empty($this->user->photo)) {
+                $this->user->photo = $facebookUser->getPictureUrl();
+            }
+
+            $this->user->save();
+
+            unset($_SESSION["facebook_auth"]);
+        }
+
+        /**
+         *  Google
+         */
+        if (! empty($_SESSION["google_auth"])) {
+            $googleUser = unserialize($_SESSION["google_auth"]);
+
+            $this->user->google_id = $googleUser->getId();
+
+            if (empty($this->user->photo)) {
+                $this->user->photo = $googleUser->getAvatar();
+            }
+
+            $this->user->save();
+
+            unset($_SESSION["google_auth"]);
+        }
+    }
+
+    public function getOrders(): ?array
+    {
+        if (! empty($this->orders)) {
+            return $this->orders;
+        }
+
+        $this->orders = (new OrderModel())->find(
+            'id_user = :id_user',
+            'id_user=' . $this->user->id
+        )->fetch(true);
+
+        return $this->orders;
+    }
+
+    public function setOrders($orders)
+    {
+        $this->orders = $orders;
     }
 }

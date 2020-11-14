@@ -5,6 +5,7 @@ namespace Theme\Pages\OrderProduct;
 
 
 use Source\Models\Model;
+use Theme\Pages\Product\ProductModel;
 
 class OrderProductModel extends Model
 {
@@ -19,5 +20,12 @@ class OrderProductModel extends Model
     public function reset(): OrderProductModel
     {
         return new OrderProductModel();
+    }
+
+    public function getProduct()
+    {
+        $this->product = (new ProductModel())->findById($this->id_product);
+
+        return $this;
     }
 }

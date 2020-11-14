@@ -85,4 +85,14 @@ class UserModel extends Model
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return true;
     }
+
+    /**
+     * Responsavel por retornar nome completo do usuário logado.
+     *
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        return $this->person->first_name . ' ' . $this->person->last_name;
+    }
 }

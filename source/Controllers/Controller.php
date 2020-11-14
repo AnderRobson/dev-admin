@@ -59,7 +59,8 @@ abstract class Controller
         $this->user = new User();
 
         if ($this->user->validateLogged()) {
-            $this->view->addData(['user' => $this->user->getUser()->getPerson()]);
+            $this->user->getUser()->getPerson();
+            $this->view->addData(['user' => $this->user->getUser()]);
         }
     }
 

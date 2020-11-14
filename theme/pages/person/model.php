@@ -51,4 +51,11 @@ class PersonModel extends Model
             ]
         ]);
     }
+
+    public function getAddress(): PersonModel
+    {
+        $this->address = (new AddressModel())->findByIdPerson($this->id);
+
+        return $this;
+    }
 }

@@ -4,7 +4,6 @@ namespace Source\Controllers;
 
 use League\Plates\Engine;
 use Theme\Pages\Login\LoginController;
-use Theme\Pages\User\UserModel;
 
 /**
  * Class Web
@@ -51,6 +50,8 @@ class Web extends Controller
      */
     public function pages(array $data): void
     {
+        $data = array_merge($data, $_GET);
+
         if (! $this->user->validateLogged()) {
             flash("danger", "Acesso negado. Favor logue-se");
             redirect("login");
@@ -59,6 +60,7 @@ class Web extends Controller
         $this->setController($data['page']);
         $function = ! empty($data['function']) ? $data['function'] : "index";
 
+        unset($data['route']);
         unset($data['page']);
         unset($data['function']);
         unset($data['action']);
@@ -77,7 +79,7 @@ class Web extends Controller
      */
     public function login(array $data = []): void
     {
-        if (! $this->user->validateLogged()) {
+        if ($this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -91,10 +93,8 @@ class Web extends Controller
      */
     public function logoff(): void
     {
-        unset($_SESSION["user"]);
-
-        flash("success", "Você saiu com sucesso, volte logo {$this->user->person->first_name}!");
-        unset($this->user);
+        flash("success", "Você saiu com sucesso, volte logo {$this->user->getUser()->getFullName()}!");
+        $this->user->destruct();
 
         redirect("login");
     }
@@ -106,7 +106,7 @@ class Web extends Controller
      */
     public function forget(array $data = []): void
     {
-        if (! $this->user->validateLogged()) {
+        if ($this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -117,7 +117,7 @@ class Web extends Controller
 
     public function reset(array $data): void
     {
-        if (! $this->user->validateLogged()) {
+        if ($this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -128,7 +128,7 @@ class Web extends Controller
 
     public function resetPassword(array $data): void
     {
-        if (! $this->user->validateLogged()) {
+        if ($this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -142,7 +142,7 @@ class Web extends Controller
      */
     public function register(array $data = []): void
     {
-        if (! $this->user->validateLogged()) {
+        if ($this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -157,7 +157,7 @@ class Web extends Controller
 
     public function facebook(array $data = []): void
     {
-        if (! $this->user->validateLogged()) {
+        if ($this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -172,7 +172,7 @@ class Web extends Controller
 
     public function google(array $data = []): void
     {
-        if (! $this->user->validateLogged()) {
+        if ($this->user->validateLogged()) {
             redirect("pages/home");
         }
 
@@ -185,9 +185,6 @@ class Web extends Controller
         }
     }
 
-    /**
-     * Auxiliares
-     */
     /**
      * @param $slugPost
      */

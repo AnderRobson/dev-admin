@@ -36,7 +36,7 @@ function urlFile(string $path, bool $theme = false): string
         return URL_BLOG . DS . $path;
     }
 
-    return URL_ADMIN . "/theme/upload/" . $path;
+    return URL_ADMIN . "/theme/assets/images/" . $path;
 }
 
 

@@ -31,10 +31,7 @@ class LoginController extends Controller
     public function index(array $data = []): void
     {
         if (! empty($data)) {
-            $email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
-            $password = filter_var($data['password'], FILTER_DEFAULT);
-
-            if (! $email || ! $password) {
+            if (! $data['email'] || ! $data['password']) {
                 echo $this->ajaxResponse("message", [
                    "type" => "danger",
                    "message" => "Informe seu e-mail e senha para logar!"
@@ -43,9 +40,9 @@ class LoginController extends Controller
                 return;
             }
 
-            $user = (new UserModel())->find("email = :email", "email={$email}")->fetch();
+            $this->user->login($data['email'], $data['password']);
 
-            if (! $user || ! password_verify($password, $user->password)) {
+            if (! $this->user->validateLogged()) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",
                     "message" => "E-mail ou senha informados não conferem!"
@@ -54,10 +51,6 @@ class LoginController extends Controller
                 return;
             }
 
-            /** Validação de rede-social */
-            $this->socialValidate($user);
-
-            $_SESSION['user'] = $user->id;
             echo $this->ajaxResponse("redirect", [
                 "url" => url('pages/home')
             ]);
@@ -97,9 +90,6 @@ class LoginController extends Controller
             $user->email = $data['email'];
             $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
 
-            /** Validação de rede-social */
-            $this->socialValidate($user);
-
             if (! $user->save()) {
                 echo $this->ajaxResponse("message", [
                    "type" => "danger",
@@ -109,7 +99,7 @@ class LoginController extends Controller
                 return;
             }
 
-            $_SESSION['user'] = $user->id;
+            $this->user->login($user->email, $user->password);
             echo $this->ajaxResponse("redirect", [
                 "url" => url('pages/home')
             ]);
@@ -463,39 +453,5 @@ class LoginController extends Controller
             "Olá {$googleUser->getFirstName()}, <strong>se já tem uma conta clique em <a title='Fazer Login' href='" . url("login") . "'>FAZER LOGIN</a></strong>, ou complete seu cadastro"
         );
         redirect("register");
-    }
-
-    /**
-     *  Valida se existe uma Classe de rede social na se??o e vincula ao usu?rio logado.
-     *
-     * @param UserModel $user
-     */
-    public function socialValidate(UserModel $user): void
-    {
-        /**
-         *  Facebook
-         */
-        if (! empty($_SESSION["facebook_auth"])) {
-            $facebookUser = unserialize($_SESSION["facebook_auth"]);
-
-            $user->facebook_id = $facebookUser->getId();
-            $user->photo = $facebookUser->getPictureUrl();
-            $user->save();
-
-            unset($_SESSION["facebook_auth"]);
-        }
-
-        /**
-         *  Google
-         */
-        if (! empty($_SESSION["google_auth"])) {
-            $googleUser = unserialize($_SESSION["google_auth"]);
-
-            $user->google_id = $googleUser->getId();
-            $user->photo = $googleUser->getAvatar();
-            $user->save();
-
-            unset($_SESSION["google_auth"]);
-        }
     }
 }

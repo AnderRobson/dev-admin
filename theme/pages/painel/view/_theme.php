@@ -9,6 +9,7 @@
         <?php
             echo $head;
             echo js("jquery");
+            echo js("utilities");
             echo plugins("bootstrap/dist/css/bootstrap.min.css");
             echo plugins("bootstrap/dist/css/bootstrap-reboot.min.css");
             echo plugins("ckeditor5-build-classic/ckeditor.js");
