@@ -21,7 +21,7 @@
         "coffeecode/paginator": "^1.0",
         "coffeecode/router": "1.0.*",
         "coffeecode/optimizer": "2.0.0",
-        "phpmailer/phpmailer": "6.1.6",
+        "phpmailer/phpmailer": "6.5.0",
         "league/oauth2-facebook": "2.0.1",
         "league/oauth2-google": "3.0.2",
         "league/plates": "v4.0.0-alpha",
