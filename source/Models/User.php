@@ -28,7 +28,10 @@ class User
      */
     public function __construct()
     {
-        $usarId = filter_var($_SESSION['user'], FILTER_VALIDATE_INT);
+        $usarId = false;
+        if (! empty($_SESSION['user'])) {
+            $usarId = filter_var($_SESSION['user'], FILTER_VALIDATE_INT);
+        }
 
         $this->user = ! empty($usarId) ? (new UserModel())->findById($usarId) : false;
 
@@ -61,6 +64,7 @@ class User
 
         $_SESSION['user'] = $user->id;
         $this->user = $user;
+        $this->islogged = ! empty($this->user);
 
         /** Validação de rede-social */
         $this->socialValidate();

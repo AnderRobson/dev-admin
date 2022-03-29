@@ -48,13 +48,13 @@ abstract class Controller
 
         $this->seo = new Optimizer();
 
-        $facebookInformation = $this->getConfigure("facebook_login");
-        if (! empty((int) $facebookInformation->id)) {
-            $this->seo->openGraph(SITE['NAME'], SITE['LOCALE'], "article")
-                ->publisher(SOCIAL["FACEBOOK_PAGE"], SOCIAL["FACEBOOK_AUTHOR"])
-                ->twitterCard(SOCIAL["TWITTER_CREATOR"], SOCIAL["TWITTER_SITE"], SITE["DOMAIN"])
-                ->facebook($facebookInformation->value['clientId']);
-        }
+//        $facebookInformation = $this->getConfigure("facebook_login");
+//        if (! empty((int) $facebookInformation->id)) {
+//            $this->seo->openGraph(SITE['NAME'], SITE['LOCALE'], "article")
+//                ->publisher(SOCIAL["FACEBOOK_PAGE"], SOCIAL["FACEBOOK_AUTHOR"])
+//                ->twitterCard(SOCIAL["TWITTER_CREATOR"], SOCIAL["TWITTER_SITE"], SITE["DOMAIN"])
+//                ->facebook($facebookInformation->value['clientId']);
+//        }
 
         $this->user = new User();
 

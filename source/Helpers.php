@@ -3,9 +3,9 @@
 /**
  * Responsavel por minificar arquivos da pasta assets.
  */
-if ($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "192.168.0.11") {
-    require __DIR__ . DS . "Minify.php";
-}
+//if ($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "192.168.0.11") {
+//    require __DIR__ . DS . "Minify.php";
+//}
 
 /**
  * Responsavel por montar url para redirecionamentos dentro da plataforma.
@@ -56,7 +56,7 @@ function css(string $file, $time = true)
         $file .= "?time=" . fileatime($fileOnDir);
     }
 
-    return "<link rel='stylesheet' href='/dev-admin/{$file}'>";
+    return "<link rel='stylesheet' href='" . URL_ADMIN . "/{$file}'>";
 }
 
 
@@ -76,7 +76,7 @@ function js(string $file, $time = true)
         $file .= "?time=" . fileatime($fileOnDir);
     }
 
-    return "<script src='/dev-admin/{$file}'></script>";
+    return "<script src='" . URL_ADMIN . "/{$file}'></script>";
 }
 
 
@@ -101,10 +101,10 @@ function plugins(string $file, $time = true)
 
     switch ($type) {
         case 'js':
-            $return = "<script src='/dev-admin/{$file}'></script>";
+            $return = "<script src='" . URL_ADMIN . "/{$file}'></script>";
             break;
         case 'css':
-            $return = "<link rel='stylesheet' href='/dev-admin/{$file}'>";
+            $return = "<link rel='stylesheet' href='" . URL_ADMIN . "/{$file}'>";
     }
 
     return $return;
@@ -128,7 +128,7 @@ function redirect($route, $external = false)
 }
 
 /**
- * Responsável por criar html de mensagens de alerta.
+ * Responsï¿½vel por criar html de mensagens de alerta.
  *
  * @param string $message
  * @param string $type
@@ -140,7 +140,7 @@ function message(string $message, string $type): string
 }
 
 /**
- * Responsável por criar e renderizar mensagens gravadas na sessão.
+ * Responsï¿½vel por criar e renderizar mensagens gravadas na sessï¿½o.
  *
  * @param string|null $type
  * @param string|null $message
@@ -212,7 +212,7 @@ function mountFilters(array $filters): array
 }
 
 /**
- * Responsavel pormatar o valor no padrão brasileiro.
+ * Responsavel pormatar o valor no padrï¿½o brasileiro.
  *
  * @param string $currency
  * @param bool $full

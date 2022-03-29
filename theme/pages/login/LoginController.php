@@ -9,6 +9,7 @@ use League\OAuth2\Client\Provider\GoogleUser;
 use Source\Controllers\Controller;
 use Source\Library\email\Email;
 use Source\Library\email\EmailModel;
+use Source\Models\User;
 use Theme\Pages\User\UserModel;
 
 /**
@@ -20,6 +21,7 @@ use Theme\Pages\User\UserModel;
  * @property $googleUser GoogleUser
  * @property $facebook Facebook
  * @property $facebookUser FacebookUser
+ * @property User $user
  *
  * @package Theme\Pages\Login
  */

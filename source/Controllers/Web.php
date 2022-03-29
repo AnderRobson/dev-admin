@@ -89,18 +89,18 @@ class Web extends Controller
     }
 
     /**
-     * Responsavel por desconectar usuário
+     * Responsavel por desconectar usuï¿½rio
      */
     public function logoff(): void
     {
-        flash("success", "Você saiu com sucesso, volte logo {$this->user->getUser()->getFullName()}!");
+        flash("success", "Vocï¿½ saiu com sucesso, volte logo {$this->user->getUser()->getFullName()}!");
         $this->user->destruct();
 
         redirect("login");
     }
 
     /**
-     * Responsavel por tratar rota de recuperação de senha
+     * Responsavel por tratar rota de recuperaï¿½ï¿½o de senha
      *
      * @param array $data
      */
@@ -190,7 +190,7 @@ class Web extends Controller
      */
     public function slugPost($slugPost)
     {
-        echo "<h1 style='text-align: center'> Pesquisa de publicação pelo slug !</h1>";
+        echo "<h1 style='text-align: center'> Pesquisa de publicaï¿½ï¿½o pelo slug !</h1>";
         var_dump($slugPost);
     }
 

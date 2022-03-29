@@ -26,7 +26,7 @@ class OrderModel extends Model
         $orderStatus = OrderStatus::searchForValue($this->status);
 
         if (! empty($option)) {
-            return $orderStatus->{$option};
+            return $orderStatus->{$option}();
         }
 
         return $orderStatus;

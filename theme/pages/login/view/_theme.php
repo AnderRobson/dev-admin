@@ -44,7 +44,7 @@
                             <div class="card-header"><?= $title; ?></div>
                             <div class="form_ajax" style="display: none"></div>
                             <div class="text-center mb-4">
-                                <img class="mb-4 m-4" src="<?= urlFile("upload/images/logo.png", true); ?>" alt="Icone da empresa/loja" width="150" height="90">
+                                <img class="mb-4 m-4" src="<?= urlFile("images/logo.png", true); ?>" alt="Icone da empresa/loja" width="150" height="90">
                             </div>
 
                             <?= $v->section("content"); ?>

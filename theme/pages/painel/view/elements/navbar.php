@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow navbar-expand-md">
     <a class="navbar-brand text-center m-0 col-sm-3 col-md-2 mr-0 h1" href="#">
-        <img src="<?= urlFile("upload/images/logo.png", true); ?>" width="35" height="25" class="d-inline-block align-top" alt="">
+        <img src="<?= urlFile("images/logo.png", true); ?>" width="35" height="25" class="d-inline-block align-top" alt="">
         <?= SITE["SHORT_NAME"] ?>
     </a>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
