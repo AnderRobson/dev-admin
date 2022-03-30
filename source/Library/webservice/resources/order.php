@@ -41,7 +41,7 @@ class Order
      */
     public function __construct($request)
     {
-        $this->request = $request;
+        $this->request = is_array($request) ? $request : json_decode($request, true);
     }
 
     /**
@@ -60,7 +60,6 @@ class Order
             ||
             empty($this->request['cart']['freight'])
         ) {
-
             throw new Exception(
                 'Requisição inválida.',
                 self::INVALID_REQUEST

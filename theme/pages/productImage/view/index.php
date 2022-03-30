@@ -1,5 +1,5 @@
 <?php
-$v->layout("product-image/view/_theme"); ?>
+$v->layout("productImage/view/_theme"); ?>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <?php
             $v->insert("product/view/elements/navbar", [
@@ -30,7 +30,7 @@ $v->layout("product-image/view/_theme"); ?>
                 if (! empty($productImages)):
                     foreach ($productImages as $productImage):
                         $v->insert(
-                                "product-image/view/elements/cardImage",
+                                "productImage/view/elements/cardImage",
                                 [
                                     'productImage' => $productImage,
                                     'altImage' => $product->title

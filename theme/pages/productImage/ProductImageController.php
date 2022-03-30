@@ -33,7 +33,7 @@ class ProductImageController extends Controller
             ""
         )->render();
 
-        echo $this->view->render("product-image/view/index", [
+        echo $this->view->render("productImage/view/index", [
             "product" => $product,
             "productImages" => (new ProductImageModel())->find("id_product = :id_product", "id_product={$product->id}")->order('id')->fetch(true),
             'head' => $head
@@ -90,7 +90,7 @@ class ProductImageController extends Controller
             ""
         )->render();
 
-        echo $this->view->render("product-image/view/edit", [
+        echo $this->view->render("productImage/view/edit", [
             "product" => $product,
             "productImage" => $productImage,
             "head" => $head
@@ -150,7 +150,7 @@ class ProductImageController extends Controller
             ""
         )->render();
 
-        echo $this->view->render("product-image/view/create", [
+        echo $this->view->render("productImage/view/create", [
             "head" => $head,
             "product" => $product
         ]);

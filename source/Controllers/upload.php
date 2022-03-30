@@ -18,7 +18,7 @@ class Upload
     private string $fileName;
 
     /** @var string */
-    private string $destiny = URL_BLOG . DS . 'upload' . DS;
+    private string $destiny = SITE_ROOT . DS . 'upload' . DS;
 
     /** @var */
     private string $link;
@@ -40,7 +40,7 @@ class Upload
     {
         $this->file = $file;
 
-        if ($this->file != 0) {
+        if (empty($this->file)) {
             throw new Exception("Erro ao realizar o upload do arquivo");
         }
 
@@ -53,7 +53,11 @@ class Upload
      */
     public function setDestiny(string $destiny): void
     {
-        $this->destiny .= $destiny . DS;
+        if (! is_dir($destiny)) {
+            mkdir($destiny);
+        }
+
+        $this->destiny .= $destiny;
     }
 
     /**
@@ -79,6 +83,7 @@ class Upload
      */
     public function upload(): string
     {
+//        ~r($this->destiny . DS . $this->fileName, $this->file["file"]);
         if (! move_uploaded_file($this->file["file"]["tmp_name"], $this->destiny . DS . $this->fileName)) {
             throw new Exception("Erro ao realizar o upload do arquivo");
         }
