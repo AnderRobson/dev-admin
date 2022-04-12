@@ -51,7 +51,7 @@ class PublicationController extends Controller
             $publication->description = $data["description"];
             $publication->status = (bool) $data["status"];
 
-            if (! empty($_FILES)) {
+            if (! empty($_FILES['file']['name'])) {
                 try {
 
                     $upload = new Upload();
@@ -60,10 +60,8 @@ class PublicationController extends Controller
                     $nameImage = $upload->upload();
 
                 } catch (Exception $exception) {
-                    echo $this->ajaxResponse("message", [
-                        "type" => "danger",
-                        "message" => $exception->getMessage()
-                    ]);
+                    flash("danger", $exception->getMessage());
+                    redirect("pages/publication/edit/" . $publication->slug);
                     return;
                 }
 
@@ -71,17 +69,13 @@ class PublicationController extends Controller
             }
 
             if (! $publication->save()) {
-                echo $this->ajaxResponse("message", [
-                    "type" => "danger",
-                    "message" => "Erro ao editar a publicação"
-                ]);
+                flash("danger", "Erro ao editar a publicação");
+                redirect("pages/publication/edit/" . $publication->slug);
                 return;
             }
 
             flash("success", "Publicação editado com sucesso");
-            echo $this->ajaxResponse("redirect", [
-                "url" => url("pages/publication/edit/" . $publication->slug)
-            ]);
+            redirect("pages/publication/edit/" . $publication->slug);
             return;
         }
 
@@ -122,7 +116,7 @@ class PublicationController extends Controller
             $publication->description = $data['description'];
             $publication->status = (bool) $data["status"];
 
-            if (! empty($_FILES["file"])) {
+            if (! empty($_FILES["file"]['name'])) {
                 try {
 
                     $upload = new Upload();
@@ -135,6 +129,8 @@ class PublicationController extends Controller
                         "type" => "danger",
                         "message" => $exception->getMessage()
                     ]);
+                    flash("danger", $exception->getMessage());
+                    redirect("pages/publication/create");
                     return;
                 }
 
@@ -142,17 +138,13 @@ class PublicationController extends Controller
             }
 
             if (! $publication->save()) {
-                echo $this->ajaxResponse("message", [
-                    "type" => "danger",
-                    "message" => "Erro ao cadastrar a Publicação"
-                ]);
+                flash("danger", "Erro ao cadastrar a publicação");
+                redirect("pages/publication/create");
                 return;
             }
 
             flash("success", "Publicação cadastrada com sucesso");
-            echo $this->ajaxResponse("redirect", [
-                "url" => url("pages/publication/edit/" . $publication->slug)
-            ]);
+            redirect("pages/publication/edit/" . $publication->slug);
             return;
         }
 

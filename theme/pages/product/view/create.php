@@ -7,7 +7,7 @@ $v->layout("product/view/_theme"); ?>
                 "active" => "product"
             ]);
         ?>
-        <form method="post" action="<?= url("pages/product/create"); ?>" enctype="multipart/form-data">
+        <form method="post" action="<?= url("pages/product/create"); ?>" enctype="multipart/form-data" novalidate>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Editando o Produto</h1>
                 <div class="form-group text-center">

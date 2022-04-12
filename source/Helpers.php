@@ -3,9 +3,9 @@
 /**
  * Responsavel por minificar arquivos da pasta assets.
  */
-//if ($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "192.168.0.11") {
-//    require __DIR__ . DS . "Minify.php";
-//}
+if ($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "192.168.0.11") {
+    require __DIR__ . DS . "Minify.php";
+}
 
 /**
  * Responsavel por montar url para redirecionamentos dentro da plataforma.

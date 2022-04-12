@@ -58,7 +58,7 @@ class StockController extends Controller
         if (! empty($data)) {
             $stock->status = $data["status"];
             $stock->title = $data["title"];
-            $stock->slug = slugify($data['title']);
+            $stock->slug = slugify($data["code"] . $data['title']);
             $stock->description = ! empty($data["description"]) ? trim($data["description"]) : '';
             $stock->old_value = $data["old_value"] ? number_format(str_replace(',', '.', $data["old_value"]), 2) : 0;
             $stock->current_value = number_format(str_replace(',', '.', $data["current_value"]), 2);
@@ -123,7 +123,7 @@ class StockController extends Controller
             $stock->id_product = $product->id;
             $stock->status = $data["status"];
             $stock->title = $data["title"];
-            $stock->slug = slugify($data['title']);
+            $stock->slug = slugify($data["code"] . $data['title']);
             $stock->description = trim($data["description"]) ?: '';
             $stock->old_value = $data["old_value"] ?: 0;
             $stock->current_value = $data["current_value"];

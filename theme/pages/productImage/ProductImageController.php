@@ -113,7 +113,7 @@ class ProductImageController extends Controller
             redirect("pages/product");
         }
 
-        if (! empty($_FILES)) {
+        if (! empty($_FILES['file']['name'])) {
             $productImage = new ProductImageModel();
             $productImage->id_product = $product->id;
 

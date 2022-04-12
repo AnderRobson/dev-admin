@@ -51,7 +51,7 @@ class BannerController extends Controller
             $banner->description = $data["description"];
             $banner->status = (bool) $data["status"];
 
-            if (! empty($_FILES)) {
+            if (! empty($_FILES['file']['name'])) {
                 try {
 
                     $upload = new Upload();
@@ -60,10 +60,8 @@ class BannerController extends Controller
                     $nameImage = $upload->upload();
 
                 } catch (Exception $exception) {
-                    echo $this->ajaxResponse("message", [
-                        "type" => "danger",
-                        "message" => $exception->getMessage()
-                    ]);
+                    flash("danger", $exception->getMessage());
+                    redirect("pages/banner/edit/" . $banner->slug);
                     return;
                 }
 
@@ -71,17 +69,13 @@ class BannerController extends Controller
             }
 
             if (! $banner->save()) {
-                echo $this->ajaxResponse("message", [
-                    "type" => "danger",
-                    "message" => "Erro ao editar o Banner"
-                ]);
+                flash("danger", "Erro ao editar o Banner");
+                redirect("pages/banner/edit/" . $banner->slug);
                 return;
             }
 
             flash("success", "Banner editado com sucesso");
-            echo $this->ajaxResponse("redirect", [
-                "url" => url("pages/banner/edit/" . $banner->slug)
-            ]);
+            redirect("pages/banner/edit/" . $banner->slug);
             return;
         }
 
@@ -107,7 +101,6 @@ class BannerController extends Controller
     {
         if (! empty($data)) {
             $data = filter_var_array($data, FILTER_SANITIZE_STRING);
-            $data["description"] = 'asadasd';
             if (empty($data["title"]) || empty($data["description"]) || ! empty($_FILES["file"]["error"])) {
                 echo $this->ajaxResponse("message", [
                     "type" => "danger",
@@ -122,7 +115,7 @@ class BannerController extends Controller
             $banner->description = $data["description"];
             $banner->status = (bool) $data["status"];
 
-            if (! empty($_FILES)) {
+            if (! empty($_FILES['file']['name'])) {
                 try {
 
                     $upload = new Upload();
@@ -131,10 +124,8 @@ class BannerController extends Controller
                     $nameImage = $upload->upload();
 
                 } catch (Exception $exception) {
-                    echo $this->ajaxResponse("message", [
-                        "type" => "danger",
-                        "message" => $exception->getMessage()
-                    ]);
+                    flash("danger", $exception->getMessage());
+                    redirect("pages/banner/create");
                     return;
                 }
 
@@ -142,17 +133,13 @@ class BannerController extends Controller
             }
 
             if (! $banner->save()) {
-                echo $this->ajaxResponse("message", [
-                    "type" => "danger",
-                    "message" => "Erro ao cadastrar o Banner"
-                ]);
+                flash("danger", "Erro ao cadastrar o Banner");
+                redirect("pages/banner/create");
                 return;
             }
 
             flash("success", "Banner cadastrado com sucesso");
-            echo $this->ajaxResponse("redirect", [
-                "url" => url("pages/banner")
-            ]);
+            redirect("pages/banner/edit/" . $banner->slug);
             return;
         }
 
@@ -184,10 +171,10 @@ class BannerController extends Controller
         }
 
         $id = filter_var($data['id'], FILTER_VALIDATE_INT);
-        $user = (new BannerModel())->findById($id);
+        $banner = (new BannerModel())->findById($id);
 
-        if (! empty($user)) {
-            if (! $user->destroy()) {
+        if (! empty($banner)) {
+            if (! $banner->destroy()) {
                 $callback['remove'] = false;
                 echo json_encode($callback);
 

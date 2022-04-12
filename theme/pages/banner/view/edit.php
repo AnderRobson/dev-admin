@@ -55,7 +55,7 @@ $v->layout("banner/view/_theme"); ?>
                 <img src="<?= urlFile("upload/banner" . DS . $banner->image, true); ?>" class="card-img-top" alt="<?= $banner->title; ?>">
                 <div class="card-footer">
                     <small class="text-muted">Imagem cadastrado em: <?= $banner->created_at; ?></small>
-                    <a href="#" data-action="<?= url("pages/product-image/delete"); ?>" data-id="<?= $banner->id; ?>">
+                    <a href="#" data-action="<?= url("pages/banner/delete_image"); ?>" data-id="<?= $banner->id; ?>">
                         <button type="button" class="btn btn-danger float-right">
                             Deletar Imagem
                         </button>
